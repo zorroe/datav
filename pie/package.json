@@ -86,11 +86,6 @@
         "type": "number",
         "default": 8
       },
-      "legendWidth": {
-        "name": "图例宽度",
-        "type": "number",
-        "default": 100
-      },
       "orient": {
         "name": "图例方向",
         "type": "string",

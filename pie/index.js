@@ -61,8 +61,6 @@ module.exports = Event.extend(
             color: cfg.legendColor,
             fontSize: cfg.legendFontSize,
             fontWeight: 500,
-            overflow: "truncate",
-            ellipsis: "...",
           },
           width: cfg.legendWidth,
           itemWidth: cfg.legendItemWidth,
