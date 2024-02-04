@@ -65,6 +65,9 @@ module.exports = Event.extend(
             overflow: "truncate",
             ellipsis: "...",
           },
+          tooltip: {
+            show: cfg.legendShowTooltip,
+          },
           width: cfg.legendWidth,
           itemWidth: cfg.legendItemWidth,
           itemHeight: cfg.legendItemHeight,
@@ -101,11 +104,11 @@ module.exports = Event.extend(
           padding: [8, 10],
           confine: true,
           formatter: (params) => {
-            let res = params.data[cfg.nameField];
+            let res = params.data.name;
             if (cfg.tooltipShowValue) {
               res = `${res}&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:600'>${
                 new Intl.NumberFormat("en-US").format(
-                  params.data[cfg.valueField]
+                  params.data.value
                 ) + cfg.valueSuffix
               }</span>`;
             }
@@ -134,7 +137,12 @@ module.exports = Event.extend(
                 borderColor: cfg.emphasisItemBorderColor,
               },
             },
-            data,
+            data: data.map((d) => {
+              return {
+                name: d[cfg.nameField],
+                value: d[cfg.valueField],
+              };
+            }),
           },
         ],
       };

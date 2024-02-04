@@ -1,0 +1,89 @@
+{
+  "options": {
+    "global": {
+      "carousel": { "show": false, "duration": 10000 },
+      "isScroll": { "show": false, "offsetX": 39, "offsetY": 6 },
+      "alignment": "center",
+      "initValue": 1,
+      "queueMode": "hori",
+      "imgSetting": {
+        "show": true,
+        "sizeH": 20,
+        "sizeW": 18,
+        "direction": "left",
+        "textMargin": 4
+      },
+      "buttonStyle": {
+        "hoverStyle": {
+          "btnNormalHoverBgColor": "rgb(57, 65, 77)",
+          "btnNormalHoverTextStyle": {
+            "color": "#40a9ff",
+            "fontSize": 12,
+            "fontWeight": "normal"
+          }
+        },
+        "buttonWidth": 20,
+        "normalStyle": {
+          "btnNormalBgColor": "rgb(57, 65, 77)",
+          "btnNormalTextStyle": {
+            "color": "rgb(144, 160, 174)",
+            "fontSize": 12,
+            "fontWeight": "normal"
+          }
+        },
+        "buttonHeight": 20
+      },
+      "globalStyle": { "bgColor": "rgba(150, 150, 150, 0)", "borderRadius": 19 }
+    },
+    "normal": {
+      "hoverStyle": {
+        "normalHoverBgColor": "rgba(32, 105, 249, 0)",
+        "normalHoverTextStyle": {
+          "color": "#4e9dff",
+          "fontSize": 14,
+          "fontFamily": "Microsoft Yahei",
+          "fontWeight": "bold"
+        }
+      },
+      "normalStyle": {
+        "normalBgColor": "rgba(10, 115, 255, 0)",
+        "normalTextStyle": {
+          "color": "#aaaaaa",
+          "fontSize": 14,
+          "fontFamily": "Microsoft Yahei",
+          "fontWeight": "normal"
+        }
+      }
+    },
+    "emphasis": {
+      "underline": {
+        "show": true,
+        "underlineStyle": {
+          "height": 3,
+          "borderRadius": 0,
+          "backgroundColor": "#4e9dff"
+        },
+        "underlinePosHor": "top",
+        "underlinePosVer": "right"
+      },
+      "hoverStyle": {
+        "emphasisHoverBgColor": "rgba(32, 105, 249, 0)",
+        "emphasisHoverTextStyle": {
+          "color": "#005dd0",
+          "fontSize": 14,
+          "fontFamily": "Microsoft Yahei",
+          "fontWeight": "bold"
+        }
+      },
+      "normalStyle": {
+        "emphasisBgColor": "rgba(0, 93, 208, 0)",
+        "emphasisTextStyle": {
+          "color": "#2069f9",
+          "fontSize": 14,
+          "fontFamily": "Microsoft Yahei",
+          "fontWeight": "normal"
+        }
+      }
+    }
+  }
+}

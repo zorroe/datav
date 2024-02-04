@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/pie",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.0.0",
@@ -70,6 +70,11 @@
         "name": "图例宽度",
         "type": "number",
         "default": 200
+      },
+      "legendShowTooltip": {
+        "name": "图例是否显示tooltip",
+        "type": "boolean",
+        "default": false
       },
       "legendFontSize": {
         "name": "图例文字大小",
@@ -170,20 +175,20 @@
     "api_data": {
       "source": [
         {
-          "value": 100001,
-          "name": "rose 1222222222222222222222222"
+          "v": 100001,
+          "n": "rose 1222222222222222222222222"
         },
         {
-          "value": 200001.1,
-          "name": "rose 2"
+          "v": 200001.1,
+          "n": "rose 2"
         },
         {
-          "value": 100002.9,
-          "name": "rose 3"
+          "v": 100002.9,
+          "n": "rose 3"
         },
         {
-          "value": 10000,
-          "name": "rose 4"
+          "v": 10000,
+          "n": "rose 4"
         }
       ]
     }
