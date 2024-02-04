@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/pie",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.0.0",
@@ -65,6 +65,11 @@
         "name": "图例文字颜色",
         "type": "string",
         "default": "#3a3a3a"
+      },
+      "legendWidth": {
+        "name": "图例宽度",
+        "type": "number",
+        "default": 200
       },
       "legendFontSize": {
         "name": "图例文字大小",
@@ -166,7 +171,7 @@
       "source": [
         {
           "value": 100001,
-          "name": "rose 1"
+          "name": "rose 1222222222222222222222222"
         },
         {
           "value": 200001.1,
