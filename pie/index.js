@@ -104,7 +104,7 @@ module.exports = Event.extend(
         },
         tooltip: {
           padding: [8, 10],
-          confine: true,
+          confine: cfg.tooltip.confine,
           formatter: (params) => {
             let res = params.data.name;
             if (cfg.tooltip.showValue) {
