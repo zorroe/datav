@@ -237,6 +237,7 @@ module.exports = Event.extend(
         series,
       };
       console.log(options);
+      this.chart.clear()
       this.chart.setOption(options);
       //如果有需要的话,更新样式
       this.updateStyle();
