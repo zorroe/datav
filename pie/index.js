@@ -2,7 +2,6 @@ var Event = require("bcore/event");
 var $ = require("jquery");
 var _ = require("lodash");
 var Echarts = require("echarts");
-//var Chart = require('XXX');
 
 /**
  * 马良基础类
@@ -16,6 +15,7 @@ module.exports = Event.extend(
     this.apis = config.apis; //hook一定要有
     this._data = null; //数据
     this.chart = null; //图表
+    this.interval = null;
     this.init(config);
   },
   {
@@ -39,6 +39,8 @@ module.exports = Event.extend(
      * !!注意: 第二个参数支持config, 就不需要updateOptions这个方法了
      */
     render: function (data, config) {
+      clearInterval(this.interval)
+      this.chart = Echarts.init(this.container[0]);
       data = this.data(data);
       console.log("data==", data);
       var cfg = this.mergeConfig(config);
@@ -54,35 +56,36 @@ module.exports = Event.extend(
           "#ae6fde",
         ],
         legend: {
-          top: cfg.legendTop, // 需配置
-          left: cfg.legendLeft,
-          orient: cfg.orient, // 需配置
+          top: cfg.legend.top, // 需配置
+          left: cfg.legend.left,
+          orient: cfg.legend.orient, // 需配置
           textStyle: {
-            color: cfg.legendColor,
-            fontSize: cfg.legendFontSize,
+            color: cfg.legend.color,
+            fontSize: cfg.legend.fontSize,
             fontWeight: 500,
-            width: cfg.legendWidth,
+            width: cfg.legend.width,
             overflow: "truncate",
             ellipsis: "...",
           },
           tooltip: {
-            show: cfg.legendShowTooltip,
+            trigger: "item",
+            show: cfg.legend.showTooltip,
           },
-          width: cfg.legendWidth,
-          itemWidth: cfg.legendItemWidth,
-          itemHeight: cfg.legendItemHeight,
-          itemGap: cfg.legendItemGap,
+          width: cfg.legend.width,
+          itemWidth: cfg.legend.itemWidth,
+          itemHeight: cfg.legend.itemHeight,
+          itemGap: cfg.legend.itemGap,
           formatter: function (name) {
             let res = name;
-            if (cfg.showValue) {
+            if (cfg.legend.showValue) {
               const d = data.find((item) => {
                 return item[cfg.nameField] === name;
               });
               res = `${res}    ${new Intl.NumberFormat("en-US").format(
                 d[cfg.valueField]
-              )}${cfg.valueSuffix}`;
+              )}${cfg.legend.valueSuffix}`;
             }
-            if (cfg.showProportion) {
+            if (cfg.legend.showProportion) {
               const total = data.reduce(function (acc, obj) {
                 return acc + obj[cfg.valueField];
               }, 0);
@@ -93,7 +96,7 @@ module.exports = Event.extend(
               console.log(d);
               const proportion =
                 ((d[cfg.valueField] / total) * 100).toFixed(
-                  cfg.proportionPrecision
+                  cfg.legend.proportionPrecision
                 ) + "%";
               res = `${res}    ${proportion}`;
             }
@@ -105,16 +108,15 @@ module.exports = Event.extend(
           confine: true,
           formatter: (params) => {
             let res = params.data.name;
-            if (cfg.tooltipShowValue) {
+            if (cfg.tooltip.showValue) {
               res = `${res}&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:600'>${
-                new Intl.NumberFormat("en-US").format(
-                  params.data.value
-                ) + cfg.valueSuffix
+                new Intl.NumberFormat("en-US").format(params.data.value) +
+                cfg.legend.valueSuffix
               }</span>`;
             }
-            if (cfg.tooltipShowProportion) {
+            if (cfg.tooltip.showProportion) {
               res = `${res}&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:600'>${params.percent.toFixed(
-                cfg.proportionPrecision
+                cfg.legend.proportionPrecision
               )}%</span>`;
             }
             return res;
@@ -125,17 +127,11 @@ module.exports = Event.extend(
           {
             type: "pie",
             colorBy: "data",
-            center: [cfg.centerX, cfg.centerY], // 需配置
-            radius: [cfg.radiusInner, cfg.radiusOuter], // 需配置
+            center: [cfg.center.x, cfg.center.y], // 需配置
+            radius: [cfg.center.inner, cfg.center.outer], // 需配置
             label: {
-              show: cfg.isShowLabel,
-              position: cfg.labelPosition,
-            },
-            emphasis: {
-              itemStyle: {
-                borderWidth: cfg.emphasisItemBorderWidth,
-                borderColor: cfg.emphasisItemBorderColor,
-              },
+              show: cfg.label.show,
+              position: cfg.label.position,
             },
             data: data.map((d) => {
               return {
@@ -147,7 +143,37 @@ module.exports = Event.extend(
         ],
       };
       console.log(options);
+
       this.chart.setOption(options);
+
+      var currentIdx = -1;
+      const playCarousel = () => {
+        currentIdx = (currentIdx + 1) % data.length;
+        this.chart.dispatchAction({
+          type: "showTip",
+          seriesIndex: 0,
+          dataIndex: currentIdx,
+        });
+      };
+      clearInterval(this.interval);
+      if (!cfg.tooltip.auto) {
+        clearInterval(this.interval);
+        this.chart.dispatchAction({
+          type: "hideTip",
+        });
+        this.chart.off("mouseover");
+        this.chart.off("mouseout");
+      }
+      if (cfg.tooltip.auto) {
+        this.interval = setInterval(playCarousel, cfg.tooltip.autoTime);
+        this.chart.on("mouseover", () => {
+          clearInterval(this.interval);
+        });
+        this.chart.on("mouseout", () => {
+          this.interval = setInterval(playCarousel, cfg.tooltip.autoTime);
+        });
+      }
+
       //如果有需要的话,更新样式
       this.updateStyle();
     },
@@ -217,12 +243,14 @@ module.exports = Event.extend(
      * 更新配置
      * !!注意:如果render支持第二个参数options, 那updateOptions不是必须的
      */
-    //updateOptions: function (options) {},
+    // updateOptions: function (options) {
+    //   console.log(options);
+    // },
     /**
      * 更新某些配置
      * 给可以增量更新配置的组件用
      */
-    //updateXXX: function () {},
+    // updateXXX: function () {},
     /**
      * 销毁组件
      */

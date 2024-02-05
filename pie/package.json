@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/pie",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.0.0",
@@ -32,15 +32,6 @@
       }
     },
     "config": {
-      "size": {
-        "name": "字号",
-        "type": "number",
-        "range": [
-          10,
-          100
-        ],
-        "default": 22
-      },
       "valueField": {
         "name": "值字段",
         "type": "string",
@@ -51,125 +42,149 @@
         "type": "string",
         "default": "name"
       },
-      "legendTop": {
-        "name": "图例距离TOP距离",
-        "type": "string",
-        "default": "bottom"
+      "legend": {
+        "name": "图例",
+        "type": "group",
+        "children": {
+          "top": {
+            "name": "图例距离TOP距离",
+            "type": "string",
+            "default": "bottom"
+          },
+          "left": {
+            "name": "图例距离LEFT距离",
+            "type": "string",
+            "default": "middle"
+          },
+          "color": {
+            "name": "图例文字颜色",
+            "type": "string",
+            "default": "#3a3a3a"
+          },
+          "width": {
+            "name": "图例宽度",
+            "type": "number",
+            "default": 200
+          },
+          "showTooltip": {
+            "name": "图例是否显示tooltip",
+            "type": "boolean",
+            "default": false
+          },
+          "fontSize": {
+            "name": "图例文字大小",
+            "type": "number",
+            "default": 12
+          },
+          "itemWidth": {
+            "name": "图例色块宽度",
+            "type": "number",
+            "default": 8
+          },
+          "itemHeight": {
+            "name": "图例色块高度",
+            "type": "number",
+            "default": 8
+          },
+          "itemGap": {
+            "name": "图例色块间隔",
+            "type": "number",
+            "default": 8
+          },
+          "orient": {
+            "name": "图例方向",
+            "type": "string",
+            "default": "vertical"
+          },
+          "showValue": {
+            "name": "图例是否显示值",
+            "type": "boolean",
+            "default": false
+          },
+          "valueSuffix": {
+            "name": "图例值后缀",
+            "type": "string",
+            "default": ""
+          },
+          "showProportion": {
+            "name": "图例是否显示比例",
+            "type": "boolean",
+            "default": false
+          },
+          "proportionPrecision": {
+            "name": "比例保留精度位数",
+            "type": "number",
+            "default": 1
+          }
+        }
       },
-      "legendLeft": {
-        "name": "图例距离LEFT距离",
-        "type": "string",
-        "default": "middle"
+      "tooltip": {
+        "name": "tooltip",
+        "type": "group",
+        "children": {
+          "showValue": {
+            "name": "是否显示数值",
+            "type": "boolean",
+            "default": true
+          },
+          "showProportion": {
+            "name": "是否显示比例",
+            "type": "boolean",
+            "default": false
+          },
+          "auto": {
+            "name": "是否轮播",
+            "type": "boolean",
+            "default": false
+          },
+          "autoTime": {
+            "name": "轮播周期",
+            "type": "number",
+            "default": 3000
+          }
+        }
       },
-      "legendColor": {
-        "name": "图例文字颜色",
-        "type": "string",
-        "default": "#3a3a3a"
+      "center": {
+        "name": "中心",
+        "type": "group",
+        "children": {
+          "x": {
+            "name": "x",
+            "type": "string",
+            "default": "50%"
+          },
+          "y": {
+            "name": "y",
+            "type": "string",
+            "default": "50%"
+          },
+          "inner": {
+            "name": "内径",
+            "type": "string",
+            "default": "0%"
+          },
+          "outer": {
+            "name": "外径",
+            "type": "string",
+            "default": "60%"
+          }
+        }
       },
-      "legendWidth": {
-        "name": "图例宽度",
-        "type": "number",
-        "default": 200
-      },
-      "legendShowTooltip": {
-        "name": "图例是否显示tooltip",
-        "type": "boolean",
-        "default": false
-      },
-      "legendFontSize": {
-        "name": "图例文字大小",
-        "type": "number",
-        "default": 12
-      },
-      "legendItemWidth": {
-        "name": "图例色块宽度",
-        "type": "number",
-        "default": 8
-      },
-      "legendItemHeight": {
-        "name": "图例色块高度",
-        "type": "number",
-        "default": 8
-      },
-      "legendItemGap": {
-        "name": "图例色块间隔",
-        "type": "number",
-        "default": 8
-      },
-      "orient": {
-        "name": "图例方向",
-        "type": "string",
-        "default": "vertical"
-      },
-      "showValue": {
-        "name": "图例是否显示值",
-        "type": "boolean",
-        "default": false
-      },
-      "valueSuffix": {
-        "name": "图例值后缀",
-        "type": "string",
-        "default": ""
-      },
-      "showProportion": {
-        "name": "图例是否显示比例",
-        "type": "boolean",
-        "default": false
-      },
-      "proportionPrecision": {
-        "name": "比例保留精度位数",
-        "type": "number",
-        "default": 1
-      },
-      "tooltipShowValue": {
-        "name": "tooltip是否显示数值",
-        "type": "boolean",
-        "default": true
-      },
-      "tooltipShowProportion": {
-        "name": "tooltip是否显示比例",
-        "type": "boolean",
-        "default": false
-      },
-      "centerX": {
-        "name": "centerX",
-        "type": "string",
-        "default": "50%"
-      },
-      "centerY": {
-        "name": "centerY",
-        "type": "string",
-        "default": "50%"
-      },
-      "radiusInner": {
-        "name": "内径",
-        "type": "string",
-        "default": "0%"
-      },
-      "radiusOuter": {
-        "name": "外径",
-        "type": "string",
-        "default": "60%"
-      },
-      "isShowLabel": {
-        "name": "是否显示标签",
-        "type": "boolean",
-        "default": false
-      },
-      "labelPosition": {
-        "name": "标签位置",
-        "type": "string",
-        "default": "outside"
-      },
-      "emphasisItemBorderWidth": {
-        "name": "item边框宽度",
-        "type": "number",
-        "default": 0
-      },
-      "emphasisItemBorderColor": {
-        "name": "item边框颜色",
-        "type": "string",
-        "default": "#ffffff"
+      "label": {
+        "name": "标签",
+        "type": "group",
+        "children": {
+          "show": {
+            "name": "是否显示标签",
+            "type": "boolean",
+            "default": false
+          },
+          "position": {
+            "name": "标签位置",
+            "type": "string",
+            "default": "outside"
+          }
+        }
       }
     },
     "api_data": {
