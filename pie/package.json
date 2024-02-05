@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/pie",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.0.0",
@@ -64,7 +64,7 @@
           "width": {
             "name": "图例宽度",
             "type": "number",
-            "default": 200
+            "default": 100
           },
           "showTooltip": {
             "name": "图例是否显示tooltip",

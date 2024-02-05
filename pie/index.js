@@ -39,7 +39,7 @@ module.exports = Event.extend(
      * !!注意: 第二个参数支持config, 就不需要updateOptions这个方法了
      */
     render: function (data, config) {
-      clearInterval(this.interval)
+      clearInterval(this.interval);
       this.chart = Echarts.init(this.container[0]);
       data = this.data(data);
       console.log("data==", data);
@@ -71,7 +71,6 @@ module.exports = Event.extend(
             trigger: "item",
             show: cfg.legend.showTooltip,
           },
-          width: cfg.legend.width,
           itemWidth: cfg.legend.itemWidth,
           itemHeight: cfg.legend.itemHeight,
           itemGap: cfg.legend.itemGap,
