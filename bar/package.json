@@ -1,6 +1,6 @@
 {
-  "name": "@namespace/bar",
-  "version": "0.0.1",
+  "name": "@ecnu-pierose/bar",
+  "version": "0.0.2",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -32,15 +32,6 @@
       }
     },
     "config": {
-      "size": {
-        "name": "字号",
-        "type": "number",
-        "default": 22,
-        "range": [
-          10,
-          100
-        ]
-      },
       "x": {
         "name": "x",
         "type": "string",
@@ -55,6 +46,63 @@
         "name": "颜色映射",
         "type": "string",
         "default": "jzqj"
+      },
+      "tooltip": {
+        "name": "tooltip",
+        "type": "group",
+        "children": {
+          "formatter": {
+            "name": "formatter",
+            "type": "string",
+            "default": ""
+          },
+          "bgColor": {
+            "name": "背景颜色",
+            "type": "string",
+            "default": "#fff"
+          },
+          "padding": {
+            "name": "padding",
+            "type": "number",
+            "default": 5
+          },
+          "textColor": {
+            "name": "字体颜色",
+            "type": "string",
+            "default": "#3A3A3A"
+          },
+          "textSize": {
+            "name": "字体大小",
+            "type": "number",
+            "default": 14
+          }
+        }
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "左",
+            "type": "string",
+            "default": "10%"
+          },
+          "right": {
+            "name": "右",
+            "type": "string",
+            "default": "10%"
+          },
+          "top": {
+            "name": "顶",
+            "type": "string",
+            "default": "60"
+          },
+          "bottom": {
+            "name": "底",
+            "type": "string",
+            "default": "60"
+          }
+        }
       },
       "legend": {
         "name": "图例配置",
@@ -156,6 +204,26 @@
             "name": "刻度是否显示",
             "type": "boolean",
             "default": true
+          },
+          "name": {
+            "name": "坐标轴名称",
+            "type": "string",
+            "default": ""
+          },
+          "nameLocation": {
+            "name": "名称显示位置",
+            "type": "string",
+            "default": "middle"
+          },
+          "nameGap": {
+            "name": "名称和轴线的距离",
+            "type": "number",
+            "default": 15
+          },
+          "nameSize": {
+            "name": "名称字体大小",
+            "type": "number",
+            "default": 12
           }
         }
       },
@@ -202,6 +270,26 @@
             "name": "分割线类型",
             "type": "string",
             "default": "dashed"
+          },
+          "name": {
+            "name": "坐标轴名称",
+            "type": "string",
+            "default": " "
+          },
+          "nameLocation": {
+            "name": "名称显示位置",
+            "type": "string",
+            "default": "middle"
+          },
+          "nameGap": {
+            "name": "名称和轴线的距离",
+            "type": "number",
+            "default": 15
+          },
+          "nameSize": {
+            "name": "名称字体大小",
+            "type": "number",
+            "default": 12
           }
         }
       }

@@ -42,6 +42,7 @@ module.exports = Event.extend(
       data = this.data(data);
       console.log("data==", data);
       var cfg = this.mergeConfig(config);
+      console.log(cfg);
       const rgbColor = [
         "#0080FF",
         "#FFD300",
@@ -134,13 +135,29 @@ module.exports = Event.extend(
         series.push(s);
       });
       console.log(xAxisData, yAxisNames, series);
+
+      const tooltip = {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+        },
+        confine: true,
+      };
+
+      if (cfg.tooltip.formatter) {
+        tooltip["formatter"] = cfg.tooltip.formatter;
+      }
+
       //更新图表
       const options = {
         color,
         tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
+          ...tooltip,
+          backgroundColor: cfg.tooltip.bgColor,
+          padding: cfg.tooltip.padding,
+          textStyle: {
+            color: cfg.tooltip.textColor,
+            fontSize: cfg.tooltip.textSize,
           },
         },
         legend: {
@@ -156,9 +173,10 @@ module.exports = Event.extend(
           itemHeight: cfg.legend.itemHeight,
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: cfg.grid.left,
+          right: cfg.grid.right,
+          bottom: cfg.grid.bottom,
+          top: cfg.grid.top,
           containLabel: true,
         },
         xAxis: [
@@ -176,6 +194,13 @@ module.exports = Event.extend(
             axisTick: {
               show: cfg.xAxis.tickShow,
               alignWithLabel: true,
+            },
+            name: cfg.xAxis.name,
+            nameLocation: cfg.xAxis.nameLocation,
+            nameGap: cfg.xAxis.nameGap,
+            nameTextStyle: {
+              color: cfg.xAxis.lineColor,
+              fontSize: cfg.xAxis.nameSize,
             },
           },
         ],
@@ -199,6 +224,13 @@ module.exports = Event.extend(
                 color: cfg.yAxis.splitLineColor,
                 type: cfg.yAxis.splitLineType,
               },
+            },
+            name: cfg.yAxis.name,
+            nameLocation: cfg.yAxis.nameLocation,
+            nameGap: cfg.yAxis.nameGap,
+            nameTextStyle: {
+              color: cfg.yAxis.lineColor,
+              fontSize: cfg.yAxis.nameSize,
             },
           },
         ],
