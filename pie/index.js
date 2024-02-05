@@ -63,7 +63,6 @@ module.exports = Event.extend(
             color: cfg.legend.color,
             fontSize: cfg.legend.fontSize,
             fontWeight: 500,
-            width: cfg.legend.width,
             overflow: "truncate",
             ellipsis: "...",
           },
@@ -141,8 +140,13 @@ module.exports = Event.extend(
           },
         ],
       };
+
+      if (cfg.legend.width.fixed) {
+        options.legend.textStyle.width = cfg.legend.width.value;
+      }
       console.log(options);
 
+      this.chart.clear()
       this.chart.setOption(options);
 
       var currentIdx = -1;

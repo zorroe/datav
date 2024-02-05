@@ -63,8 +63,19 @@
           },
           "width": {
             "name": "图例宽度",
-            "type": "number",
-            "default": 100
+            "type": "group",
+            "children": {
+              "fixed": {
+                "name": "是否固定",
+                "type": "boolean",
+                "default": false
+              },
+              "value": {
+                "name": "宽度",
+                "type": "number",
+                "default": 50
+              }
+            }
           },
           "showTooltip": {
             "name": "图例是否显示tooltip",
