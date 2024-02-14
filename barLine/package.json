@@ -1,0 +1,823 @@
+{
+  "name": "@ecnu-pierose/bar-line",
+  "version": "0.0.4",
+  "dependencies": {
+    "bcore": "0.0.18",
+    "echarts": "5.3.1",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1"
+  },
+  "datav": {
+    "cn_name": "组合图",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "400",
+      "height": "200",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "dataset": {
+        "name": "dataset",
+        "type": "group",
+        "children": {
+          "dimensions": {
+            "name": "维度",
+            "description": "把所有维度用字符串拼接，逗号分隔",
+            "type": "string"
+          }
+        },
+        "default": {
+          "dimensions": "tjn,zs,jz"
+        }
+      },
+      "gradual": {
+        "name": "是否开启渐变",
+        "type": "boolean",
+        "default": true
+      },
+      "legend": {
+        "name": "图例",
+        "type": "group",
+        "children": {
+          "show": {
+            "name": "显示",
+            "type": "boolean"
+          },
+          "left": {
+            "name": "LEFT距离",
+            "type": "string"
+          },
+          "top": {
+            "name": "TOP距离",
+            "type": "string"
+          },
+          "itemGap": {
+            "name": "图例间隔",
+            "type": "number"
+          },
+          "itemWidth": {
+            "name": "图形宽度",
+            "type": "number"
+          },
+          "itemHeight": {
+            "name": "图形高度",
+            "type": "number"
+          }
+        },
+        "default": {
+          "show": true,
+          "left": "0%",
+          "top": "0%",
+          "itemGap": 10,
+          "itemWidth": 24,
+          "itemHeight": 14
+        }
+      },
+      "xAxis": {
+        "name": "x轴",
+        "type": "group",
+        "children": {
+          "lineShow": {
+            "name": "轴线是否显示",
+            "type": "boolean"
+          },
+          "lineWidth": {
+            "name": "轴线宽度",
+            "type": "number"
+          },
+          "lineColor": {
+            "name": "轴线颜色",
+            "type": "string"
+          },
+          "tickShow": {
+            "name": "刻度是否显示",
+            "type": "boolean"
+          },
+          "alignWithLabel": {
+            "name": "对齐",
+            "type": "boolean"
+          },
+          "labelShow": {
+            "name": "显示标签",
+            "type": "boolean"
+          },
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "name": {
+            "name": "坐标轴名称",
+            "type": "string"
+          },
+          "nameLocation": {
+            "name": "名称显示位置",
+            "type": "string"
+          },
+          "nameGap": {
+            "name": "名称和轴线的距离",
+            "type": "number"
+          },
+          "nameColor": {
+            "name": "名称颜色",
+            "type": "string"
+          },
+          "nameSize": {
+            "name": "名称字体大小",
+            "type": "number"
+          }
+        },
+        "default": {
+          "lineShow": true,
+          "lineWidth": 1,
+          "lineColor": "#c2c2c2",
+          "tickShow": false,
+          "alignWithLabel": false,
+          "labelShow": true,
+          "labelColor": "rgba(58,58,58,0.5)",
+          "name": "",
+          "nameLocation": "middle",
+          "nameGap": 15,
+          "nameColor": "rgba(58,58,58,0.5)",
+          "nameSize": 12
+        }
+      },
+      "yAxis": {
+        "name": "y轴",
+        "type": "array",
+        "child": {
+          "name": "轴<%=i+1%>",
+          "type": "object",
+          "children": {
+            "type": {
+              "name": "类型",
+              "type": "string",
+              "default": "value"
+            },
+            "name": {
+              "name": "轴线名称",
+              "type": "string",
+              "default": "轴<%=i+1%>"
+            },
+            "nameTextStyle": {
+              "name": "名称样式",
+              "type": "group",
+              "children": {
+                "color": {
+                  "name": "颜色",
+                  "type": "string",
+                  "default": "rgba(58,58,58,0.5)"
+                },
+                "fontSize": {
+                  "name": "字体大小",
+                  "type": "number",
+                  "default": 12
+                }
+              }
+            },
+            "alignTicks": {
+              "name": "多Y轴对齐刻度",
+              "type": "boolean",
+              "default": true
+            },
+            "splitLine": {
+              "name": "分割线",
+              "type": "group",
+              "children": {
+                "lineStyle": {
+                  "name": "分割线样式",
+                  "type": "group",
+                  "children": {
+                    "type": {
+                      "name": "类型",
+                      "type": "string",
+                      "default": "dashed"
+                    },
+                    "color": {
+                      "name": "颜色",
+                      "type": "string",
+                      "default": "#ccc"
+                    },
+                    "width": {
+                      "name": "宽度",
+                      "type": "number",
+                      "default": 1
+                    }
+                  }
+                }
+              }
+            },
+            "axisLine": {
+              "name": "轴线",
+              "type": "group",
+              "children": {
+                "show": {
+                  "name": "是否显示",
+                  "type": "boolean",
+                  "default": true
+                },
+                "lineStyle": {
+                  "name": "轴线样式",
+                  "type": "group",
+                  "children": {
+                    "color": {
+                      "name": "颜色",
+                      "type": "string",
+                      "default": "#333"
+                    },
+                    "width": {
+                      "name": "宽度",
+                      "type": "number",
+                      "default": 1
+                    }
+                  }
+                }
+              }
+            },
+            "axisLabel": {
+              "name": "轴标签",
+              "type": "group",
+              "children": {
+                "show": {
+                  "name": "是否显示",
+                  "type": "boolean",
+                  "default": true
+                },
+                "color": {
+                  "name": "颜色",
+                  "type": "string",
+                  "default": "rgba(58,58,58,0.5)"
+                },
+                "fontSize": {
+                  "name": "字体大小",
+                  "type": "number",
+                  "default": 12
+                }
+              }
+            }
+          }
+        },
+        "default": [
+          {
+            "type": "value",
+            "name": "",
+            "nameTextStyle": {
+              "color": "rgba(58, 58, 58, 0.50)",
+              "fontSize": 12
+            },
+            "alignTicks": true,
+            "splitLine": {
+              "lineStyle": {
+                "type": "dashed",
+                "color": "#ccc",
+                "width": 1
+              }
+            },
+            "axisLine": {
+              "show": false,
+              "lineStyle": {
+                "color": "#333",
+                "width": 1
+              }
+            },
+            "axisLabel": {
+              "show": true,
+              "color": "rgba(58, 58, 58, 0.50)",
+              "fontSize": 12
+            },
+            "_active": false
+          },
+          {
+            "type": "value",
+            "name": "",
+            "nameTextStyle": {
+              "color": "rgba(58, 58, 58, 0.50)",
+              "fontSize": 12
+            },
+            "alignTicks": true,
+            "splitLine": {
+              "lineStyle": {
+                "type": "dashed",
+                "color": "#ccc",
+                "width": 1
+              }
+            },
+            "axisLine": {
+              "show": false,
+              "lineStyle": {
+                "color": "#333",
+                "width": 1
+              }
+            },
+            "axisLabel": {
+              "show": true,
+              "color": "rgba(58, 58, 58, 0.50)",
+              "fontSize": 12
+            },
+            "_active": true
+          }
+        ]
+      },
+      "series": {
+        "name": "系列",
+        "type": "array",
+        "child": {
+          "name": "系列<%=i+1%>",
+          "type": "object",
+          "children": {
+            "type": {
+              "name": "图表类型",
+              "type": "string",
+              "default": "bar"
+            },
+            "name": {
+              "name": "系列名称",
+              "type": "string",
+              "default": "系列<%=i+1%>"
+            },
+            "yAxisIndex": {
+              "name": "y轴index",
+              "type": "number",
+              "default": 0
+            },
+            "stack": {
+              "name": "堆叠名称",
+              "type": "string",
+              "default": "系列<%=i+1%>"
+            }
+          }
+        },
+        "default": [
+          {
+            "type": "bar",
+            "name": "系列1",
+            "yAxisIndex": 0,
+            "stack": "系列1",
+            "_active": false
+          },
+          {
+            "type": "line",
+            "name": "系列2",
+            "yAxisIndex": 1,
+            "stack": "系列2",
+            "_active": true
+          }
+        ]
+      },
+      "barOption": {
+        "name": "柱图配置",
+        "type": "group",
+        "children": {
+          "barMaxWidth": {
+            "name": "柱最大宽度",
+            "type": "number"
+          },
+          "barMinWidth": {
+            "name": "柱最小宽度",
+            "type": "number"
+          },
+          "borderRadius": {
+            "name": "圆角",
+            "type": "string"
+          }
+        },
+        "default": {
+          "barMaxWidth": 20,
+          "barMinWidth": 10,
+          "borderRadius": "8,8,0,0"
+        }
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "左",
+            "type": "string"
+          },
+          "right": {
+            "name": "右",
+            "type": "string"
+          },
+          "top": {
+            "name": "顶",
+            "type": "string"
+          },
+          "bottom": {
+            "name": "底",
+            "type": "string"
+          },
+          "containLabel": {
+            "name": "包含刻度",
+            "type": "boolean"
+          }
+        },
+        "default": {
+          "left": "10%",
+          "right": "10%",
+          "top": "60",
+          "bottom": "60",
+          "containLabel": false
+        }
+      },
+      "dataZoom": {
+        "name": "缩放组件",
+        "type": "group",
+        "children": {
+          "show": {
+            "name": "是否显示",
+            "type": "boolean"
+          },
+          "height": {
+            "name": "组件高度",
+            "type": "number"
+          },
+          "showDataShadow": {
+            "name": "显示数据趋势",
+            "type": "boolean"
+          },
+          "borderRadius": {
+            "name": "边框圆角大小",
+            "type": "number"
+          },
+          "backgroundColor": {
+            "name": "背景颜色",
+            "type": "string"
+          },
+          "borderColor": {
+            "name": "背景颜色",
+            "type": "string"
+          },
+          "handleIcon": {
+            "name": "拉手图标",
+            "type": "string"
+          },
+          "moveHandleSize": {
+            "name": "移动拉手尺寸",
+            "type": "number"
+          },
+          "fillerColor": {
+            "name": "选择内部填充颜色",
+            "type": "string"
+          },
+          "minValueSpan": {
+            "name": "窗口大小的最小值",
+            "type": "number"
+          },
+          "maxValueSpan": {
+            "name": "窗口大小的最大值",
+            "type": "number"
+          },
+          "zoomLock": {
+            "name": "是否锁定选择区域",
+            "type": "boolean"
+          },
+          "bottom": {
+            "name": "距底部距离",
+            "type": "string"
+          }
+        },
+        "default": {
+          "show": false,
+          "height": 10,
+          "showDataShadow": false,
+          "borderRadius": 6,
+          "backgroundColor": "#DDDDDD",
+          "borderColor": "#DDDDDD",
+          "handleIcon": "path://M4 24a20 20 0 1 0 40 0a20 20 0 1 0 -40 0z",
+          "moveHandleSize": 0,
+          "fillerColor": "rgba(0, 128, 255, 1)",
+          "minValueSpan": 5,
+          "maxValueSpan": 10,
+          "zoomLock": true,
+          "bottom": "0%"
+        }
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "tjn": 2024,
+          "syfx": "教学+科研",
+          "zs": 90,
+          "jz": 646.6
+        },
+        {
+          "tjn": 2023,
+          "syfx": "教学+科研",
+          "zs": 11428,
+          "jz": 39106.75
+        },
+        {
+          "tjn": 2022,
+          "syfx": "教学+科研",
+          "zs": 9504,
+          "jz": 19045.42
+        },
+        {
+          "tjn": 2021,
+          "syfx": "教学+科研",
+          "zs": 11737,
+          "jz": 23387.97
+        },
+        {
+          "tjn": 2020,
+          "syfx": "教学+科研",
+          "zs": 12599,
+          "jz": 35639.8
+        },
+        {
+          "tjn": 2019,
+          "syfx": "教学+科研",
+          "zs": 12848,
+          "jz": 35318.61
+        },
+        {
+          "tjn": 2018,
+          "syfx": "教学+科研",
+          "zs": 10953,
+          "jz": 25770.28
+        },
+        {
+          "tjn": 2017,
+          "syfx": "教学+科研",
+          "zs": 10716,
+          "jz": 23300.59
+        },
+        {
+          "tjn": 2016,
+          "syfx": "教学+科研",
+          "zs": 8612,
+          "jz": 18070.8
+        },
+        {
+          "tjn": 2015,
+          "syfx": "教学+科研",
+          "zs": 5874,
+          "jz": 11092.54
+        },
+        {
+          "tjn": 2014,
+          "syfx": "教学+科研",
+          "zs": 4474,
+          "jz": 11901.47
+        },
+        {
+          "tjn": 2013,
+          "syfx": "教学+科研",
+          "zs": 4473,
+          "jz": 18216.71
+        },
+        {
+          "tjn": 2012,
+          "syfx": "教学+科研",
+          "zs": 2798,
+          "jz": 9427.52
+        },
+        {
+          "tjn": 2011,
+          "syfx": "教学+科研",
+          "zs": 2173,
+          "jz": 5899.4
+        },
+        {
+          "tjn": 2010,
+          "syfx": "教学+科研",
+          "zs": 1898,
+          "jz": 10736.89
+        },
+        {
+          "tjn": 2009,
+          "syfx": "教学+科研",
+          "zs": 1861,
+          "jz": 13386.7
+        },
+        {
+          "tjn": 2008,
+          "syfx": "教学+科研",
+          "zs": 1951,
+          "jz": 8673.42
+        },
+        {
+          "tjn": 2007,
+          "syfx": "教学+科研",
+          "zs": 992,
+          "jz": 2732.78
+        },
+        {
+          "tjn": 2006,
+          "syfx": "教学+科研",
+          "zs": 2372,
+          "jz": 3288.97
+        },
+        {
+          "tjn": 2005,
+          "syfx": "教学+科研",
+          "zs": 640,
+          "jz": 2365.01
+        },
+        {
+          "tjn": 2004,
+          "syfx": "教学+科研",
+          "zs": 248,
+          "jz": 2924.88
+        },
+        {
+          "tjn": 2003,
+          "syfx": "教学+科研",
+          "zs": 222,
+          "jz": 2204.75
+        },
+        {
+          "tjn": 2002,
+          "syfx": "教学+科研",
+          "zs": 237,
+          "jz": 896.21
+        },
+        {
+          "tjn": 2001,
+          "syfx": "教学+科研",
+          "zs": 64,
+          "jz": 355.71
+        },
+        {
+          "tjn": 2000,
+          "syfx": "教学+科研",
+          "zs": 43,
+          "jz": 183.61
+        },
+        {
+          "tjn": 1999,
+          "syfx": "教学+科研",
+          "zs": 21,
+          "jz": 475.49
+        },
+        {
+          "tjn": 1998,
+          "syfx": "教学+科研",
+          "zs": 38,
+          "jz": 17.63
+        },
+        {
+          "tjn": 1997,
+          "syfx": "教学+科研",
+          "zs": 34,
+          "jz": 56.84
+        },
+        {
+          "tjn": 1996,
+          "syfx": "教学+科研",
+          "zs": 43,
+          "jz": 212.26
+        },
+        {
+          "tjn": 1994,
+          "syfx": "教学+科研",
+          "zs": 43,
+          "jz": 103.84
+        },
+        {
+          "tjn": 1993,
+          "syfx": "教学+科研",
+          "zs": 5,
+          "jz": 0.61
+        },
+        {
+          "tjn": 1992,
+          "syfx": "教学+科研",
+          "zs": 1,
+          "jz": 0.13
+        },
+        {
+          "tjn": 1991,
+          "syfx": "教学+科研",
+          "zs": 8,
+          "jz": 2.84
+        },
+        {
+          "tjn": 1990,
+          "syfx": "教学+科研",
+          "zs": 5,
+          "jz": 0.58
+        },
+        {
+          "tjn": 1989,
+          "syfx": "教学+科研",
+          "zs": 5,
+          "jz": 1.19
+        },
+        {
+          "tjn": 1988,
+          "syfx": "教学+科研",
+          "zs": 2,
+          "jz": 0.27
+        },
+        {
+          "tjn": 1987,
+          "syfx": "教学+科研",
+          "zs": 11,
+          "jz": 2.24
+        },
+        {
+          "tjn": 1986,
+          "syfx": "教学+科研",
+          "zs": 37,
+          "jz": 62.25
+        },
+        {
+          "tjn": 1985,
+          "syfx": "教学+科研",
+          "zs": 25,
+          "jz": 364.06
+        },
+        {
+          "tjn": 1984,
+          "syfx": "教学+科研",
+          "zs": 21,
+          "jz": 18.4
+        },
+        {
+          "tjn": 1983,
+          "syfx": "教学+科研",
+          "zs": 20,
+          "jz": 11.89
+        },
+        {
+          "tjn": 1982,
+          "syfx": "教学+科研",
+          "zs": 24,
+          "jz": 2.45
+        },
+        {
+          "tjn": 1981,
+          "syfx": "教学+科研",
+          "zs": 12,
+          "jz": 1.19
+        },
+        {
+          "tjn": 1980,
+          "syfx": "教学+科研",
+          "zs": 26,
+          "jz": 5.69
+        },
+        {
+          "tjn": 1979,
+          "syfx": "教学+科研",
+          "zs": 43,
+          "jz": 3.78
+        },
+        {
+          "tjn": 1978,
+          "syfx": "教学+科研",
+          "zs": 23,
+          "jz": 1.58
+        },
+        {
+          "tjn": 1977,
+          "syfx": "教学+科研",
+          "zs": 2,
+          "jz": 0.14
+        },
+        {
+          "tjn": 1976,
+          "syfx": "教学+科研",
+          "zs": 1,
+          "jz": 0.1
+        },
+        {
+          "tjn": 1975,
+          "syfx": "教学+科研",
+          "zs": 1,
+          "jz": 0.07
+        },
+        {
+          "tjn": 1974,
+          "syfx": "教学+科研",
+          "zs": 1,
+          "jz": 0.26
+        },
+        {
+          "tjn": 1972,
+          "syfx": "教学+科研",
+          "zs": 19,
+          "jz": 1.5
+        }
+      ]
+    }
+  }
+}
