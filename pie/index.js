@@ -42,7 +42,6 @@ module.exports = Event.extend(
       clearInterval(this.interval);
       this.chart = Echarts.init(this.container[0]);
       data = this.data(data);
-      console.log("data==", data);
       var cfg = this.mergeConfig(config);
       //更新图表
       const options = {
@@ -128,8 +127,16 @@ module.exports = Event.extend(
             center: [cfg.center.x, cfg.center.y], // 需配置
             radius: [cfg.center.inner, cfg.center.outer], // 需配置
             label: {
-              show: cfg.label.show,
+              show: cfg.label.labelShow,
               position: cfg.label.position,
+              normal: {
+                show: cfg.label.normalShow,
+                position: cfg.label.normalPosition,
+                color: cfg.label.normalColor,
+                formatter: cfg.label.normalFormatter.replace(/\\n/g, "\n"),
+                fontSize: 14,
+                fontWeight: 600,
+              },
             },
             data: data.map((d) => {
               return {
@@ -146,7 +153,7 @@ module.exports = Event.extend(
       }
       console.log(options);
 
-      this.chart.clear()
+      this.chart.clear();
       this.chart.setOption(options);
 
       var currentIdx = -1;

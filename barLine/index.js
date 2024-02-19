@@ -31,6 +31,11 @@ module.exports = Event.extend(
       this.chart = Echarts.init(this.container[0]);
       //4.如果有需要, 更新样式
       this.updateStyle();
+      this.chart.on("click", "xAxis", (params) => {
+        this.emit("clickXAxis", {
+          value: params.value,
+        });
+      });
     },
     /**
      * 绘制
@@ -155,6 +160,7 @@ module.exports = Event.extend(
             color: cfg.xAxis.nameColor,
             fontSize: cfg.xAxis.nameSize,
           },
+          triggerEvent: true,
           axisLine: {
             show: cfg.xAxis.lineShow,
             lineStyle: {

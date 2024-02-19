@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -224,6 +224,21 @@
             "name": "名称字体大小",
             "type": "number",
             "default": 12
+          },
+          "labelWidth": {
+            "name": "名称宽度",
+            "type": "number",
+            "default": "60"
+          },
+          "labelTextOverflow": {
+            "name": "名称溢出设置",
+            "type": "string",
+            "default": "break"
+          },
+          "labelEllipsis": {
+            "name": "名称溢出显示文本",
+            "type": "string",
+            "default": "..."
           }
         }
       },
@@ -290,6 +305,16 @@
             "name": "名称字体大小",
             "type": "number",
             "default": 12
+          }
+        }
+      }
+    },
+    "events": {
+      "clickSeries": {
+        "description": "点击Series",
+        "fields": {
+          "year": {
+            "description": "所在年份"
           }
         }
       }

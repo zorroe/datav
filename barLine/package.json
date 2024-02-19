@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar-line",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.3.1",
@@ -506,6 +506,16 @@
           "maxValueSpan": 10,
           "zoomLock": true,
           "bottom": "0%"
+        }
+      }
+    },
+    "events": {
+      "clickXAxis": {
+        "description": "点击X轴文字事件",
+        "fields": {
+          "value": {
+            "description": "点击值"
+          }
         }
       }
     },

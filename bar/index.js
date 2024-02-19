@@ -31,6 +31,12 @@ module.exports = Event.extend(
       this.chart = Echarts.init(this.container[0]);
       //4.如果有需要, 更新样式
       this.updateStyle();
+
+      this.chart.on("click", "series", (params) => {
+        this.emit("clickSeries", {
+          year: params.name,
+        });
+      });
     },
     /**
      * 绘制
@@ -202,6 +208,11 @@ module.exports = Event.extend(
               color: cfg.xAxis.lineColor,
               fontSize: cfg.xAxis.nameSize,
             },
+            axisLabel: {
+              width: cfg.xAxis.labelWidth,
+              overflow: cfg.xAxis.labelTextOverflow,
+              ellipsis: cfg.xAxis.labelEllipsis,
+            },
           },
         ],
         yAxis: [
@@ -237,7 +248,7 @@ module.exports = Event.extend(
         series,
       };
       console.log(options);
-      this.chart.clear()
+      this.chart.clear();
       this.chart.setOption(options);
       //如果有需要的话,更新样式
       this.updateStyle();
