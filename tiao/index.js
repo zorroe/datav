@@ -210,7 +210,7 @@ module.exports = Event.extend(
       const dataZoom = [
         {
           type: "slider",
-          show: true,
+          show: cfg.zoomShow,
           orient: "vertical",
           top: 10,
           bottom: 20,
@@ -221,12 +221,14 @@ module.exports = Event.extend(
           borderColor: "#DDDDDD",
           fillerColor: "rgba(0, 128, 255, 1)",
           borderRadius: 6,
-          maxValueSpan: cfg.zoomMinValueSpan,
-          minValueSpan: cfg.zoomMaxValueSpan,
+          maxValueSpan: cfg.valueSpan - 1,
+          minValueSpan: cfg.valueSpan - 1,
           moveHandleSize: 0,
           showDataShadow: false,
           backgroundColor: "#DDDDDD",
           brushSelect: false,
+          startValue: 0, // 数据窗口范围的起始数值index
+          endValue: cfg.valueSpan, // 数据窗口范围的结束数值index
         },
       ];
 
@@ -245,6 +247,21 @@ module.exports = Event.extend(
       this.chart.setOption(options);
       //如果有需要的话,更新样式
       this.updateStyle();
+      if (cfg.autoPlay) {
+        setInterval(() => {
+          if (
+            options.dataZoom[0].endValue ==
+            options.dataset.source.length - 1
+          ) {
+            options.dataZoom[0].endValue = cfg.valueSpan;
+            options.dataZoom[0].startValue = 0;
+          } else {
+            options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
+            options.dataZoom[0].startValue = options.dataZoom[0].startValue + 1;
+          }
+          this.chart.setOption(options);
+        }, cfg.autoPlayInterval);
+      }
     },
     /**
      *

@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/tiao",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -38,7 +38,7 @@
         "default": "#F29318-#FFD300"
       },
       "otherColor": {
-        "name": "TOP1颜色",
+        "name": "其他颜色",
         "type": "string",
         "default": "#297AFC-#60B0FF"
       },
@@ -118,15 +118,25 @@
         "type": "number",
         "default": 60
       },
-      "zoomMinValueSpan":{
-        "name":"最小显示条数",
-        "type":"number",
-        "default":4
+      "zoomShow": {
+        "name": "是否显示滚动条",
+        "type": "boolean",
+        "default": true
       },
-      "zoomMaxValueSpan":{
-        "name":"最大显示条数",
-        "type":"number",
-        "default":4
+      "valueSpan": {
+        "name": "显示条数",
+        "type": "number",
+        "default": 4
+      },
+      "autoPlay": {
+        "name": "是否自动轮播",
+        "type": "boolean",
+        "default": false
+      },
+      "autoPlayInterval": {
+        "name": "轮播周期",
+        "type": "number",
+        "default": 3000
       }
     },
     "api_data": {
