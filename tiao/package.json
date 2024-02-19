@@ -32,10 +32,155 @@
       }
     },
     "config": {
+      "top1Color": {
+        "name": "TOP1颜色",
+        "type": "string",
+        "default": "#F29318-#FFD300"
+      },
+      "otherColor": {
+        "name": "TOP1颜色",
+        "type": "string",
+        "default": "#297AFC-#60B0FF"
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "距左",
+            "type": "number",
+            "default": 0
+          },
+          "right": {
+            "name": "距右",
+            "type": "number",
+            "default": 30
+          },
+          "top": {
+            "name": "距顶",
+            "type": "number",
+            "default": 0
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "number",
+            "default": 0
+          }
+        }
+      },
+      "yAxisIndexName": {
+        "name": "用哪个字段作为name",
+        "type": "string",
+        "default": "name"
+      },
+      "xAxisIndexName": {
+        "name": "用哪些字段作为数值",
+        "type": "string",
+        "default": "num"
+      },
+      "sortName": {
+        "name": "排序字段名",
+        "type": "string",
+        "default": "sort"
+      },
+      "barWidth": {
+        "name": "条的宽度",
+        "type": "number",
+        "default": 14
+      },
+      "labelLayoutWidth": {
+        "name": "labelLayout宽度",
+        "type": "number",
+        "default": 400
+      },
+      "labelYOffset": {
+        "name": "labelY轴偏移",
+        "type": "number",
+        "default": -10
+      },
+      "labelSortPrefix": {
+        "name": "label序号前缀",
+        "type": "string",
+        "default": "No."
+      },
+      "labelSortWidth": {
+        "name": "label排序字段宽度",
+        "type": "number",
+        "default": 40
+      },
+      "labelNameWidth": {
+        "name": "label名称字段宽度",
+        "type": "number",
+        "default": 270
+      },
+      "labelNumWidth": {
+        "name": "label数量字段宽度",
+        "type": "number",
+        "default": 60
+      },
+      "zoomMinValueSpan":{
+        "name":"最小显示条数",
+        "type":"number",
+        "default":4
+      },
+      "zoomMaxValueSpan":{
+        "name":"最大显示条数",
+        "type":"number",
+        "default":4
+      }
     },
     "api_data": {
       "source": [
-        
+        {
+          "sort": 1,
+          "name": "精密光谱科学与技术国家重点实验室",
+          "num": 182.9
+        },
+        {
+          "sort": 2,
+          "name": "生命科学学院办公室",
+          "num": 79.85
+        },
+        {
+          "sort": 3,
+          "name": "电子科学系",
+          "num": 67.34
+        },
+        {
+          "sort": 4,
+          "name": "化学与分子工程学院",
+          "num": 57.79
+        },
+        {
+          "sort": 5,
+          "name": "生命医学系",
+          "num": 48.07
+        },
+        {
+          "sort": 6,
+          "name": "生命科学学院",
+          "num": 47.64
+        },
+        {
+          "sort": 7,
+          "name": "上海市绿色化学与化工过程绿色化重点实验室",
+          "num": 42.08
+        },
+        {
+          "sort": 8,
+          "name": "物理学系",
+          "num": 32.97
+        },
+        {
+          "sort": 9,
+          "name": "化学系",
+          "num": 31.53
+        },
+        {
+          "sort": 10,
+          "name": "生态与环境科学学院",
+          "num": 28.39
+        }
       ]
     }
   }

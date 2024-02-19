@@ -30,57 +30,57 @@ option = {
     width: 480
   },
   dataset: {
-    dimensions: ['bmmc', 'zj'],
+    dimensions: ['name', 'num'],
     source: [
       {
-        rk: 1,
-        bmmc: '精密光谱科学与技术国家重点实验室',
-        zj: 182.9
+        sort: 1,
+        name: '精密光谱科学与技术国家重点实验室',
+        num: 182.9
       },
       {
-        rk: 2,
-        bmmc: '生命科学学院办公室',
-        zj: 79.85
+        sort: 2,
+        name: '生命科学学院办公室',
+        num: 79.85
       },
       {
-        rk: 3,
-        bmmc: '电子科学系',
-        zj: 67.34
+        sort: 3,
+        name: '电子科学系',
+        num: 67.34
       },
       {
-        rk: 4,
-        bmmc: '化学与分子工程学院',
-        zj: 57.79
+        sort: 4,
+        name: '化学与分子工程学院',
+        num: 57.79
       },
       {
-        rk: 5,
-        bmmc: '生命医学系',
-        zj: 48.07
+        sort: 5,
+        name: '生命医学系',
+        num: 48.07
       },
       {
-        rk: 6,
-        bmmc: '生命科学学院',
-        zj: 47.64
+        sort: 6,
+        name: '生命科学学院',
+        num: 47.64
       },
       {
-        rk: 7,
-        bmmc: '上海市绿色化学与化工过程绿色化重点实验室',
-        zj: 42.08
+        sort: 7,
+        name: '上海市绿色化学与化工过程绿色化重点实验室',
+        num: 42.08
       },
       {
-        rk: 8,
-        bmmc: '物理学系',
-        zj: 32.97
+        sort: 8,
+        name: '物理学系',
+        num: 32.97
       },
       {
-        rk: 9,
-        bmmc: '化学系',
-        zj: 31.53
+        sort: 9,
+        name: '化学系',
+        num: 31.53
       },
       {
-        rk: 10,
-        bmmc: '生态与环境科学学院',
-        zj: 28.39
+        sort: 10,
+        name: '生态与环境科学学院',
+        num: 28.39
       }
     ]
   },
@@ -92,7 +92,7 @@ option = {
       show: false
     },
     max: () => {
-      return option.dataset.source.sort((a, b) => b.zj - a.zj)[0].zj;
+      return option.dataset.source.sort((a, b) => b.num - a.num)[0].num;
     }
   },
   yAxis: {
@@ -115,7 +115,7 @@ option = {
       itemStyle: {
         borderRadius: [0, 8, 8, 0],
         color: (params) => {
-          if (params.data.rk === 1) {
+          if (params.data.sort === 1) {
             return gradientFun(top1GradualColor);
           } else {
             return gradientFun(notop1GradualColor);
@@ -137,10 +137,10 @@ option = {
         offset: [0, -28],
         formatter: (params) => {
           const data = params.data;
-          if (data.rk === 1) {
-            return `{top1|TOP${data.rk}}{yellowName|${data.bmmc}}{yellowNum|${data.zj}}`;
+          if (data.sort === 1) {
+            return `{top1|TOP${data.sort}}{yellowName|${data.name}}{yellowNum|${data.num}}`;
           } else {
-            return `{notop1|TOP${data.rk}}{blueName|${data.bmmc}}{blueNum|${data.zj}}`;
+            return `{notop1|TOP${data.sort}}{blueName|${data.name}}{blueNum|${data.num}}`;
           }
         },
         rich: {

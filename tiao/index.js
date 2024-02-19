@@ -32,6 +32,26 @@ module.exports = Event.extend(
       //4.如果有需要, 更新样式
       this.updateStyle();
     },
+
+    gradientFun: function (colorList) {
+      return {
+        type: "linear",
+        x: 0,
+        y: 1,
+        x2: 1,
+        y2: 1,
+        colorStops: [
+          {
+            offset: 0,
+            color: colorList[0], // 0% 处的颜色
+          },
+          {
+            offset: 1,
+            color: colorList[1], // 100% 处的颜色
+          },
+        ],
+      };
+    },
     /**
      * 绘制
      * @param data
@@ -40,9 +60,186 @@ module.exports = Event.extend(
      */
     render: function (data, config) {
       data = this.data(data);
+      console.log(data);
       var cfg = this.mergeConfig(config);
 
-      const options = {};
+      const top1Color = cfg.top1Color.split("-");
+      const otherColor = cfg.otherColor.split("-");
+
+      const colorMap = [top1Color, otherColor].map((c) => {
+        return this.gradientFun(c);
+      });
+
+      // console.log("colorMap:", colorMap);
+
+      const legend = {
+        show: false,
+      };
+
+      const tooltip = {
+        show: false,
+      };
+
+      const grid = {
+        left: cfg.grid.left,
+        right: cfg.grid.right,
+        top: cfg.grid.top,
+        bottom: cfg.grid.bottom,
+      };
+
+      const dataset = {
+        dimensions: [cfg.yAxisIndexName, cfg.xAxisIndexName],
+        source: data,
+      };
+
+      const xAxis = {
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      };
+
+      const yAxis = {
+        type: "category",
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        inverse: true,
+      };
+
+      const series = [
+        {
+          type: "bar",
+          barWidth: cfg.barWidth,
+          itemStyle: {
+            borderRadius: [0, 8, 8, 0],
+            color: (params) => {
+              if (params.data[cfg.sortName] == 1) {
+                return colorMap[0];
+              } else {
+                return colorMap[1];
+              }
+            },
+          },
+          showBackground: true,
+          backgroundStyle: {
+            color: "rgba(56, 156, 255, 0.10)",
+          },
+          labelLayout: {
+            x: 0,
+            width: cfg.labelLayoutWidth,
+          },
+          label: {
+            show: true,
+            position: "top",
+            offset: [0, cfg.labelYOffset],
+            formatter: (params) => {
+              const data = params.data;
+              console.log(data, cfg.sortName);
+              if (data[cfg.sortName] === 1) {
+                console.log(
+                  `{top1Sort|${cfg.labelSortPrefix}${
+                    data[cfg.sortName]
+                  }}{top1Name|${data[cfg.yAxisIndexName]}}{top1Num|${
+                    data[cfg.xAxisIndexName]
+                  }}`
+                );
+                return `{top1Sort|${cfg.labelSortPrefix}${
+                  data[cfg.sortName]
+                }}{top1Name|${data[cfg.yAxisIndexName]}}{top1Num|${
+                  data[cfg.xAxisIndexName]
+                }}`;
+              } else {
+                return `{notop1Sort|${cfg.labelSortPrefix}${
+                  data[cfg.sortName]
+                }} {notop1Name|${data[cfg.yAxisIndexName]}} {notop1Num|${
+                  data[cfg.xAxisIndexName]
+                }}`;
+              }
+            },
+            rich: {
+              top1Sort: {
+                color: top1Color[0],
+                width: cfg.labelSortWidth,
+                fontSize: 14,
+                fontWeight: 500,
+              },
+              top1Name: {
+                color: top1Color[0],
+                width: cfg.labelNameWidth,
+                fontSize: 14,
+                fontWeight: 500,
+              },
+              top1Num: {
+                color: top1Color[0],
+                width: cfg.labelNumWidth,
+                fontSize: 14,
+                fontWeight: 500,
+              },
+              notop1Sort: {
+                color: otherColor[0],
+                width: cfg.labelSortWidth,
+                fontSize: 14,
+                fontWeight: 500,
+              },
+              notop1Name: {
+                color: otherColor[0],
+                width: cfg.labelNameWidth,
+                fontSize: 14,
+                fontWeight: 500,
+              },
+              notop1Num: {
+                color: otherColor[0],
+                width: cfg.labelNumWidth,
+                fontSize: 14,
+                fontWeight: 500,
+              },
+            },
+          },
+        },
+      ];
+
+      const dataZoom = [
+        {
+          type: "slider",
+          show: true,
+          orient: "vertical",
+          top: 10,
+          bottom: 20,
+          width: 10,
+          zoomLock: true,
+          yAxisIndex: 0,
+          handleIcon: "path://M4 24a20 20 0 1 0 40 0a20 20 0 1 0 -40 0z",
+          borderColor: "#DDDDDD",
+          fillerColor: "rgba(0, 128, 255, 1)",
+          borderRadius: 6,
+          maxValueSpan: cfg.zoomMinValueSpan,
+          minValueSpan: cfg.zoomMaxValueSpan,
+          moveHandleSize: 0,
+          showDataShadow: false,
+          backgroundColor: "#DDDDDD",
+          brushSelect: false,
+        },
+      ];
+
+      const options = {
+        legend,
+        tooltip,
+        grid,
+        dataset,
+        xAxis,
+        yAxis,
+        series,
+        dataZoom,
+      };
       console.log(options);
       this.chart.clear();
       this.chart.setOption(options);

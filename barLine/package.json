@@ -490,6 +490,11 @@
           "bottom": {
             "name": "距底部距离",
             "type": "string"
+          },
+          "brushSelect": {
+            "name": "brushSelect",
+            "type": "boolean",
+            "default": false
           }
         },
         "default": {
