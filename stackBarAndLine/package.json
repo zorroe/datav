@@ -67,6 +67,11 @@
         "name": "y轴字段名",
         "type": "string",
         "default": "y"
+      },
+      "lineIndexName": {
+        "name": "折线字段名",
+        "type": "string",
+        "default": "line"
       }
     },
     "events": {},

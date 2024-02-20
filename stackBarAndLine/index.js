@@ -43,9 +43,34 @@ module.exports = Event.extend(
       console.log("data==", data);
       var cfg = this.mergeConfig(config);
 
-      
+      const uniqueX = [
+        ...new Set(data.map((item) => item[cfg.xAxisIndexName])),
+      ];
+      const uniqueY = [
+        ...new Set(data.map((item) => item[cfg.yAxisIndexName])),
+      ];
 
-      const options = {}
+      // 步骤2: 为每个jzqj创建一个“模板”对象，每个yqjg对应的sl值初始化为0
+      const template = uniqueY.reduce((acc, y) => {
+        acc[y] = uniqueX.reduce((yAcc, x) => {
+          yAcc[x] = 0; // 初始化每个yqjg的sl值为0
+          return yAcc;
+        }, {});
+        return acc;
+      }, {});
+
+      data.forEach((item) => {
+        template[item[cfg.yAxisIndexName]][item[cfg.xAxisIndexName]] = item.sl;
+      });
+
+      const barsData = Object.entries(template).map(([y, xObj]) => ({
+        y,
+        values: Object.values(xObj),
+      }));
+
+      console.log(barsData);
+
+      const options = {};
       console.log(options);
       this.chart.clear();
       this.chart.setOption(options);
