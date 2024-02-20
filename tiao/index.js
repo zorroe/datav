@@ -2,7 +2,6 @@ var Event = require("bcore/event");
 var $ = require("jquery");
 var _ = require("lodash");
 var Echarts = require("echarts");
-//var Chart = require('XXX');
 
 /**
  * 马良基础类
@@ -16,6 +15,7 @@ module.exports = Event.extend(
     this.apis = config.apis; //hook一定要有
     this._data = null; //数据
     this.chart = null; //图表
+    this.interval = null;
     this.init(config);
   },
   {
@@ -59,6 +59,7 @@ module.exports = Event.extend(
      * !!注意: 第二个参数支持config, 就不需要updateOptions这个方法了
      */
     render: function (data, config) {
+      clearInterval(this.interval);
       data = this.data(data);
       console.log(data);
       var cfg = this.mergeConfig(config);
@@ -143,25 +144,17 @@ module.exports = Event.extend(
             offset: [0, cfg.labelYOffset],
             formatter: (params) => {
               const data = params.data;
-              console.log(data, cfg.sortName);
               if (data[cfg.sortName] === 1) {
-                console.log(
-                  `{top1Sort|${cfg.labelSortPrefix}${
-                    data[cfg.sortName]
-                  }}{top1Name|${data[cfg.yAxisIndexName]}}{top1Num|${
-                    data[cfg.xAxisIndexName]
-                  }}`
-                );
                 return `{top1Sort|${cfg.labelSortPrefix}${
                   data[cfg.sortName]
                 }}{top1Name|${data[cfg.yAxisIndexName]}}{top1Num|${
-                  data[cfg.xAxisIndexName]
+                  data[cfg.numStrName]
                 }}`;
               } else {
                 return `{notop1Sort|${cfg.labelSortPrefix}${
                   data[cfg.sortName]
                 }} {notop1Name|${data[cfg.yAxisIndexName]}} {notop1Num|${
-                  data[cfg.xAxisIndexName]
+                  data[cfg.numStrName]
                 }}`;
               }
             },
@@ -169,38 +162,42 @@ module.exports = Event.extend(
               top1Sort: {
                 color: top1Color[0],
                 width: cfg.labelSortWidth,
-                fontSize: 14,
+                fontSize: cfg.sortFontSize,
                 fontWeight: 500,
               },
               top1Name: {
                 color: top1Color[0],
                 width: cfg.labelNameWidth,
-                fontSize: 14,
+                fontSize: cfg.nameFontSize,
                 fontWeight: 500,
               },
               top1Num: {
                 color: top1Color[0],
                 width: cfg.labelNumWidth,
-                fontSize: 14,
+                fontSize: cfg.numFontSize,
                 fontWeight: 500,
+                align: "right",
+                padding: [0, cfg.grid.right, 0, 0],
               },
               notop1Sort: {
                 color: otherColor[0],
                 width: cfg.labelSortWidth,
-                fontSize: 14,
+                fontSize: cfg.sortFontSize,
                 fontWeight: 500,
               },
               notop1Name: {
                 color: otherColor[0],
                 width: cfg.labelNameWidth,
-                fontSize: 14,
+                fontSize: cfg.nameFontSize,
                 fontWeight: 500,
               },
               notop1Num: {
                 color: otherColor[0],
                 width: cfg.labelNumWidth,
-                fontSize: 14,
+                fontSize: cfg.numFontSize,
                 fontWeight: 500,
+                align: "right",
+                padding: [0, cfg.grid.right, 0, 0],
               },
             },
           },
@@ -247,20 +244,31 @@ module.exports = Event.extend(
       this.chart.setOption(options);
       //如果有需要的话,更新样式
       this.updateStyle();
+
+      const playCarousel = () => {
+        if (options.dataZoom[0].endValue == options.dataset.source.length - 1) {
+          options.dataZoom[0].endValue = cfg.valueSpan;
+          options.dataZoom[0].startValue = 0;
+        } else {
+          options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
+          options.dataZoom[0].startValue = options.dataZoom[0].startValue + 1;
+        }
+        this.chart.setOption(options);
+      };
+
       if (cfg.autoPlay) {
-        setInterval(() => {
-          if (
-            options.dataZoom[0].endValue ==
-            options.dataset.source.length - 1
-          ) {
-            options.dataZoom[0].endValue = cfg.valueSpan;
-            options.dataZoom[0].startValue = 0;
-          } else {
-            options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
-            options.dataZoom[0].startValue = options.dataZoom[0].startValue + 1;
-          }
-          this.chart.setOption(options);
-        }, cfg.autoPlayInterval);
+        clearInterval(this.interval);
+        this.interval = setInterval(playCarousel, cfg.autoPlayInterval);
+        this.chart.on("mouseover", () => {
+          clearInterval(this.interval);
+        });
+        this.chart.on("mouseout", () => {
+          this.interval = setInterval(playCarousel, cfg.autoPlayInterval);
+        });
+      } else {
+        clearInterval(this.interval);
+        this.chart.off("mouseover");
+        this.chart.off("mouseout");
       }
     },
     /**

@@ -31,9 +31,9 @@ module.exports = Event.extend(
       this.chart = Echarts.init(this.container[0]);
       //4.如果有需要, 更新样式
       this.updateStyle();
-      this.chart.on("click", "xAxis", (params) => {
-        this.emit("clickXAxis", {
-          value: params.value,
+      this.chart.on("click", "series", (params) => {
+        this.emit("clickSeries", {
+          year: params.name,
         });
       });
     },
