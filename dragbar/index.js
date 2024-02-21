@@ -173,6 +173,7 @@ module.exports = Event.extend(
           splitLine: {
             lineStyle: {
               type: "dashed",
+              color: cfg.yAxis.splitLineColor
             },
           },
         },

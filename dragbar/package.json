@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/dragbar",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -248,12 +248,16 @@
             "type": "number"
           },
           "labelColor": {
-            "name": "轴线和标签颜色",
+            "name": "标签颜色",
             "type": "string"
           },
           "labelFontSize": {
             "name": "标签字体大小",
             "type": "number"
+          },
+          "splitLineColor": {
+            "name": "分割线颜色",
+            "type": "string"
           }
         },
         "default": {
@@ -264,7 +268,8 @@
           "labelShow": true,
           "labelMargin": 8,
           "labelColor": "#3A3A3A",
-          "labelFontSize": 12
+          "labelFontSize": 12,
+          "splitLineColor": "#bfbfbf"
         }
       },
       "barWidth": {
