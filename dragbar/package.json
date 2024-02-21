@@ -1,0 +1,495 @@
+{
+  "name": "@ecnu-pierose/dragbar",
+  "version": "0.0.3",
+  "dependencies": {
+    "bcore": "0.0.18",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1",
+    "echarts": "5.3.1"
+  },
+  "datav": {
+    "cn_name": "可拖拽的柱状图",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "800",
+      "height": "500",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "color": {
+        "name": "颜色map",
+        "type": "string",
+        "default": "#60B0FF-#297AFC&#FFD300-#F29318&#0DD491-#07A872&#FF98A9-#FF98A9&#D69FFF-#AE6FDE&#75F3FF-#50D6E3&#FF9191-#FF9191"
+      },
+      "labelName": {
+        "name": "标签字段名",
+        "type": "string",
+        "default": "yqjg"
+      },
+      "catName": {
+        "name": "分类字段名",
+        "type": "string",
+        "default": "xnw"
+      },
+      "valName": {
+        "name": "值字段名",
+        "type": "string",
+        "default": "pjjs"
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "距左",
+            "type": "number"
+          },
+          "right": {
+            "name": "距右",
+            "type": "number"
+          },
+          "top": {
+            "name": "距顶",
+            "type": "number"
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "number"
+          }
+        },
+        "default": {
+          "left": 50,
+          "right": 30,
+          "top": 50,
+          "bottom": 100
+        }
+      },
+      "tooltip": {
+        "name": "tooltip",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "是否显示",
+            "type": "boolean"
+          },
+          "confine": {
+            "name": "是否限制在图表内",
+            "type": "boolean"
+          },
+          "fixed": {
+            "name": "显示精度",
+            "type": "number"
+          },
+          "suffix": {
+            "name": "后缀",
+            "type": "string"
+          }
+        },
+        "default": {
+          "isShow": true,
+          "confine": true,
+          "fixed": 0,
+          "suffix": "次"
+        }
+      },
+      "legend": {
+        "name": "图例配置",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "图例是否显示",
+            "type": "boolean"
+          },
+          "left": {
+            "name": "图例距左距离",
+            "type": "string"
+          },
+          "top": {
+            "name": "图例距顶距离",
+            "type": "string"
+          },
+          "orient": {
+            "name": "图例方向",
+            "type": "string"
+          },
+          "textColor": {
+            "name": "图例文字颜色",
+            "type": "string"
+          },
+          "textSize": {
+            "name": "图例字大小",
+            "type": "number"
+          },
+          "itemWidth": {
+            "name": "图形宽度",
+            "type": "number"
+          },
+          "itemHeight": {
+            "name": "图形高度",
+            "type": "number"
+          },
+          "itemGap": {
+            "name": "图例间隔",
+            "type": "number"
+          }
+        },
+        "default": {
+          "isShow": true,
+          "left": "center",
+          "top": "0",
+          "orient": "horizontal",
+          "textColor": "#3A3A3A",
+          "textSize": 12,
+          "itemWidth": 8,
+          "itemHeight": 8,
+          "itemGap": 20
+        }
+      },
+      "xAxis": {
+        "name": "xAxis",
+        "type": "group",
+        "children": {
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "lineColor": {
+            "name": "轴线颜色",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "标签字体大小",
+            "type": "number"
+          },
+          "labelWidth": {
+            "name": "标签宽度",
+            "type": "number"
+          },
+          "labelRotate": {
+            "name": "标签旋转角度",
+            "type": "number"
+          },
+          "labelMargin": {
+            "name": "标签和轴线间隔",
+            "type": "number"
+          },
+          "labelInterval": {
+            "name": "标签之间间隔",
+            "type": "number"
+          },
+          "labelOverflow": {
+            "name": "标签溢出",
+            "type": "string"
+          },
+          "inverse": {
+            "name": "是否反转",
+            "type": "boolean"
+          },
+          "tickShow": {
+            "name": "刻度是否显示",
+            "type": "boolean"
+          }
+        },
+        "default": {
+          "labelColor": "#3A3A3A",
+          "lineColor": "#ccc",
+          "labelFontSize": 12,
+          "labelWidth": 120,
+          "labelRotate": -28,
+          "labelMargin": 12,
+          "labelInterval": 5,
+          "labelOverflow": "break",
+          "inverse": false,
+          "tickShow": false
+        }
+      },
+      "yAxis": {
+        "name": "yAxis",
+        "type": "group",
+        "children": {
+          "axisName": {
+            "name": "轴线名称",
+            "type": "string"
+          },
+          "nameLocation": {
+            "name": "名称显示位置",
+            "type": "string"
+          },
+          "nameColor": {
+            "name": "名称颜色",
+            "type": "string"
+          },
+          "nameFontSize": {
+            "name": "名称字体大小",
+            "type": "number"
+          },
+          "labelShow": {
+            "name": "是否显示标签",
+            "type": "boolean"
+          },
+          "labelMargin": {
+            "name": "标签和轴线间隔",
+            "type": "number"
+          },
+          "labelColor": {
+            "name": "轴线和标签颜色",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "标签字体大小",
+            "type": "number"
+          }
+        },
+        "default": {
+          "axisName": "单位：次",
+          "nameLocation": "end",
+          "nameColor": "#3A3A3A",
+          "nameFontSize": 12,
+          "labelShow": true,
+          "labelMargin": 8,
+          "labelColor": "#3A3A3A",
+          "labelFontSize": 12
+        }
+      },
+      "barWidth": {
+        "name": "条的宽度",
+        "type": "number",
+        "default": 10
+      },
+      "barRadius": {
+        "name": "条圆角大小",
+        "type": "number",
+        "default": 8
+      },
+      "zoom": {
+        "name": "缩放组件",
+        "type": "group",
+        "children": {
+          "valueSpan": {
+            "name": "显示条数",
+            "type": "number"
+          },
+          "left": {
+            "name": "距左",
+            "type": "number"
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "number"
+          },
+          "right": {
+            "name": "距右",
+            "type": "number"
+          }
+        },
+        "default": {
+          "valueSpan": 10,
+          "left": 10,
+          "bottom": 10,
+          "right": 10
+        }
+      },
+      "autoPlay": {
+        "name": "是否自动轮播",
+        "type": "boolean",
+        "default": false
+      },
+      "autoPlayInterval": {
+        "name": "轮播周期",
+        "type": "number",
+        "default": 3000
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "tjn": 2023,
+          "yqjg": "体育与健康实验中心",
+          "xnw": "院外",
+          "zjs": 5866.97,
+          "yqs": 1,
+          "pjjs": 5866.97,
+          "rk": 1
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "上海市绿色化学与化工过程绿色化重点实验室",
+          "xnw": "院内",
+          "zjs": 39591.09,
+          "yqs": 21,
+          "pjjs": 1885.29,
+          "rk": 2
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "上海市绿色化学与化工过程绿色化重点实验室",
+          "xnw": "院外",
+          "zjs": 127544.4,
+          "yqs": 49,
+          "pjjs": 2602.95,
+          "rk": 2
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "河口海岸科学研究院（海洋科学学院）",
+          "xnw": "校外",
+          "zjs": 4162.46,
+          "yqs": 3,
+          "pjjs": 1387.49,
+          "rk": 3
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "河口海岸科学研究院（海洋科学学院）",
+          "xnw": "院外",
+          "zjs": 2344.4,
+          "yqs": 5,
+          "pjjs": 468.88,
+          "rk": 3
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "河口海岸科学研究院（海洋科学学院）",
+          "xnw": "院内",
+          "zjs": 84811.21,
+          "yqs": 38,
+          "pjjs": 2231.87,
+          "rk": 3
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "化学实验教学中心",
+          "xnw": "院外",
+          "zjs": 7800.33,
+          "yqs": 2,
+          "pjjs": 3900.17,
+          "rk": 4
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "上海分子治疗与新药创制工程技术研究中心",
+          "xnw": "院内",
+          "zjs": 5081.15,
+          "yqs": 4,
+          "pjjs": 1270.29,
+          "rk": 5
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "上海分子治疗与新药创制工程技术研究中心",
+          "xnw": "院外",
+          "zjs": 29931.85,
+          "yqs": 17,
+          "pjjs": 1760.7,
+          "rk": 5
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "材料科学系",
+          "xnw": "院内",
+          "zjs": 32071.28,
+          "yqs": 19,
+          "pjjs": 1687.96,
+          "rk": 6
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "材料科学系",
+          "xnw": "院外",
+          "zjs": 2383.86,
+          "yqs": 2,
+          "pjjs": 1191.93,
+          "rk": 6
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "微纳加工中心",
+          "xnw": "院外",
+          "zjs": 4686.05,
+          "yqs": 2,
+          "pjjs": 2343.02,
+          "rk": 7
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "地理科学学院",
+          "xnw": "院内",
+          "zjs": 59310.65,
+          "yqs": 26,
+          "pjjs": 2281.18,
+          "rk": 8
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "地理科学学院",
+          "xnw": "院外",
+          "zjs": 25,
+          "yqs": 1,
+          "pjjs": 25,
+          "rk": 8
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "生物学系",
+          "xnw": "院内",
+          "zjs": 8697.28,
+          "yqs": 6,
+          "pjjs": 1449.55,
+          "rk": 9
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "生物学系",
+          "xnw": "院外",
+          "zjs": 2328.51,
+          "yqs": 3,
+          "pjjs": 776.17,
+          "rk": 9
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "精密光谱科学与技术国家重点实验室",
+          "xnw": "院内",
+          "zjs": 211087.46,
+          "yqs": 128,
+          "pjjs": 1649.12,
+          "rk": 10
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "精密光谱科学与技术国家重点实验室",
+          "xnw": "院外",
+          "zjs": 6717.98,
+          "yqs": 14,
+          "pjjs": 479.86,
+          "rk": 10
+        },
+        {
+          "tjn": 2023,
+          "yqjg": "精密光谱科学与技术国家重点实验室",
+          "xnw": "校外",
+          "zjs": 196.6,
+          "yqs": 6,
+          "pjjs": 32.77,
+          "rk": 10
+        }
+      ]
+    }
+  }
+}

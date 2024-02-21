@@ -45,29 +45,56 @@ module.exports = Event.extend(
 
       var cfg = this.mergeConfig(config);
 
-      /* 转换data */
-      const transformedData = data.reduce((acc, d) => {
-        // 查找当前加工的name是否已经存在于累加器acc中
-        const existingObj = acc.find(
-          (obj) => obj.labelName === d[cfg.labelName]
-        );
-        if (existingObj) {
-          // 如果存在，直接在该对象上添加新的键值对
-          existingObj[d[cfg.catName]] = d[cfg.valName];
-        } else {
-          // 如果不存在，创建一个新的对象，其中包括name和以cate为键、sl为值的键值对
-          const newObj = {
-            labelName: d[cfg.labelName],
-            [d[cfg.catName]]: d[cfg.valName],
-          };
-          acc.push(newObj);
-        }
+      const uniqueX = [...new Set(data.map((item) => item[cfg.labelName]))];
+      const uniqueY = [...new Set(data.map((item) => item[cfg.catName]))];
+
+      const template = uniqueY.reduce((acc, cate) => {
+        acc[cate] = uniqueX.reduce((labelAcc, label) => {
+          labelAcc[label] = 0; // 初始化每个yqjg的sl值为0
+          return labelAcc;
+        }, {});
         return acc;
-      }, []);
+      }, {});
 
-      console.log(transformedData);
+      data.forEach((item) => {
+        template[item[cfg.catName]][item[cfg.labelName]] =
+          item[cfg.valName] ?? 0;
+      });
 
-      const uniqueX = [...new Set(data.map((item) => item[cfg.catName]))];
+      // 结果转换为所需格式
+      const barsData = Object.entries(template).map(([catName, yqjgObj]) => ({
+        catName,
+        values: Object.values(yqjgObj),
+      }));
+
+      console.log(barsData);
+      console.log(uniqueX, uniqueY);
+
+      const colorMap = cfg.color.split("&");
+      const linearColor = colorMap.map((c) => {
+        return c.split("-");
+      });
+
+      const color = linearColor.map((c) => {
+        return {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: c[0],
+            },
+            {
+              offset: 1,
+              color: c[1],
+            },
+          ],
+          global: false,
+        };
+      });
 
       const legend = {
         show: cfg.legend.isShow,
@@ -79,13 +106,13 @@ module.exports = Event.extend(
           color: cfg.legend.textColor,
           fontSize: cfg.legend.textSize,
         },
+        itemGap: cfg.legend.itemGap,
       };
 
       const tooltip = {
         show: cfg.tooltip.isShow,
         trigger: "axis",
         confine: cfg.tooltip.confine,
-
         valueFormatter: (value) => {
           return (
             Number(value ? value : 0).toFixed(cfg.tooltip.fixed) +
@@ -101,79 +128,142 @@ module.exports = Event.extend(
         bottom: cfg.grid.bottom,
       };
 
-      const dataset = {
-        dimensions: ["labelName", ...uniqueX],
-        source: transformedData,
-      };
-
       const xAxis = {
-        splitLine: {
-          show: false,
-        },
-        
-      };
-
-      const yAxis = {
         type: "category",
+        data: uniqueX,
         axisPointer: {
-          show: true,
           type: "shadow",
         },
         axisLabel: {
-          show: true,
-          color: "#000",
-          interval: 0
+          width: cfg.xAxis.labelWidth,
+          rotate: cfg.xAxis.labelRotate,
+          margin: cfg.xAxis.labelMargin,
+          intercal: cfg.xAxis.labelInterval,
+          overflow: cfg.xAxis.labelOverflow,
+          color: cfg.xAxis.labelColor,
+          fontSize: cfg.xAxis.labelFontSize,
         },
-        inverse: cfg.yAxis.inverse,
+        axisLine: {
+          lineStyle: {
+            color: cfg.xAxis.lineColor,
+          },
+        },
+        axisTick: {
+          show: cfg.xAxis.tickShow,
+          alignWithLabel: true,
+        },
+        inverse: cfg.xAxis.inverse,
       };
 
-      const series = uniqueX.map((x, idx) => {
-        return {
-          type: "bar",
-          stack: "a",
-          barWidth: 10,
-          itemStyle: {
-            borderRadius:
-              idx < uniqueX.length - 1
-                ? [0, 0, 0, 0]
-                : [0, cfg.series.itemRadius, cfg.series.itemRadius, 0],
+      const yAxis = [
+        {
+          type: "value",
+          name: cfg.yAxis.axisName,
+          nameLocation: cfg.yAxis.nameLocation,
+          nameTextStyle: {
+            color: cfg.yAxis.nameColor,
+            fontSize: cfg.yAxis.nameFontSize,
           },
-          label: {
-            show: true,
+          axisLabel: {
+            show: cfg.yAxis.labelShow,
+            margin: cfg.yAxis.labelMargin,
+            color: cfg.yAxis.labelColor,
+            fontSize: cfg.yAxis.labelFontSize,
           },
-        };
-      });
+          splitLine: {
+            lineStyle: {
+              type: "dashed",
+            },
+          },
+        },
+      ];
+
+      const series = [
+        ...barsData.map((d, idx) => {
+          return {
+            name: d["catName"],
+            type: "bar",
+            data: d.values,
+            stack: "a",
+            barWidth: cfg.barWidth,
+            itemStyle: {
+              borderRadius: [0, 0, 0, 0],
+            },
+          };
+        }),
+      ];
+
+      const stackInfo = {};
+      for (let i = 0; i < series[0].data.length; ++i) {
+        for (let j = 0; j < series.length; ++j) {
+          const stackName = series[j].stack;
+          if (!stackName) {
+            continue;
+          }
+          if (!stackInfo[stackName]) {
+            stackInfo[stackName] = {
+              stackStart: [],
+              stackEnd: [],
+            };
+          }
+          const info = stackInfo[stackName];
+          const data = series[j].data[i];
+          if (data && data !== "-") {
+            if (info.stackStart[i] == null) {
+              info.stackStart[i] = j;
+            }
+            info.stackEnd[i] = j;
+          }
+        }
+      }
+
+      for (let i = 0; i < series.length; ++i) {
+        const data = series[i].data;
+        const info = stackInfo[series[i].stack];
+        for (let j = 0; j < series[i].data.length; ++j) {
+          // const isStart = info.stackStart[j] === i;
+          const isEnd = info.stackEnd[j] === i;
+          const topBorder = isEnd ? cfg.barRadius : 0;
+          const bottomBorder = 0;
+          data[j] = {
+            value: data[j],
+            itemStyle: {
+              borderRadius: [topBorder, topBorder, bottomBorder, bottomBorder],
+            },
+          };
+        }
+      }
 
       const dataZoom = [
         {
           type: "slider",
-          show: cfg.zoomShow,
-          orient: "vertical",
-          top: 10,
-          bottom: 20,
-          width: 10,
+          show: cfg.zoom.valueSpan >= uniqueX.length ? false : true,
+          orient: "horizontal",
+          left: cfg.zoom.left,
+          bottom: cfg.zoom.bottom,
+          right: cfg.zoom.right,
+          height: 10,
           zoomLock: true,
-          yAxisIndex: 0,
           handleIcon: "path://M4 24a20 20 0 1 0 40 0a20 20 0 1 0 -40 0z",
           borderColor: "#DDDDDD",
           fillerColor: "rgba(0, 128, 255, 1)",
           borderRadius: 6,
-          maxValueSpan: cfg.valueSpan - 1,
-          minValueSpan: cfg.valueSpan - 1,
+          maxValueSpan: cfg.zoom.valueSpan - 1,
+          minValueSpan: cfg.zoom.valueSpan - 1,
           moveHandleSize: 0,
           showDataShadow: false,
           backgroundColor: "#DDDDDD",
           brushSelect: false,
           startValue: 0, // 数据窗口范围的起始数值index
-          endValue: cfg.valueSpan, // 数据窗口范围的结束数值index
+          endValue: cfg.zoom.valueSpan, // 数据窗口范围的结束数值index
         },
       ];
 
       const options = {
+        color,
         legend,
         tooltip,
         grid,
-        dataset,
         xAxis,
         yAxis,
         series,
