@@ -41,8 +41,6 @@ module.exports = Event.extend(
 
     render: function (data, config) {
       clearInterval(this.interval);
-      this.chart.off("mouseover");
-      this.chart.off("mouseout");
       data = this.data(data);
 
       var cfg = this.mergeConfig(config);
@@ -64,13 +62,10 @@ module.exports = Event.extend(
       });
 
       // 结果转换为所需格式
-      const barsData = Object.entries(template).map(([catName, yqjgObj]) => ({
+      const linesData = Object.entries(template).map(([catName, yqjgObj]) => ({
         catName,
         values: Object.values(yqjgObj),
       }));
-
-      // console.log(barsData);
-      // console.log(uniqueX, uniqueY);
 
       const colorMap = cfg.color.split("&");
       const linearColor = colorMap.map((c) => {
@@ -140,7 +135,7 @@ module.exports = Event.extend(
           width: cfg.xAxis.labelWidth,
           rotate: cfg.xAxis.labelRotate,
           margin: cfg.xAxis.labelMargin,
-          interval: cfg.xAxis.labelInterval,
+          intercal: cfg.xAxis.labelInterval,
           overflow: cfg.xAxis.labelOverflow,
           color: cfg.xAxis.labelColor,
           fontSize: cfg.xAxis.labelFontSize,
@@ -157,92 +152,45 @@ module.exports = Event.extend(
         inverse: cfg.xAxis.inverse,
       };
 
-      const yAxis = {
-        type: "value",
-        name: cfg.yAxis.axisName,
-        nameLocation: cfg.yAxis.nameLocation,
-        nameTextStyle: {
-          color: cfg.yAxis.nameColor,
-          fontSize: cfg.yAxis.nameFontSize,
-        },
-        axisLabel: {
-          show: cfg.yAxis.labelShow,
-          margin: cfg.yAxis.labelMargin,
-          color: cfg.yAxis.labelColor,
-          fontSize: cfg.yAxis.labelFontSize,
-          formatter: cfg.yAxis.labelFormatter,
-        },
-        splitLine: {
-          lineStyle: {
-            type: "dashed",
-            color: cfg.yAxis.splitLineColor,
+      const yAxis = [
+        {
+          type: "value",
+          name: cfg.yAxis.axisName,
+          nameLocation: cfg.yAxis.nameLocation,
+          nameTextStyle: {
+            color: cfg.yAxis.nameColor,
+            fontSize: cfg.yAxis.nameFontSize,
+          },
+          axisLabel: {
+            show: cfg.yAxis.labelShow,
+            margin: cfg.yAxis.labelMargin,
+            color: cfg.yAxis.labelColor,
+            fontSize: cfg.yAxis.labelFontSize,
+          },
+          splitLine: {
+            lineStyle: {
+              type: "dashed",
+              color: cfg.yAxis.splitLineColor
+            },
           },
         },
-      };
-      if (cfg.yAxis.max) {
-        yAxis.max = cfg.yAxis.max;
-      }
+      ];
 
       const series = [
-        ...barsData.map((d, idx) => {
+        ...linesData.map((d, idx) => {
           return {
             name: d["catName"],
             type: "bar",
             data: d.values,
             stack: "a",
-            barWidth: cfg.barWidth,
-            itemStyle: {
-              borderRadius: [0, 0, 0, 0],
-            },
           };
         }),
       ];
 
-      const stackInfo = {};
-      for (let i = 0; i < series[0].data.length; ++i) {
-        for (let j = 0; j < series.length; ++j) {
-          const stackName = series[j].stack;
-          if (!stackName) {
-            continue;
-          }
-          if (!stackInfo[stackName]) {
-            stackInfo[stackName] = {
-              stackStart: [],
-              stackEnd: [],
-            };
-          }
-          const info = stackInfo[stackName];
-          const data = series[j].data[i];
-          if (data && data !== "-") {
-            if (info.stackStart[i] == null) {
-              info.stackStart[i] = j;
-            }
-            info.stackEnd[i] = j;
-          }
-        }
-      }
-
-      for (let i = 0; i < series.length; ++i) {
-        const data = series[i].data;
-        const info = stackInfo[series[i].stack];
-        for (let j = 0; j < series[i].data.length; ++j) {
-          // const isStart = info.stackStart[j] === i;
-          const isEnd = info.stackEnd[j] === i;
-          const topBorder = isEnd ? cfg.barRadius : 0;
-          const bottomBorder = 0;
-          data[j] = {
-            value: data[j],
-            itemStyle: {
-              borderRadius: [topBorder, topBorder, bottomBorder, bottomBorder],
-            },
-          };
-        }
-      }
-
       const dataZoom = [
         {
           type: "slider",
-          show: cfg.zoom.zoomShow && !cfg.autoPlay,
+          show: cfg.zoom.valueSpan >= uniqueX.length ? false : true,
           orient: "horizontal",
           left: cfg.zoom.left,
           bottom: cfg.zoom.bottom,
@@ -281,8 +229,8 @@ module.exports = Event.extend(
       this.updateStyle();
 
       const playCarousel = () => {
-        if (options.dataZoom[0].endValue == uniqueX.length - 1) {
-          options.dataZoom[0].endValue = cfg.zoom.valueSpan;
+        if (options.dataZoom[0].endValue == options.dataset.source.length - 1) {
+          options.dataZoom[0].endValue = cfg.valueSpan;
           options.dataZoom[0].startValue = 0;
         } else {
           options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
@@ -300,6 +248,10 @@ module.exports = Event.extend(
         this.chart.on("mouseout", () => {
           this.interval = setInterval(playCarousel, cfg.autoPlayInterval);
         });
+      } else {
+        clearInterval(this.interval);
+        this.chart.off("mouseover");
+        this.chart.off("mouseout");
       }
     },
     /**
