@@ -165,6 +165,8 @@ module.exports = Event.extend(
           color: cfg.yAxis.nameColor,
           fontSize: cfg.yAxis.nameFontSize,
         },
+        minInterval: 1,
+        splitNumber: cfg.yAxis.splitNumber,
         axisLabel: {
           show: cfg.yAxis.labelShow,
           margin: cfg.yAxis.labelMargin,

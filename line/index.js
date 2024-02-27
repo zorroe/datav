@@ -41,6 +41,8 @@ module.exports = Event.extend(
 
     render: function (data, config) {
       clearInterval(this.interval);
+      this.chart.off("mouseover");
+      this.chart.off("mouseout");
       data = this.data(data);
 
       var cfg = this.mergeConfig(config);
@@ -62,17 +64,18 @@ module.exports = Event.extend(
       });
 
       // 结果转换为所需格式
-      const linesData = Object.entries(template).map(([catName, yqjgObj]) => ({
+      const barsData = Object.entries(template).map(([catName, yqjgObj]) => ({
         catName,
         values: Object.values(yqjgObj),
       }));
 
-      const colorMap = cfg.color.split("&");
-      const linearColor = colorMap.map((c) => {
-        return c.split("-");
+      const colorMap = cfg.color.split("-");
+
+      const colors = colorMap.map((c) => {
+        return c.split(",");
       });
 
-      const color = linearColor.map((c) => {
+      const areaColor = colors.map((c) => {
         return {
           type: "linear",
           x: 0,
@@ -82,21 +85,28 @@ module.exports = Event.extend(
           colorStops: [
             {
               offset: 0,
-              color: c[0],
+              color: "rgba(" + [...c, cfg.gradientStart].join(",") + ")",
             },
             {
               offset: 1,
-              color: c[1],
+              color: "rgba(" + [...c, cfg.gradientEnd].join(",") + ")",
             },
           ],
           global: false,
         };
       });
 
+      const color = colors.map((c) => {
+        return "rgb(" + c.join(",") + ")";
+      });
+
+      console.log(color);
+
       const legend = {
         show: cfg.legend.isShow,
         top: cfg.legend.top,
         left: cfg.legend.left,
+        orient: cfg.legend.orient,
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
         textStyle: {
@@ -135,7 +145,7 @@ module.exports = Event.extend(
           width: cfg.xAxis.labelWidth,
           rotate: cfg.xAxis.labelRotate,
           margin: cfg.xAxis.labelMargin,
-          intercal: cfg.xAxis.labelInterval,
+          interval: cfg.xAxis.labelInterval,
           overflow: cfg.xAxis.labelOverflow,
           color: cfg.xAxis.labelColor,
           fontSize: cfg.xAxis.labelFontSize,
@@ -152,37 +162,42 @@ module.exports = Event.extend(
         inverse: cfg.xAxis.inverse,
       };
 
-      const yAxis = [
-        {
-          type: "value",
-          name: cfg.yAxis.axisName,
-          nameLocation: cfg.yAxis.nameLocation,
-          nameTextStyle: {
-            color: cfg.yAxis.nameColor,
-            fontSize: cfg.yAxis.nameFontSize,
-          },
-          axisLabel: {
-            show: cfg.yAxis.labelShow,
-            margin: cfg.yAxis.labelMargin,
-            color: cfg.yAxis.labelColor,
-            fontSize: cfg.yAxis.labelFontSize,
-          },
-          splitLine: {
-            lineStyle: {
-              type: "dashed",
-              color: cfg.yAxis.splitLineColor
-            },
+      const yAxis = {
+        type: "value",
+        name: cfg.yAxis.axisName,
+        nameLocation: cfg.yAxis.nameLocation,
+        nameTextStyle: {
+          color: cfg.yAxis.nameColor,
+          fontSize: cfg.yAxis.nameFontSize,
+        },
+        axisLabel: {
+          show: cfg.yAxis.labelShow,
+          margin: cfg.yAxis.labelMargin,
+          color: cfg.yAxis.labelColor,
+          fontSize: cfg.yAxis.labelFontSize,
+          formatter: cfg.yAxis.labelFormatter,
+        },
+        splitLine: {
+          lineStyle: {
+            type: "dashed",
+            color: cfg.yAxis.splitLineColor,
           },
         },
-      ];
+      };
+      if (cfg.yAxis.max) {
+        yAxis.max = cfg.yAxis.max;
+      }
 
       const series = [
-        ...linesData.map((d, idx) => {
+        ...barsData.map((d, idx) => {
           return {
             name: d["catName"],
-            type: "bar",
+            type: "line",
             data: d.values,
-            stack: "a",
+            stack: cfg.series.isStack ? "a" : idx + "",
+            areaStyle: {
+              color: areaColor[idx],
+            },
           };
         }),
       ];
@@ -190,7 +205,7 @@ module.exports = Event.extend(
       const dataZoom = [
         {
           type: "slider",
-          show: cfg.zoom.valueSpan >= uniqueX.length ? false : true,
+          show: cfg.zoom.zoomShow && !cfg.autoPlay,
           orient: "horizontal",
           left: cfg.zoom.left,
           bottom: cfg.zoom.bottom,
@@ -229,8 +244,8 @@ module.exports = Event.extend(
       this.updateStyle();
 
       const playCarousel = () => {
-        if (options.dataZoom[0].endValue == options.dataset.source.length - 1) {
-          options.dataZoom[0].endValue = cfg.valueSpan;
+        if (options.dataZoom[0].endValue == uniqueX.length - 1) {
+          options.dataZoom[0].endValue = cfg.zoom.valueSpan;
           options.dataZoom[0].startValue = 0;
         } else {
           options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
@@ -248,10 +263,6 @@ module.exports = Event.extend(
         this.chart.on("mouseout", () => {
           this.interval = setInterval(playCarousel, cfg.autoPlayInterval);
         });
-      } else {
-        clearInterval(this.interval);
-        this.chart.off("mouseover");
-        this.chart.off("mouseout");
       }
     },
     /**
