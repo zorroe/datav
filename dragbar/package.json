@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/dragbar",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -243,9 +243,9 @@
             "name": "最大值",
             "type": "string"
           },
-          "splitNumber":{
-            "name":"分割段数",
-            "type": 5
+          "splitNumber": {
+            "name": "分割段数",
+            "type": "number"
           },
           "labelShow": {
             "name": "是否显示标签",

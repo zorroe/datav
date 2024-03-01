@@ -66,15 +66,18 @@ module.exports = Event.extend(
       }, []);
 
       console.log(transformedData);
-
       const uniqueX = [...new Set(data.map((item) => item[cfg.catName]))];
-
+      if (cfg.reverseX) {
+        uniqueX.reverse();
+      }
+      const color = cfg.color.split("-");
       const legend = {
         show: cfg.legend.isShow,
         top: cfg.legend.top,
         left: cfg.legend.left,
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
+        itemGap: cfg.legend.itemGap,
         textStyle: {
           color: cfg.legend.textColor,
           fontSize: cfg.legend.textSize,
@@ -110,7 +113,6 @@ module.exports = Event.extend(
         splitLine: {
           show: false,
         },
-        
       };
 
       const yAxis = {
@@ -121,8 +123,22 @@ module.exports = Event.extend(
         },
         axisLabel: {
           show: true,
-          color: "#000",
-          interval: 0
+          margin: cfg.yAxis.labelMargin,
+          color: cfg.yAxis.labelColor,
+          fontSize: cfg.yAxis.labelFontSize,
+          fontWeight: cfg.yAxis.labelFontWeight,
+          inside: cfg.yAxis.labelInside,
+          align: cfg.yAxis.labelAlign,
+          verticalAlign: cfg.yAxis.labelVerticalAlign,
+          lineHeight: cfg.yAxis.labelLineHeight,
+        },
+        axisLine: {
+          lineStyle: {
+            color: cfg.yAxis.lineColor,
+          },
+        },
+        axisTick: {
+          show: false,
         },
         inverse: cfg.yAxis.inverse,
       };
@@ -131,7 +147,7 @@ module.exports = Event.extend(
         return {
           type: "bar",
           stack: "a",
-          barWidth: 10,
+          barWidth: cfg.series.barWidth,
           itemStyle: {
             borderRadius:
               idx < uniqueX.length - 1
@@ -140,6 +156,15 @@ module.exports = Event.extend(
           },
           label: {
             show: true,
+            fontSize: cfg.series.labelFontSize,
+            verticalAlign: "middle",
+            lineHeight: cfg.series.labelFontSize,
+            offset: [cfg.series.labelXOffset, cfg.series.labelYOffset],
+            color: cfg.series.labelColor,
+          },
+          showBackground: true,
+          backgroundStyle: {
+            color: cfg.series.backgroundColor,
           },
         };
       });
@@ -170,6 +195,7 @@ module.exports = Event.extend(
       ];
 
       const options = {
+        color,
         legend,
         tooltip,
         grid,

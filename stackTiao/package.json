@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/stackTiao",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -8,7 +8,7 @@
     "echarts": "5.3.1"
   },
   "datav": {
-    "cn_name": "条形图",
+    "cn_name": "堆积条形图",
     "icon": "",
     "protocol": 2,
     "type": [
@@ -35,17 +35,27 @@
       "labelName": {
         "name": "标签字段名",
         "type": "string",
-        "default": "yqjg"
+        "default": "fsn"
       },
       "catName": {
         "name": "分类字段名",
         "type": "string",
-        "default": "jzqj"
+        "default": "wjdj"
       },
       "valName": {
         "name": "值字段名",
         "type": "string",
         "default": "sl"
+      },
+      "reverseX": {
+        "name": "反转X轴",
+        "type": "boolean",
+        "default": false
+      },
+      "color": {
+        "name": "颜色",
+        "type": "string",
+        "default": "#C61F0A-#F28018-#FFD300"
       },
       "grid": {
         "name": "grid",
@@ -69,9 +79,9 @@
           }
         },
         "default": {
-          "left": 0,
+          "left": 50,
           "right": 30,
-          "top": 0,
+          "top": 40,
           "bottom": 0
         }
       },
@@ -81,24 +91,26 @@
         "children": {
           "isShow": {
             "name": "是否显示",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "confine": {
             "name": "是否限制在图表内",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "fixed": {
             "name": "显示精度",
-            "type": "number",
-            "default": 2
+            "type": "number"
           },
           "suffix": {
             "name": "后缀",
-            "type": "string",
-            "default": ""
+            "type": "string"
           }
+        },
+        "default": {
+          "isShow": true,
+          "confine": true,
+          "fixed": 0,
+          "suffix": ""
         }
       },
       "legend": {
@@ -107,44 +119,46 @@
         "children": {
           "isShow": {
             "name": "图例是否显示",
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
           },
           "left": {
             "name": "图例距左距离",
-            "type": "string",
-            "default": "0%"
+            "type": "string"
           },
           "top": {
             "name": "图例距顶距离",
-            "type": "string",
-            "default": ""
-          },
-          "orient": {
-            "name": "图例方向",
-            "type": "string",
-            "default": "horizontal"
+            "type": "string"
           },
           "textColor": {
             "name": "图例文字颜色",
-            "type": "string",
-            "default": "#3A3A3A"
+            "type": "string"
           },
           "textSize": {
             "name": "图例字大小",
-            "type": "number",
-            "default": 12
+            "type": "number"
           },
           "itemWidth": {
             "name": "图形宽度",
-            "type": "number",
-            "default": 8
+            "type": "number"
           },
           "itemHeight": {
             "name": "图形高度",
-            "type": "number",
-            "default": 8
+            "type": "number"
+          },
+          "itemGap": {
+            "name": "图例间隔",
+            "type": "number"
           }
+        },
+        "default": {
+          "isShow": true,
+          "left": "center",
+          "top": "10",
+          "textColor": "#3A3A3A",
+          "textSize": 12,
+          "itemWidth": 10,
+          "itemHeight": 10,
+          "itemGap": 10
         }
       },
       "yAxis": {
@@ -153,9 +167,56 @@
         "children": {
           "inverse": {
             "name": "是否反转",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
+          },
+          "labelColor": {
+            "name": "label颜色",
+            "type": "string"
+          },
+          "labelMargin": {
+            "name": "label距坐标轴距离",
+            "type": "number"
+          },
+          "labelFontSize": {
+            "name": "label字体大小",
+            "type": "number"
+          },
+          "labelFontWeight": {
+            "name": "label字重",
+            "type": "number"
+          },
+          "labelInside": {
+            "name": "标签是否在内部",
+            "type": "boolean"
+          },
+          "labelAlign": {
+            "name": "标签水平对齐方式",
+            "type": "string"
+          },
+          "labelVerticalAlign": {
+            "name": "标签垂直对齐方式",
+            "type": "string"
+          },
+          "labelLineHeight": {
+            "name": "标签行高",
+            "type": "number"
+          },
+          "lineColor": {
+            "name": "轴线颜色",
+            "type": "string"
           }
+        },
+        "default": {
+          "inverse": true,
+          "labelColor": "#999",
+          "labelMargin": 0,
+          "labelFontSize": 14,
+          "labelFontWeight": 600,
+          "labelInside": true,
+          "labelAlign": "left",
+          "labelVerticalAlign": "bottom",
+          "labelLineHeight": 32,
+          "lineColor": "rgba(0,0,0,0)"
         }
       },
       "series": {
@@ -164,55 +225,52 @@
         "children": {
           "itemRadius": {
             "name": "条圆角",
-            "type": "number",
-            "default": 8
+            "type": "number"
+          },
+          "barWidth": {
+            "name": "条宽度",
+            "type": "number"
+          },
+          "backgroundColor": {
+            "name": "条背景",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "标签字体大小",
+            "type": "number"
+          },
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "labelYOffset": {
+            "name": "纵向偏移",
+            "type": "number"
+          },
+          "labelXOffset": {
+            "name": "横向偏移",
+            "type": "number"
           }
+        },
+        "default": {
+          "itemRadius": 0,
+          "barWidth": 16,
+          "backgroundColor": "rgba(255, 211, 0, 0.04)",
+          "labelFontSize": 14,
+          "labelColor": "#FFF",
+          "labelYOffset": 1,
+          "labelXOffset": 0
         }
-      },
-      "barWidth": {
-        "name": "条的宽度",
-        "type": "number",
-        "default": 14
-      },
-      "labelLayoutWidth": {
-        "name": "labelLayout宽度",
-        "type": "number",
-        "default": 400
-      },
-      "labelYOffset": {
-        "name": "labelY轴偏移",
-        "type": "number",
-        "default": -10
-      },
-      "labelSortPrefix": {
-        "name": "label序号前缀",
-        "type": "string",
-        "default": "No."
-      },
-      "labelSortWidth": {
-        "name": "label排序字段宽度",
-        "type": "number",
-        "default": 40
-      },
-      "labelNameWidth": {
-        "name": "label名称字段宽度",
-        "type": "number",
-        "default": 270
-      },
-      "labelNumWidth": {
-        "name": "label数量字段宽度",
-        "type": "number",
-        "default": 60
       },
       "zoomShow": {
         "name": "是否显示滚动条",
         "type": "boolean",
-        "default": true
+        "default": false
       },
       "valueSpan": {
         "name": "显示条数",
         "type": "number",
-        "default": 4
+        "default": 3
       },
       "autoPlay": {
         "name": "是否自动轮播",
@@ -223,288 +281,54 @@
         "name": "轮播周期",
         "type": "number",
         "default": 3000
-      },
-      "sortFontSize": {
-        "name": "序号字号",
-        "type": "number",
-        "default": 14
-      },
-      "nameFontSize": {
-        "name": "名称字号",
-        "type": "number",
-        "default": 14
-      },
-      "numFontSize": {
-        "name": "数字字号",
-        "type": "number",
-        "default": 14
       }
     },
     "api_data": {
       "source": [
         {
-          "tjn": 2023,
-          "yqjg": "精密光谱科学与技术国家重点实验室",
-          "jzqj": "500（含）-1000万",
-          "sl": 3,
-          "jz": 1668.05,
-          "rk": 1
+          "fsn": 2021,
+          "wjdj": "轻度",
+          "sl": 37
         },
         {
-          "tjn": 2023,
-          "yqjg": "精密光谱科学与技术国家重点实验室",
-          "jzqj": "100（含）-500万",
-          "sl": 31,
-          "jz": 5493.98,
-          "rk": 1
+          "fsn": 2021,
+          "wjdj": "中度",
+          "sl": 27
         },
         {
-          "tjn": 2023,
-          "yqjg": "精密光谱科学与技术国家重点实验室",
-          "jzqj": "50（含）-100万",
-          "sl": 53,
-          "jz": 3770.22,
-          "rk": 1
+          "fsn": 2021,
+          "wjdj": "重度",
+          "sl": 2
         },
         {
-          "tjn": 2023,
-          "yqjg": "精密光谱科学与技术国家重点实验室",
-          "jzqj": "30（含）-50万",
-          "sl": 49,
-          "jz": 1910.23,
-          "rk": 1
+          "fsn": 2022,
+          "wjdj": "轻度",
+          "sl": 67
         },
         {
-          "tjn": 2023,
-          "yqjg": "上海市绿色化学与化工过程绿色化重点实验室",
-          "jzqj": "500（含）-1000万",
-          "sl": 1,
-          "jz": 819.94,
-          "rk": 2
+          "fsn": 2022,
+          "wjdj": "中度",
+          "sl": 23
         },
         {
-          "tjn": 2023,
-          "yqjg": "上海市绿色化学与化工过程绿色化重点实验室",
-          "jzqj": "100（含）-500万",
-          "sl": 15,
-          "jz": 3347.48,
-          "rk": 2
+          "fsn": 2022,
+          "wjdj": "重度",
+          "sl": 3
         },
         {
-          "tjn": 2023,
-          "yqjg": "上海市绿色化学与化工过程绿色化重点实验室",
-          "jzqj": "50（含）-100万",
-          "sl": 20,
-          "jz": 1298.25,
-          "rk": 2
+          "fsn": 2023,
+          "wjdj": "轻度",
+          "sl": 40
         },
         {
-          "tjn": 2023,
-          "yqjg": "上海市绿色化学与化工过程绿色化重点实验室",
-          "jzqj": "30（含）-50万",
-          "sl": 19,
-          "jz": 750.15,
-          "rk": 2
+          "fsn": 2023,
+          "wjdj": "中度",
+          "sl": 24
         },
         {
-          "tjn": 2023,
-          "yqjg": "河口海岸科学研究院（海洋科学学院）",
-          "jzqj": "100（含）-500万",
-          "sl": 10,
-          "jz": 1976.22,
-          "rk": 3
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "河口海岸科学研究院（海洋科学学院）",
-          "jzqj": "50（含）-100万",
-          "sl": 16,
-          "jz": 1024.64,
-          "rk": 3
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "河口海岸科学研究院（海洋科学学院）",
-          "jzqj": "30（含）-50万",
-          "sl": 13,
-          "jz": 518.86,
-          "rk": 3
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "化学系",
-          "jzqj": "500（含）-1000万",
-          "sl": 1,
-          "jz": 512.21,
-          "rk": 4
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "化学系",
-          "jzqj": "100（含）-500万",
-          "sl": 10,
-          "jz": 2154.71,
-          "rk": 4
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "化学系",
-          "jzqj": "50（含）-100万",
-          "sl": 12,
-          "jz": 872.76,
-          "rk": 4
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "化学系",
-          "jzqj": "30（含）-50万",
-          "sl": 9,
-          "jz": 352.03,
-          "rk": 4
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "地理科学学院",
-          "jzqj": "100（含）-500万",
-          "sl": 8,
-          "jz": 2070.88,
-          "rk": 5
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "地理科学学院",
-          "jzqj": "50（含）-100万",
-          "sl": 12,
-          "jz": 774.89,
-          "rk": 5
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "地理科学学院",
-          "jzqj": "30（含）-50万",
-          "sl": 6,
-          "jz": 219.1,
-          "rk": 5
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "材料科学系",
-          "jzqj": "100（含）-500万",
-          "sl": 10,
-          "jz": 2296.15,
-          "rk": 6
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "材料科学系",
-          "jzqj": "50（含）-100万",
-          "sl": 8,
-          "jz": 567.08,
-          "rk": 6
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "材料科学系",
-          "jzqj": "30（含）-50万",
-          "sl": 2,
-          "jz": 72.81,
-          "rk": 6
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "上海分子治疗与新药创制工程技术研究中心",
-          "jzqj": "100（含）-500万",
-          "sl": 6,
-          "jz": 1395.33,
-          "rk": 7
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "上海分子治疗与新药创制工程技术研究中心",
-          "jzqj": "50（含）-100万",
-          "sl": 3,
-          "jz": 220.68,
-          "rk": 7
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "上海分子治疗与新药创制工程技术研究中心",
-          "jzqj": "30（含）-50万",
-          "sl": 9,
-          "jz": 334.58,
-          "rk": 7
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "生命科学学院",
-          "jzqj": "100（含）-500万",
-          "sl": 3,
-          "jz": 608.82,
-          "rk": 8
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "生命科学学院",
-          "jzqj": "50（含）-100万",
-          "sl": 5,
-          "jz": 357.9,
-          "rk": 8
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "生命科学学院",
-          "jzqj": "30（含）-50万",
-          "sl": 8,
-          "jz": 315.6,
-          "rk": 8
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "脑功能基因组学教育部重点实验室",
-          "jzqj": "100（含）-500万",
-          "sl": 3,
-          "jz": 442.44,
-          "rk": 9
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "脑功能基因组学教育部重点实验室",
-          "jzqj": "50（含）-100万",
-          "sl": 8,
-          "jz": 581,
-          "rk": 9
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "脑功能基因组学教育部重点实验室",
-          "jzqj": "30（含）-50万",
-          "sl": 4,
-          "jz": 155.33,
-          "rk": 9
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "生命医学系",
-          "jzqj": "100（含）-500万",
-          "sl": 2,
-          "jz": 416.86,
-          "rk": 10
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "生命医学系",
-          "jzqj": "50（含）-100万",
-          "sl": 5,
-          "jz": 341.47,
-          "rk": 10
-        },
-        {
-          "tjn": 2023,
-          "yqjg": "生命医学系",
-          "jzqj": "30（含）-50万",
-          "sl": 6,
-          "jz": 216.41,
-          "rk": 10
+          "fsn": 2023,
+          "wjdj": "重度",
+          "sl": 1
         }
       ]
     }
