@@ -141,6 +141,7 @@ module.exports = Event.extend(
         axisPointer: {
           type: "shadow",
         },
+        boundaryGap: cfg.xAxis.boundaryGap,
         axisLabel: {
           width: cfg.xAxis.labelWidth,
           rotate: cfg.xAxis.labelRotate,

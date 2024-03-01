@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/line",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -214,6 +214,10 @@
           "tickShow": {
             "name": "刻度是否显示",
             "type": "boolean"
+          },
+          "boundaryGap": {
+            "name": "boundaryGap",
+            "type": "boolean"
           }
         },
         "default": {
@@ -226,7 +230,8 @@
           "labelInterval": 0,
           "labelOverflow": "break",
           "inverse": false,
-          "tickShow": false
+          "tickShow": false,
+          "boundaryGap": true
         }
       },
       "yAxis": {
