@@ -1,0 +1,372 @@
+{
+  "name": "@ecnu-pierose/hill",
+  "version": "0.0.1",
+  "dependencies": {
+    "bcore": "0.0.18",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1",
+    "echarts": "5.3.1"
+  },
+  "datav": {
+    "cn_name": "小山象形图",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "800",
+      "height": "500",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "itemColor": {
+        "name": "图形颜色",
+        "type": "string",
+        "default": "rgba(0, 128, 255,1)-rgba(0,128,255,0)"
+      },
+      "emphasisColor": {
+        "name": "强调颜色",
+        "type": "string",
+        "default": "rgba(255, 211, 0, 1)-rgba(255, 211, 0, 0)"
+      },
+      "labelName": {
+        "name": "标签字段名",
+        "type": "string",
+        "default": "year"
+      },
+      "valName": {
+        "name": "值字段名",
+        "type": "string",
+        "default": "val"
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "距左",
+            "type": "number"
+          },
+          "right": {
+            "name": "距右",
+            "type": "number"
+          },
+          "top": {
+            "name": "距顶",
+            "type": "number"
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "number"
+          },
+          "containLabel": {
+            "name": "containLabel",
+            "type": "boolean"
+          }
+        },
+        "default": {
+          "left": 10,
+          "right": 10,
+          "top": 20,
+          "bottom": 10,
+          "containLabel": true
+        }
+      },
+      "tooltip": {
+        "name": "tooltip",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "是否显示",
+            "type": "boolean"
+          },
+          "confine": {
+            "name": "是否限制在图表内",
+            "type": "boolean"
+          },
+          "suffix": {
+            "name": "后缀",
+            "type": "string"
+          }
+        },
+        "default": {
+          "isShow": true,
+          "confine": true,
+          "suffix": ""
+        }
+      },
+      "legend": {
+        "name": "图例配置",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "图例是否显示",
+            "type": "boolean"
+          },
+          "left": {
+            "name": "图例距左距离",
+            "type": "string"
+          },
+          "top": {
+            "name": "图例距顶距离",
+            "type": "string"
+          },
+          "orient": {
+            "name": "图例方向",
+            "type": "string"
+          },
+          "textColor": {
+            "name": "图例文字颜色",
+            "type": "string"
+          },
+          "textSize": {
+            "name": "图例字大小",
+            "type": "number"
+          },
+          "itemWidth": {
+            "name": "图形宽度",
+            "type": "number"
+          },
+          "itemHeight": {
+            "name": "图形高度",
+            "type": "number"
+          },
+          "itemGap": {
+            "name": "图例间隔",
+            "type": "number"
+          }
+        },
+        "default": {
+          "isShow": false,
+          "left": "center",
+          "top": "0",
+          "orient": "horizontal",
+          "textColor": "#3A3A3A",
+          "textSize": 12,
+          "itemWidth": 8,
+          "itemHeight": 8,
+          "itemGap": 20
+        }
+      },
+      "xAxis": {
+        "name": "xAxis",
+        "type": "group",
+        "children": {
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "lineColor": {
+            "name": "轴线颜色",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "标签字体大小",
+            "type": "number"
+          },
+          "labelWidth": {
+            "name": "标签宽度",
+            "type": "number"
+          },
+          "labelRotate": {
+            "name": "标签旋转角度",
+            "type": "number"
+          },
+          "labelMargin": {
+            "name": "标签和轴线间隔",
+            "type": "number"
+          },
+          "labelInterval": {
+            "name": "标签之间间隔",
+            "type": "number"
+          },
+          "labelOverflow": {
+            "name": "标签溢出",
+            "type": "string"
+          },
+          "inverse": {
+            "name": "是否反转",
+            "type": "boolean"
+          },
+          "tickShow": {
+            "name": "刻度是否显示",
+            "type": "boolean"
+          }
+        },
+        "default": {
+          "labelColor": "#3A3A3A",
+          "lineColor": "#ccc",
+          "labelFontSize": 12,
+          "labelWidth": 80,
+          "labelRotate": 0,
+          "labelMargin": 12,
+          "labelInterval": 0,
+          "labelOverflow": "break",
+          "inverse": false,
+          "tickShow": false
+        }
+      },
+      "yAxis": {
+        "name": "yAxis",
+        "type": "group",
+        "children": {
+          "axisName": {
+            "name": "轴线名称",
+            "type": "string"
+          },
+          "nameLocation": {
+            "name": "名称显示位置",
+            "type": "string"
+          },
+          "nameColor": {
+            "name": "名称颜色",
+            "type": "string"
+          },
+          "nameFontSize": {
+            "name": "名称字体大小",
+            "type": "number"
+          },
+          "max": {
+            "name": "最大值",
+            "type": "string"
+          },
+          "splitNumber": {
+            "name": "分割段数",
+            "type": "number"
+          },
+          "labelShow": {
+            "name": "是否显示标签",
+            "type": "boolean"
+          },
+          "labelMargin": {
+            "name": "标签和轴线间隔",
+            "type": "number"
+          },
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "标签字体大小",
+            "type": "number"
+          },
+          "labelFormatter": {
+            "name": "标签formatter",
+            "type": "string"
+          },
+          "splitLineColor": {
+            "name": "分割线颜色",
+            "type": "string"
+          }
+        },
+        "default": {
+          "axisName": "",
+          "nameLocation": "end",
+          "nameColor": "#3A3A3A",
+          "nameFontSize": 12,
+          "max": "",
+          "splitNumber": 5,
+          "labelShow": true,
+          "labelMargin": 8,
+          "labelColor": "#3A3A3A",
+          "labelFontSize": 12,
+          "labelFormatter": "{value}",
+          "splitLineColor": "rgba(58, 58, 58, 0.30)"
+        }
+      },
+      "series": {
+        "name": "series",
+        "type": "group",
+        "children": {
+          "barCategoryGap": {
+            "name": "barCategoryGap",
+            "type": "string"
+          }
+        },
+        "default": {
+          "barCategoryGap": "-50%"
+        }
+      },
+      "zoom": {
+        "name": "缩放组件",
+        "type": "group",
+        "children": {
+          "zoomShow": {
+            "name": "是否显示缩放组件",
+            "type": "boolean"
+          },
+          "valueSpan": {
+            "name": "显示条数",
+            "type": "number"
+          },
+          "left": {
+            "name": "距左",
+            "type": "number"
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "number"
+          },
+          "right": {
+            "name": "距右",
+            "type": "number"
+          }
+        },
+        "default": {
+          "zoomShow": false,
+          "valueSpan": 10,
+          "left": 10,
+          "bottom": 10,
+          "right": 10
+        }
+      },
+      "autoPlay": {
+        "name": "自动轮播(打开则自动取消缩放组件)",
+        "type": "boolean",
+        "default": false
+      },
+      "autoPlayInterval": {
+        "name": "轮播周期",
+        "type": "number",
+        "default": 3000
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "year": "2019",
+          "val": "88"
+        },
+        {
+          "year": "2020",
+          "val": "99"
+        },
+        {
+          "year": "2021",
+          "val": "111"
+        },
+        {
+          "year": "2022",
+          "val": "88"
+        },
+        {
+          "year": "2023",
+          "val": "77"
+        }
+      ]
+    }
+  }
+}
