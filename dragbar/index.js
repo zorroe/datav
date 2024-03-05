@@ -161,6 +161,7 @@ module.exports = Event.extend(
         type: "value",
         name: cfg.yAxis.axisName,
         nameLocation: cfg.yAxis.nameLocation,
+        nameGap: cfg.yAxis.nameGap,
         nameTextStyle: {
           color: cfg.yAxis.nameColor,
           fontSize: cfg.yAxis.nameFontSize,
@@ -181,6 +182,13 @@ module.exports = Event.extend(
           },
         },
       };
+
+      const axisPointer = {
+        shadowStyle: {
+          color: cfg.axisPointer.shadowColor,
+        },
+      };
+
       if (cfg.yAxis.max) {
         yAxis.max = cfg.yAxis.max;
       }
@@ -261,13 +269,14 @@ module.exports = Event.extend(
           showDataShadow: false,
           backgroundColor: "#DDDDDD",
           brushSelect: false,
-          startValue: 0, // 数据窗口范围的起始数值index
-          endValue: cfg.zoom.valueSpan, // 数据窗口范围的结束数值index
+          startValue: cfg.zoom.startValue, // 数据窗口范围的起始数值index
+          endValue: cfg.zoom.startValue + cfg.zoom.valueSpan, // 数据窗口范围的结束数值index
         },
       ];
 
       const options = {
         color,
+        axisPointer,
         legend,
         tooltip,
         grid,

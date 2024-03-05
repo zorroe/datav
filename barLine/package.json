@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar-line",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.3.1",
@@ -443,6 +443,10 @@
             "name": "是否显示",
             "type": "boolean"
           },
+          "startValue": {
+            "name": "起始位置",
+            "type": "number"
+          },
           "height": {
             "name": "组件高度",
             "type": "number"
@@ -499,6 +503,7 @@
         },
         "default": {
           "show": false,
+          "startValue": 0,
           "height": 10,
           "showDataShadow": false,
           "borderRadius": 6,

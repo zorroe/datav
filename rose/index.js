@@ -15,7 +15,6 @@ module.exports = Event.extend(
     this.apis = config.apis; //hook一定要有
     this._data = null; //数据
     this.chart = null; //图表
-    this.interval = null;
     this.init(config);
   },
   {
@@ -39,22 +38,64 @@ module.exports = Event.extend(
      * !!注意: 第二个参数支持config, 就不需要updateOptions这个方法了
      */
     render: function (data, config) {
-      clearInterval(this.interval);
+      this.chart && this.chart.clear();
       this.chart = Echarts.init(this.container[0]);
       data = this.data(data);
+
       var cfg = this.mergeConfig(config);
+
+      const normalColors = cfg.itemColor.split("-");
+      const emphasisColors = cfg.emphasisColor.split("-");
+
+      const new_data = data.map((d, idx) => {
+        return {
+          name: d[cfg.nameField],
+          v: d[cfg.valueField],
+          value: cfg.pieValueStart - idx * 10,
+        };
+      });
+
+      const length = new_data.length;
+      for (let index = 0; index < length; index++) {
+        new_data.push({
+          value: 0,
+          itemStyle: {
+            color: "transparent",
+          },
+          emphasis: {
+            itemStyle: {
+              color: "rgba(0,0,0,0)",
+            },
+          },
+        });
+      }
+      console.log(new_data);
+
       //更新图表
       const options = {
-        color: [
-          "#0080FF",
-          "#FFD300",
-          "#F28018",
-          "#2BA471",
-          "#F86470",
-          "#029cd4",
-          "#ae6fde",
-        ],
+        // color: [
+        //   {
+        //     type: "linear",
+        //     x: 0,
+        //     y: 0,
+        //     x2: 0,
+        //     y2: 1,
+        //     colorStops: [
+        //       {
+        //         offset: 0,
+        //         color: normalColors[0], // 0% 处的颜色
+        //       },
+        //       {
+        //         offset: 1,
+        //         color: normalColors[1], // 100% 处的颜色
+        //       },
+        //     ],
+        //     global: false, // 缺省为 false
+        //   },
+        // ],
+
         legend: {
+          show: cfg.legend.isShow,
           top: cfg.legend.top, // 需配置
           left: cfg.legend.left,
           orient: cfg.legend.orient, // 需配置
@@ -104,15 +145,26 @@ module.exports = Event.extend(
           padding: [8, 10],
           confine: cfg.tooltip.confine,
           formatter: (params) => {
-            let res = params.data.name;
+            console.log(data);
+            const name = params.data.name;
+            let res = name;
             if (cfg.tooltip.showValue) {
               res = `${res}&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:600'>${
-                new Intl.NumberFormat("en-US").format(params.data.value) +
+                new Intl.NumberFormat("en-US").format(params.data.v) +
                 cfg.legend.valueSuffix
               }</span>`;
             }
+
             if (cfg.tooltip.showProportion) {
-              res = `${res}&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:600'>${params.percent.toFixed(
+              const total = data.reduce(function (acc, obj) {
+                return acc + obj[cfg.valueField];
+              }, 0);
+
+              const d = data.find((n) => n[cfg.nameField] === name);
+              console.log(`total: ${total} --- value: ${d[cfg.valueField]}`);
+              const proportion = (d[cfg.valueField] / total) * 100;
+
+              res = `${res}&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-weight:600'>${proportion.toFixed(
                 cfg.legend.proportionPrecision
               )}%</span>`;
             }
@@ -127,23 +179,56 @@ module.exports = Event.extend(
             center: [cfg.center.x, cfg.center.y], // 需配置
             radius: [cfg.center.inner, cfg.center.outer], // 需配置
             label: {
-              show: cfg.label.labelShow,
-              position: cfg.label.position,
-              normal: {
-                show: cfg.label.normalShow,
-                position: cfg.label.normalPosition,
-                color: cfg.label.normalColor,
-                formatter: cfg.label.normalFormatter.replace(/\\n/g, "\n"),
-                fontSize: cfg.label.normalFontSize,
-                fontWeight: cfg.label.normalFontWeight,
+              show: false,
+            },
+            startAngle: 180,
+            roseType: "area",
+            itemStyle: {
+              borderRadius: cfg.series.borderRadius,
+              borderWidth: cfg.series.borderWidth,
+              borderColor: cfg.series.borderColor,
+              color: {
+                type: "linear",
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: normalColors[0], // 0% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: normalColors[1], // 100% 处的颜色
+                  },
+                ],
+                global: false, // 缺省为 false
               },
             },
-            data: data.map((d) => {
-              return {
-                name: d[cfg.nameField],
-                value: d[cfg.valueField],
-              };
-            }),
+            emphasis: {
+              itemStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: emphasisColors[0], // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: emphasisColors[1], // 100% 处的颜色
+                    },
+                  ],
+                  global: false, // 缺省为 false
+                },
+              },
+            },
+            data: new_data,
           },
         ],
       };
@@ -155,34 +240,6 @@ module.exports = Event.extend(
 
       this.chart.clear();
       this.chart.setOption(options);
-
-      var currentIdx = -1;
-      const playCarousel = () => {
-        currentIdx = (currentIdx + 1) % data.length;
-        this.chart.dispatchAction({
-          type: "showTip",
-          seriesIndex: 0,
-          dataIndex: currentIdx,
-        });
-      };
-      clearInterval(this.interval);
-      if (!cfg.tooltip.auto) {
-        clearInterval(this.interval);
-        this.chart.dispatchAction({
-          type: "hideTip",
-        });
-        this.chart.off("mouseover");
-        this.chart.off("mouseout");
-      }
-      if (cfg.tooltip.auto) {
-        this.interval = setInterval(playCarousel, cfg.tooltip.autoTime);
-        this.chart.on("mouseover", () => {
-          clearInterval(this.interval);
-        });
-        this.chart.on("mouseout", () => {
-          this.interval = setInterval(playCarousel, cfg.tooltip.autoTime);
-        });
-      }
 
       //如果有需要的话,更新样式
       this.updateStyle();

@@ -1,14 +1,14 @@
 {
-  "name": "@ecnu-pierose/pie",
-  "version": "0.0.17",
+  "name": "@ecnu-pierose/rose",
+  "version": "0.0.3",
   "dependencies": {
     "bcore": "0.0.18",
-    "echarts": "5.0.0",
+    "echarts": "5.3.1",
     "jquery": "2.1.4",
     "lodash": "4.6.1"
   },
   "datav": {
-    "cn_name": "饼图",
+    "cn_name": "玫瑰图",
     "icon": "/icons/316x238icon.png?time=1706855021848",
     "protocol": 2,
     "type": [
@@ -32,20 +32,39 @@
       }
     },
     "config": {
-      "valueField": {
-        "name": "值字段",
-        "type": "string",
-        "default": "jz"
-      },
       "nameField": {
         "name": "名称字段",
         "type": "string",
         "default": "lx"
       },
+      "valueField": {
+        "name": "值字段",
+        "type": "string",
+        "default": "jz"
+      },
+      "pieValueStart": {
+        "name": "饼大小起始值",
+        "type": "number",
+        "default": 80
+      },
+      "itemColor": {
+        "name": "饼颜色",
+        "type": "string",
+        "default": "rgba(96, 176, 255, 1)-rgba(41, 122, 252, 0.40)"
+      },
+      "emphasisColor": {
+        "name": "强调颜色",
+        "type": "string",
+        "default": "rgba(255, 211, 0, 1)-rgba(255, 211, 0, 0.40)"
+      },
       "legend": {
         "name": "图例",
         "type": "group",
         "children": {
+          "isShow": {
+            "name": "是否显示",
+            "type": "boolean"
+          },
           "top": {
             "name": "图例距离TOP距离",
             "type": "string"
@@ -114,6 +133,7 @@
           }
         },
         "default": {
+          "isShow": false,
           "top": "bottom",
           "left": "center",
           "color": "#3a3a3a",
@@ -145,14 +165,6 @@
             "name": "是否显示比例",
             "type": "boolean"
           },
-          "auto": {
-            "name": "是否轮播",
-            "type": "boolean"
-          },
-          "autoTime": {
-            "name": "轮播周期",
-            "type": "number"
-          },
           "confine": {
             "name": "是否限制在图标内",
             "type": "boolean"
@@ -160,9 +172,7 @@
         },
         "default": {
           "showValue": true,
-          "showProportion": false,
-          "auto": false,
-          "autoTime": 3000,
+          "showProportion": true,
           "confine": false
         }
       },
@@ -190,56 +200,31 @@
         "default": {
           "x": "50%",
           "y": "50%",
-          "inner": "50%",
-          "outer": "60%"
+          "inner": "30",
+          "outer": "100"
         }
       },
-      "label": {
-        "name": "标签",
+      "series": {
+        "name": "series",
         "type": "group",
         "children": {
-          "labelShow": {
-            "name": "是否显示标签",
-            "type": "boolean"
-          },
-          "position": {
-            "name": "标签位置",
-            "type": "string"
-          },
-          "normalShow": {
-            "name": "文字是否显示",
-            "type": "boolean"
-          },
-          "normalPosition": {
-            "name": "文字位置",
-            "type": "string"
-          },
-          "normalColor": {
-            "name": "文字颜色",
-            "type": "string"
-          },
-          "normalFormatter": {
-            "name": "文字格式化",
-            "type": "string"
-          },
-          "normalFontSize": {
-            "name": "文字大小",
+          "borderRadius": {
+            "name": "图形圆角大小",
             "type": "number"
           },
-          "normalFontWeight": {
-            "name": "字重",
+          "borderWidth": {
+            "name": "图形边框宽度",
             "type": "number"
+          },
+          "borderColor": {
+            "name": "边框颜色",
+            "type": "string"
           }
         },
         "default": {
-          "labelShow": false,
-          "position": "outside",
-          "normalShow": true,
-          "normalPosition": "center",
-          "normalColor": "#3A3A3A",
-          "normalFormatter": "全校总资产规模",
-          "normalFontSize": 16,
-          "normalFontWeight": 600
+          "borderRadius": 0,
+          "borderWidth": 0,
+          "borderColor": "#FFF"
         }
       }
     },

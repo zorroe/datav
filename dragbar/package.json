@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/dragbar",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -78,6 +78,17 @@
           "right": 30,
           "top": 50,
           "bottom": 100
+        }
+      },
+      "axisPointer":{
+        "name":"指针",
+        "type":"group",
+        "children":{
+          "shadowColor":{
+            "name":"阴影颜色",
+            "type":"string",
+            "default":"rgba(56, 156, 255, 0.12)"
+          }
         }
       },
       "tooltip": {
@@ -239,6 +250,10 @@
             "name": "名称字体大小",
             "type": "number"
           },
+          "nameGap":{
+            "name":"名称与轴线距离",
+            "type":"number"
+          },
           "max": {
             "name": "最大值",
             "type": "string"
@@ -277,6 +292,7 @@
           "nameLocation": "end",
           "nameColor": "#3A3A3A",
           "nameFontSize": 12,
+          "nameGap": 15,
           "max": "",
           "labelShow": true,
           "labelMargin": 8,
@@ -305,6 +321,10 @@
             "name": "是否显示缩放组件",
             "type": "boolean"
           },
+          "startValue": {
+            "name": "起始位置",
+            "type": "number"
+          },
           "valueSpan": {
             "name": "显示条数",
             "type": "number"
@@ -324,6 +344,7 @@
         },
         "default": {
           "zoomShow": true,
+          "startValue": 0,
           "valueSpan": 10,
           "left": 10,
           "bottom": 10,
