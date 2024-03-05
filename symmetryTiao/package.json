@@ -1,0 +1,250 @@
+{
+  "name": "@ecnu-pierose/symmetryTiao",
+  "version": "0.0.1",
+  "dependencies": {
+    "bcore": "0.0.18",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1",
+    "echarts": "5.3.1"
+  },
+  "datav": {
+    "cn_name": "对称条形图",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "400",
+      "height": "200",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "dimensions": {
+        "name": "维度",
+        "type": "string",
+        "default": ""
+      },
+      "color": {
+        "name": "颜色",
+        "type": "string",
+        "default": "#C61F0A-#F28018-#FFD300"
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "距左",
+            "type": "number"
+          },
+          "right": {
+            "name": "距右",
+            "type": "number"
+          },
+          "top": {
+            "name": "距顶",
+            "type": "number"
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "number"
+          },
+          "containLabel": {
+            "name": "containLabel",
+            "type": "boolean"
+          }
+        },
+        "default": {
+          "left": 0,
+          "right": 20,
+          "top": 20,
+          "bottom": 20,
+          "containLabel": true
+        }
+      },
+      "tooltip": {
+        "name": "tooltip",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "是否显示",
+            "type": "boolean"
+          },
+          "confine": {
+            "name": "是否限制在图表内",
+            "type": "boolean"
+          },
+          "fixed": {
+            "name": "显示精度",
+            "type": "number"
+          },
+          "suffix": {
+            "name": "后缀",
+            "type": "string"
+          }
+        },
+        "default": {
+          "isShow": true,
+          "confine": true,
+          "fixed": 0,
+          "suffix": ""
+        }
+      },
+      "legend": {
+        "name": "图例配置",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "图例是否显示",
+            "type": "boolean"
+          },
+          "left": {
+            "name": "图例距左距离",
+            "type": "string"
+          },
+          "top": {
+            "name": "图例距顶距离",
+            "type": "string"
+          },
+          "textColor": {
+            "name": "图例文字颜色",
+            "type": "string"
+          },
+          "textSize": {
+            "name": "图例字大小",
+            "type": "number"
+          },
+          "itemWidth": {
+            "name": "图形宽度",
+            "type": "number"
+          },
+          "itemHeight": {
+            "name": "图形高度",
+            "type": "number"
+          },
+          "itemGap": {
+            "name": "图例间隔",
+            "type": "number"
+          }
+        },
+        "default": {
+          "isShow": true,
+          "left": "center",
+          "top": "10",
+          "textColor": "#3A3A3A",
+          "textSize": 12,
+          "itemWidth": 10,
+          "itemHeight": 10,
+          "itemGap": 10
+        }
+      },
+      "xAxis": {
+        "name": "xAxis",
+        "type": "group",
+        "children": {
+          "inverse": {
+            "name": "是否反转",
+            "type": "boolean",
+            "default": false
+          },
+          "min":{
+            "name":"最小值",
+            "type":"number",
+            "default": 0
+          },
+          "max":{
+            "name":"最大值",
+            "type":"number",
+            "default": 0
+          },
+          "splitLineColor": {
+            "name": "分割线颜色",
+            "type": "string",
+            "default": "#ccc"
+          },
+          "splitLineType": {
+            "name": "分割线类型",
+            "type": "string",
+            "default": "5-10"
+          }
+        }
+      },
+      "yAxis": {
+        "name": "yAxis",
+        "type": "group",
+        "children": {
+          "inverse": {
+            "name": "是否反转",
+            "type": "boolean"
+          },
+          "labelColor": {
+            "name": "label颜色",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "label字体大小",
+            "type": "number"
+          },
+          "labelFontWeight": {
+            "name": "label字重",
+            "type": "number"
+          },
+          "lineColor": {
+            "name": "轴线颜色",
+            "type": "string"
+          }
+        },
+        "default": {
+          "inverse": true,
+          "labelColor": "#999",
+          "labelMargin": 0,
+          "labelFontSize": 14,
+          "labelFontWeight": 600,
+          "labelInside": true,
+          "labelAlign": "left",
+          "labelVerticalAlign": "bottom",
+          "labelLineHeight": 32,
+          "lineColor": "rgba(0,0,0,0)"
+        }
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "lqlx": "优师专项",
+          "男": 52,
+          "女": -98
+        },
+        {
+          "lqlx": "公费师范",
+          "男": 268,
+          "女": -557
+        },
+        {
+          "lqlx": "师范",
+          "男": 33,
+          "女": -99
+        },
+        {
+          "lqlx": "普通专业",
+          "男": 1082,
+          "女": -1536
+        }
+      ]
+      
+    }
+  }
+}
