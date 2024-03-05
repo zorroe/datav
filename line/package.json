@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/line",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -254,6 +254,10 @@
             "name": "名称字体大小",
             "type": "number"
           },
+          "min": {
+            "name": "最小值",
+            "type": "string"
+          },
           "max": {
             "name": "最大值",
             "type": "string"
@@ -288,6 +292,7 @@
           "nameLocation": "end",
           "nameColor": "#3A3A3A",
           "nameFontSize": 12,
+          "min": "",
           "max": "",
           "labelShow": true,
           "labelMargin": 8,
@@ -304,10 +309,20 @@
           "isStack": {
             "name": "是否堆叠",
             "type": "boolean"
+          },
+          "symbol": {
+            "name": "符号类型",
+            "type": "string"
+          },
+          "symbolSize": {
+            "name": "符号大小",
+            "type": "number"
           }
         },
         "default": {
-          "isStack": false
+          "isStack": false,
+          "symbol": "emptyCircle",
+          "symbolSize": 4
         }
       },
       "zoom": {

@@ -189,6 +189,10 @@ module.exports = Event.extend(
         yAxis.max = cfg.yAxis.max;
       }
 
+      if (cfg.yAxis.min) {
+        yAxis.min = cfg.yAxis.min;
+      }
+
       const series = [
         ...barsData.map((d, idx) => {
           return {
