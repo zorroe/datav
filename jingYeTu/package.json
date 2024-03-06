@@ -1,0 +1,332 @@
+{
+  "name": "@ecnu-pierose/jingYeTu",
+  "version": "0.0.2",
+  "dependencies": {
+    "bcore": "0.0.18",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1",
+    "echarts": "5.3.1"
+  },
+  "datav": {
+    "cn_name": "对称条图(y轴标签在中间)",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "500",
+      "height": "300",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "xField": {
+        "name": "x轴字段",
+        "type": "string",
+        "default": "xb"
+      },
+      "yField": {
+        "name": "y轴字段",
+        "type": "string",
+        "default": "nld"
+      },
+      "valueField": {
+        "name": "值字段",
+        "type": "string",
+        "default": "rs"
+      },
+      "color": {
+        "name": "颜色",
+        "type": "string",
+        "default": "#60B0FF-#297AFC=#F29318-#FFD300"
+      },
+      "legend": {
+        "name": "图例",
+        "type": "group",
+        "children": {
+          "isShow": {
+            "name": "是否显示",
+            "type": "boolean"
+          },
+          "left": {
+            "name": "距左",
+            "type": "string"
+          },
+          "top": {
+            "name": "距顶",
+            "type": "string"
+          },
+          "itemGap": {
+            "name": "图例间隔",
+            "type": "number"
+          },
+          "itemWidth": {
+            "name": "图形宽度",
+            "type": "number"
+          },
+          "itemHeight": {
+            "name": "图形高度",
+            "type": "number"
+          },
+          "textColor": {
+            "name": "文字颜色",
+            "type": "string"
+          },
+          "fontSize": {
+            "name": "文字大小",
+            "type": "number"
+          }
+        },
+        "default": {
+          "isShow": true,
+          "left": "center",
+          "top": "10",
+          "itemGap": 10,
+          "itemWidth": 10,
+          "itemHeight": 10,
+          "textColor": "#333",
+          "fontSize": 12
+        }
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "top": {
+            "name": "距顶",
+            "type": "string"
+          },
+          "bottom": {
+            "name": "距底",
+            "type": "string"
+          },
+          "side": {
+            "name": "距两侧",
+            "type": "string"
+          },
+          "width": {
+            "name": "宽度",
+            "type": "string"
+          }
+        },
+        "default": {
+          "top": "40",
+          "bottom": "20",
+          "side": "20",
+          "width": "40%"
+        }
+      },
+      "xAxis": {
+        "name": "xAxis",
+        "type": "group",
+        "children": {
+          "boundaryGap": {
+            "name": "boundaryGap",
+            "type": "boolean"
+          },
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "labelSize": {
+            "name": "标签大小",
+            "type": "number"
+          },
+          "splitNumber": {
+            "name": "分割段数",
+            "type": "number"
+          },
+          "splitLineType": {
+            "name": "分割线类型",
+            "type": "string"
+          },
+          "splitLineColor": {
+            "name": "分割线颜色",
+            "type": "string"
+          }
+        },
+        "default": {
+          "boundaryGap": false,
+          "labelColor": "#999",
+          "labelSize": 12,
+          "labelInterval": 0.5,
+          "splitNumber": 5,
+          "splitLineType": "5-5",
+          "splitLineColor": "rgba(58, 58, 58, 0.3)"
+        }
+      },
+      "yAxis": {
+        "name": "yAxis",
+        "type": "group",
+        "children": {
+          "inverse": {
+            "name": "是否反转",
+            "type": "boolean"
+          },
+          "axisLineColor": {
+            "name": "轴线颜色",
+            "type": "string"
+          },
+          "axisLabelSize": {
+            "name": "标签大小",
+            "type": "number"
+          },
+          "axisLabelWidth": {
+            "name": "标签宽度",
+            "type": "number"
+          },
+          "axisLabelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "axisLabelMargin": {
+            "name": "标签margin",
+            "type": "number"
+          },
+          "shadowColor": {
+            "name": "shadow颜色",
+            "type": "string"
+          },
+          "interval": {
+            "name": "标签显示间隔",
+            "type": "number"
+          }
+        },
+        "default": {
+          "inverse": true,
+          "axisLineColor": "#999",
+          "axisLabelSize": 12,
+          "axisLabelWidth": 50,
+          "axisLabelColor": "#666",
+          "axisLabelMargin": 35,
+          "shadowColor": "rgba(56, 156, 255, 0.1)=rgba(255, 211, 0, 0.1)",
+          "interval": 0
+        }
+      },
+      "series": {
+        "name": "series",
+        "type": "group",
+        "children": {
+          "borderRadius": {
+            "name": "柱子圆角",
+            "type": "number"
+          },
+          "barWidth": {
+            "name": "柱子宽度",
+            "type": "number"
+          }
+        },
+        "default": {
+          "borderRadius": 8,
+          "barWidth": 12
+        }
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "xb": "男",
+          "nld": "65+",
+          "rs": 40
+        },
+        {
+          "xb": "女",
+          "nld": "65+",
+          "rs": 5
+        },
+        {
+          "xb": "男",
+          "nld": "60-64",
+          "rs": 176
+        },
+        {
+          "xb": "女",
+          "nld": "60-64",
+          "rs": 26
+        },
+        {
+          "xb": "男",
+          "nld": "55-59",
+          "rs": 311
+        },
+        {
+          "xb": "女",
+          "nld": "55-59",
+          "rs": 127
+        },
+        {
+          "xb": "男",
+          "nld": "50-54",
+          "rs": 327
+        },
+        {
+          "xb": "女",
+          "nld": "50-54",
+          "rs": 269
+        },
+        {
+          "xb": "男",
+          "nld": "45-49",
+          "rs": 388
+        },
+        {
+          "xb": "女",
+          "nld": "45-49",
+          "rs": 432
+        },
+        {
+          "xb": "男",
+          "nld": "40-44",
+          "rs": 403
+        },
+        {
+          "xb": "女",
+          "nld": "40-44",
+          "rs": 505
+        },
+        {
+          "xb": "男",
+          "nld": "35-39",
+          "rs": 426
+        },
+        {
+          "xb": "女",
+          "nld": "35-39",
+          "rs": 560
+        },
+        {
+          "xb": "男",
+          "nld": "30-34",
+          "rs": 202
+        },
+        {
+          "xb": "女",
+          "nld": "30-34",
+          "rs": 349
+        },
+        {
+          "xb": "男",
+          "nld": "0-29",
+          "rs": 61
+        },
+        {
+          "xb": "女",
+          "nld": "0-29",
+          "rs": 98
+        }
+      ]
+    }
+  }
+}
