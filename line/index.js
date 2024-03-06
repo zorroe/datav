@@ -96,6 +96,12 @@ module.exports = Event.extend(
         };
       });
 
+      const axisPointer = {
+        shadowStyle: {
+          color: cfg.axisPointer.shadowColor,
+        },
+      };
+
       const color = colors.map((c) => {
         return "rgb(" + c.join(",") + ")";
       });
@@ -178,6 +184,7 @@ module.exports = Event.extend(
           fontSize: cfg.yAxis.labelFontSize,
           formatter: cfg.yAxis.labelFormatter,
         },
+        splitNumber: cfg.yAxis.splitNumber,
         splitLine: {
           lineStyle: {
             type: "dashed",
@@ -241,6 +248,7 @@ module.exports = Event.extend(
         yAxis,
         series,
         dataZoom,
+        axisPointer,
       };
       console.log(options);
       this.chart.clear();

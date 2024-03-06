@@ -41,7 +41,28 @@ module.exports = Event.extend(
     render: function (data, config) {
       data = this.data(data);
       var cfg = this.mergeConfig(config);
-      const color = cfg.color.split("-");
+      const colors = cfg.color.split("=");
+      const color = colors.map((c) => {
+        const pairs = c.split("-");
+        return {
+          type: "linear",
+          x: 0,
+          y: 1,
+          x2: 1,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: pairs[0], // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: pairs[1], // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        };
+      });
 
       const dimensions = cfg.dimensions.split("-");
 
@@ -92,6 +113,8 @@ module.exports = Event.extend(
             console.log(value);
             return value < 0 ? 0 - value : value;
           },
+          color: cfg.xAxis.labelColor,
+          fontSize: cfg.xAxis.labelSize
         },
         splitLine: {
           lineStyle: {
@@ -137,12 +160,56 @@ module.exports = Event.extend(
         {
           type: "bar",
           stack: "total",
+          itemStyle: {
+            borderRadius: cfg.xAxis.inverse
+              ? [cfg.series.barRadius, 0, 0, cfg.series.barRadius]
+              : [0, cfg.series.barRadius, cfg.series.barRadius, 0],
+          },
+          barWidth: cfg.series.barWidth,
         },
         {
           type: "bar",
           stack: "total",
+          itemStyle: {
+            borderRadius: cfg.xAxis.inverse
+              ? [0, cfg.series.barRadius, cfg.series.barRadius, 0]
+              : [cfg.series.barRadius, 0, 0, cfg.series.barRadius],
+          },
+          barWidth: cfg.series.barWidth,
         },
       ];
+
+      const shadowColor = cfg.shadowColor.split("-");
+      const axisPointer = {
+        shadowStyle: {
+          color: {
+            type: "linear",
+            x: 0,
+            y: 1,
+            x2: 1,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: shadowColor[0], // 0% 处的颜色
+              },
+              {
+                offset: 0.5,
+                color: shadowColor[0], // 100% 处的颜色
+              },
+              {
+                offset: 0.5,
+                color: shadowColor[1], // 100% 处的颜色
+              },
+              {
+                offset: 1,
+                color: shadowColor[1], // 100% 处的颜色
+              },
+            ],
+            global: false, // 缺省为 false
+          },
+        },
+      };
 
       const options = {
         color,
@@ -153,6 +220,7 @@ module.exports = Event.extend(
         xAxis,
         yAxis,
         series,
+        axisPointer,
       };
       console.log(options);
       this.chart.clear();

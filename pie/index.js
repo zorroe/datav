@@ -45,15 +45,7 @@ module.exports = Event.extend(
       var cfg = this.mergeConfig(config);
       //更新图表
       const options = {
-        color: [
-          "#0080FF",
-          "#FFD300",
-          "#F28018",
-          "#2BA471",
-          "#F86470",
-          "#029cd4",
-          "#ae6fde",
-        ],
+        color: cfg.color.split("-"),
         legend: {
           top: cfg.legend.top, // 需配置
           left: cfg.legend.left,

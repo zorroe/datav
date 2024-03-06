@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/line",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -171,6 +171,17 @@
           "itemGap": 20
         }
       },
+      "axisPointer": {
+        "name": "指针",
+        "type": "group",
+        "children": {
+          "shadowColor": {
+            "name": "阴影颜色",
+            "type": "string",
+            "default": "rgba(56, 156, 255, 0.12)"
+          }
+        }
+      },
       "xAxis": {
         "name": "xAxis",
         "type": "group",
@@ -282,6 +293,10 @@
             "name": "标签formatter",
             "type": "string"
           },
+          "splitNumber": {
+            "name": "分割段数",
+            "type": "number"
+          },
           "splitLineColor": {
             "name": "分割线颜色",
             "type": "string"
@@ -299,6 +314,7 @@
           "labelColor": "#3A3A3A",
           "labelFontSize": 12,
           "labelFormatter": "{value}",
+          "splitNumber": 4,
           "splitLineColor": "#bfbfbf"
         }
       },

@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/symmetryTiao",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -35,12 +35,17 @@
       "dimensions": {
         "name": "维度",
         "type": "string",
-        "default": ""
+        "default": "lqlx-男-女"
       },
       "color": {
         "name": "颜色",
         "type": "string",
-        "default": "#C61F0A-#F28018-#FFD300"
+        "default": "rgba(41, 122, 252, 0.6)-rgba(41, 122, 252, 1)=rgba(242, 147, 24, 1)-rgba(242, 147, 24, 0.6)=#07A872-#0DD491"
+      },
+      "shadowColor": {
+        "name": "shadow颜色",
+        "type": "string",
+        "default": "rgba(56, 156, 255, 0.10)-rgba(255, 211, 0, 0.10)"
       },
       "grid": {
         "name": "grid",
@@ -70,7 +75,7 @@
         "default": {
           "left": 0,
           "right": 20,
-          "top": 20,
+          "top": 40,
           "bottom": 20,
           "containLabel": true
         }
@@ -157,29 +162,41 @@
         "children": {
           "inverse": {
             "name": "是否反转",
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
           },
-          "min":{
-            "name":"最小值",
-            "type":"number",
-            "default": 0
+          "min": {
+            "name": "最小值",
+            "type": "number"
           },
-          "max":{
-            "name":"最大值",
-            "type":"number",
-            "default": 0
+          "max": {
+            "name": "最大值",
+            "type": "number"
+          },
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string",
+            "default": "rgba(58, 58, 58, 0.50)"
+          },
+          "labelSize": {
+            "name": "标签大小",
+            "type": "number",
+            "default": 12
           },
           "splitLineColor": {
             "name": "分割线颜色",
-            "type": "string",
-            "default": "#ccc"
+            "type": "string"
           },
           "splitLineType": {
             "name": "分割线类型",
-            "type": "string",
-            "default": "5-10"
+            "type": "string"
           }
+        },
+        "default": {
+          "inverse": true,
+          "min": -2000,
+          "max": 2000,
+          "splitLineColor": "rgba(58, 58, 58, 0.30)",
+          "splitLineType": "5-5"
         }
       },
       "yAxis": {
@@ -209,15 +226,28 @@
         },
         "default": {
           "inverse": true,
-          "labelColor": "#999",
-          "labelMargin": 0,
-          "labelFontSize": 14,
-          "labelFontWeight": 600,
-          "labelInside": true,
-          "labelAlign": "left",
-          "labelVerticalAlign": "bottom",
-          "labelLineHeight": 32,
+          "labelColor": "rgba(58, 58, 58, 0.50)",
+          "labelFontSize": 12,
+          "labelFontWeight": 400,
           "lineColor": "rgba(0,0,0,0)"
+        }
+      },
+      "series": {
+        "name": "series",
+        "type": "group",
+        "children": {
+          "barRadius": {
+            "name": "圆角大小",
+            "type": "number"
+          },
+          "barWidth": {
+            "name": "柱子宽度",
+            "type": "number"
+          }
+        },
+        "default": {
+          "barRadius": 8,
+          "barWidth": 12
         }
       }
     },
@@ -244,7 +274,6 @@
           "女": -1536
         }
       ]
-      
     }
   }
 }
