@@ -69,13 +69,15 @@ module.exports = Event.extend(
         values: Object.values(yqjgObj),
       }));
 
-      const colorMap = cfg.color.split("-");
+      // console.log(barsData);
+      // console.log(uniqueX, uniqueY);
 
-      const colors = colorMap.map((c) => {
-        return c.split(",");
+      const colorMap = cfg.color.split("&");
+      const linearColor = colorMap.map((c) => {
+        return c.split("-");
       });
 
-      const areaColor = colors.map((c) => {
+      const color = linearColor.map((c) => {
         return {
           type: "linear",
           x: 0,
@@ -85,34 +87,21 @@ module.exports = Event.extend(
           colorStops: [
             {
               offset: 0,
-              color: "rgba(" + [...c, cfg.gradientStart].join(",") + ")",
+              color: c[0],
             },
             {
               offset: 1,
-              color: "rgba(" + [...c, cfg.gradientEnd].join(",") + ")",
+              color: c[1],
             },
           ],
           global: false,
         };
       });
 
-      const axisPointer = {
-        shadowStyle: {
-          color: cfg.axisPointer.shadowColor,
-        },
-      };
-
-      const color = colors.map((c) => {
-        return "rgb(" + c.join(",") + ")";
-      });
-
-      console.log(color);
-
       const legend = {
         show: cfg.legend.isShow,
         top: cfg.legend.top,
         left: cfg.legend.left,
-        orient: cfg.legend.orient,
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
         textStyle: {
@@ -147,7 +136,6 @@ module.exports = Event.extend(
         axisPointer: {
           type: "shadow",
         },
-        boundaryGap: cfg.xAxis.boundaryGap,
         axisLabel: {
           width: cfg.xAxis.labelWidth,
           rotate: cfg.xAxis.labelRotate,
@@ -173,10 +161,13 @@ module.exports = Event.extend(
         type: "value",
         name: cfg.yAxis.axisName,
         nameLocation: cfg.yAxis.nameLocation,
+        nameGap: cfg.yAxis.nameGap,
         nameTextStyle: {
           color: cfg.yAxis.nameColor,
           fontSize: cfg.yAxis.nameFontSize,
         },
+        minInterval: 1,
+        splitNumber: cfg.yAxis.splitNumber,
         axisLabel: {
           show: cfg.yAxis.labelShow,
           margin: cfg.yAxis.labelMargin,
@@ -184,35 +175,81 @@ module.exports = Event.extend(
           fontSize: cfg.yAxis.labelFontSize,
           formatter: cfg.yAxis.labelFormatter,
         },
-        splitNumber: cfg.yAxis.splitNumber,
         splitLine: {
           lineStyle: {
-            type: cfg.yAxis.splitType.split("-"),
+            type: "dashed",
             color: cfg.yAxis.splitLineColor,
           },
         },
       };
+
+      const axisPointer = {
+        shadowStyle: {
+          color: cfg.axisPointer.shadowColor,
+        },
+      };
+
       if (cfg.yAxis.max) {
         yAxis.max = cfg.yAxis.max;
       }
 
-      if (cfg.yAxis.min) {
-        yAxis.min = cfg.yAxis.min;
-      }
-
+      const stacks = cfg.series.stack.split("-");
       const series = [
         ...barsData.map((d, idx) => {
           return {
             name: d["catName"],
-            type: "line",
+            type: "bar",
             data: d.values,
-            stack: cfg.series.isStack ? "a" : idx + "",
-            areaStyle: {
-              color: areaColor[idx],
+            stack: stacks[idx],
+            barWidth: cfg.barWidth,
+            itemStyle: {
+              borderRadius: [0, 0, 0, 0],
             },
+            barGap: cfg.series.barGap
           };
         }),
       ];
+
+      const stackInfo = {};
+      for (let i = 0; i < series[0].data.length; ++i) {
+        for (let j = 0; j < series.length; ++j) {
+          const stackName = series[j].stack;
+          if (!stackName) {
+            continue;
+          }
+          if (!stackInfo[stackName]) {
+            stackInfo[stackName] = {
+              stackStart: [],
+              stackEnd: [],
+            };
+          }
+          const info = stackInfo[stackName];
+          const data = series[j].data[i];
+          if (data && data !== "-") {
+            if (info.stackStart[i] == null) {
+              info.stackStart[i] = j;
+            }
+            info.stackEnd[i] = j;
+          }
+        }
+      }
+
+      for (let i = 0; i < series.length; ++i) {
+        const data = series[i].data;
+        const info = stackInfo[series[i].stack];
+        for (let j = 0; j < series[i].data.length; ++j) {
+          // const isStart = info.stackStart[j] === i;
+          const isEnd = info.stackEnd[j] === i;
+          const topBorder = isEnd ? cfg.barRadius : 0;
+          const bottomBorder = 0;
+          data[j] = {
+            value: data[j],
+            itemStyle: {
+              borderRadius: [topBorder, topBorder, bottomBorder, bottomBorder],
+            },
+          };
+        }
+      }
 
       const dataZoom = [
         {
@@ -234,13 +271,14 @@ module.exports = Event.extend(
           showDataShadow: false,
           backgroundColor: "#DDDDDD",
           brushSelect: false,
-          startValue: 0, // 数据窗口范围的起始数值index
-          endValue: cfg.zoom.valueSpan, // 数据窗口范围的结束数值index
+          startValue: cfg.zoom.startValue, // 数据窗口范围的起始数值index
+          endValue: cfg.zoom.startValue + cfg.zoom.valueSpan, // 数据窗口范围的结束数值index
         },
       ];
 
       const options = {
         color,
+        axisPointer,
         legend,
         tooltip,
         grid,
@@ -248,7 +286,6 @@ module.exports = Event.extend(
         yAxis,
         series,
         dataZoom,
-        axisPointer,
       };
       console.log(options);
       this.chart.clear();
