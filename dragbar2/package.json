@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/new-drag-bar",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -112,13 +112,38 @@
           "suffix": {
             "name": "后缀",
             "type": "string"
+          },
+          "bgColor": {
+            "name": "背景颜色",
+            "type": "string"
+          },
+          "padding": {
+            "name": "padding",
+            "type": "number"
+          },
+          "textColor": {
+            "name": "字体颜色",
+            "type": "string"
+          },
+          "textSize": {
+            "name": "字体大小",
+            "type": "number"
+          },
+          "order": {
+            "name": "是否按照series顺序",
+            "type": "boolean"
           }
         },
         "default": {
           "isShow": true,
-          "confine": true,
+          "confine": false,
           "fixed": 2,
-          "suffix": "%"
+          "suffix": "%",
+          "bgColor": "rgba(255, 255, 255, 0.85)",
+          "padding": 10,
+          "textColor": "#3A3A3A",
+          "textSize": 14,
+          "order": false
         }
       },
       "legend": {

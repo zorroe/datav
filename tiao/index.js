@@ -116,6 +116,7 @@ module.exports = Event.extend(
         inverse: true,
       };
 
+      const textColor = cfg.textColor.split("-");
       const series = [
         {
           type: "bar",
@@ -160,42 +161,42 @@ module.exports = Event.extend(
             },
             rich: {
               top1Sort: {
-                color: top1Color[0],
+                color: cfg.textColorWithBar ? top1Color[0] : textColor[0],
                 width: cfg.labelSortWidth,
                 fontSize: cfg.sortFontSize,
-                fontWeight: 500,
+                fontWeight: cfg.sortFontWeight,
               },
               top1Name: {
-                color: top1Color[0],
+                color: cfg.textColorWithBar ? top1Color[0]: textColor[1],
                 width: cfg.labelNameWidth,
                 fontSize: cfg.nameFontSize,
-                fontWeight: 500,
+                fontWeight: cfg.nameFontWeight,
               },
               top1Num: {
-                color: top1Color[0],
+                color: cfg.textColorWithBar ? top1Color[0]: textColor[2],
                 width: cfg.labelNumWidth,
                 fontSize: cfg.numFontSize,
-                fontWeight: 500,
+                fontWeight: cfg.numFontWeight,
                 align: "right",
                 padding: [0, cfg.grid.right, 0, 0],
               },
               notop1Sort: {
-                color: otherColor[0],
+                color: cfg.textColorWithBar ? otherColor[0] : textColor[0],
                 width: cfg.labelSortWidth,
                 fontSize: cfg.sortFontSize,
-                fontWeight: 500,
+                fontWeight: cfg.sortFontWeight,
               },
               notop1Name: {
-                color: otherColor[0],
+                color: cfg.textColorWithBar ? otherColor[0]: textColor[1],
                 width: cfg.labelNameWidth,
                 fontSize: cfg.nameFontSize,
-                fontWeight: 500,
+                fontWeight: cfg.nameFontWeight,
               },
               notop1Num: {
-                color: otherColor[0],
+                color: cfg.textColorWithBar ? otherColor[0]: textColor[2],
                 width: cfg.labelNumWidth,
                 fontSize: cfg.numFontSize,
-                fontWeight: 500,
+                fontWeight: cfg.numFontWeight,
                 align: "right",
                 padding: [0, cfg.grid.right, 0, 0],
               },
@@ -226,6 +227,9 @@ module.exports = Event.extend(
           brushSelect: false,
           startValue: 0, // 数据窗口范围的起始数值index
           endValue: cfg.valueSpan, // 数据窗口范围的结束数值index
+          textStyle: {
+            color: cfg.zoomTextColor,
+          },
         },
       ];
 

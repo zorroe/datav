@@ -115,12 +115,19 @@ module.exports = Event.extend(
         show: cfg.tooltip.isShow,
         trigger: "axis",
         confine: cfg.tooltip.confine,
+        backgroundColor: cfg.tooltip.bgColor,
+        padding: cfg.tooltip.padding,
+        textStyle: {
+          color: cfg.tooltip.textColor,
+          fontSize: cfg.tooltip.textSize,
+        },
         valueFormatter: (value) => {
           return (
             Number(value ? value : 0).toFixed(cfg.tooltip.fixed) +
             cfg.tooltip.suffix
           );
         },
+        order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
       };
 
       const grid = {

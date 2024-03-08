@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar-line",
-  "version": "0.0.8",
+  "version": "0.0.11",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.3.1",
@@ -32,6 +32,11 @@
       }
     },
     "config": {
+      "color":{
+        "name":"颜色",
+        "type":"string",
+        "default":"#60B0FF-#297AFC=#FFD300-#F29318=#0DD491-#07A872"
+      },
       "dataset": {
         "name": "dataset",
         "type": "group",
@@ -45,11 +50,6 @@
         "default": {
           "dimensions": "tjn,zs,jz"
         }
-      },
-      "gradual": {
-        "name": "是否开启渐变",
-        "type": "boolean",
-        "default": true
       },
       "legend": {
         "name": "图例",
@@ -85,8 +85,64 @@
           "left": "0%",
           "top": "0%",
           "itemGap": 10,
-          "itemWidth": 24,
-          "itemHeight": 14
+          "itemWidth": 10,
+          "itemHeight": 10
+        }
+      },
+      "tooltip": {
+        "name": "tooltip",
+        "type": "group",
+        "children": {
+          "bgColor": {
+            "name": "背景颜色",
+            "type": "string"
+          },
+          "padding": {
+            "name": "padding",
+            "type": "number"
+          },
+          "textColor": {
+            "name": "字体颜色",
+            "type": "string"
+          },
+          "textSize": {
+            "name": "字体大小",
+            "type": "number"
+          },
+          "valueFixed": {
+            "name": "value精度",
+            "type": "number"
+          },
+          "confine": {
+            "name": "是否限制在图表内",
+            "type": "boolean"
+          },
+          "order": {
+            "name": "是否按照series顺序",
+            "type": "boolean"
+          }
+        },
+        "default": {
+          "bgColor": "rgba(255, 255, 255, 0.85)",
+          "padding": 5,
+          "textColor": "#3A3A3A",
+          "textSize": 14,
+          "valueFixed": -1,
+          "confine": false,
+          "order": true
+        }
+      },
+      "axisPointer": {
+        "name": "指针",
+        "type": "group",
+        "children": {
+          "shadowColor": {
+            "name": "阴影颜色",
+            "type": "string"
+          }
+        },
+        "default": {
+          "shadowColor": "rgba(56, 156, 255, 0.12)"
         }
       },
       "xAxis": {
@@ -397,9 +453,25 @@
           }
         },
         "default": {
-          "barMaxWidth": 20,
+          "barMaxWidth": 10,
           "barMinWidth": 10,
           "borderRadius": "8,8,0,0"
+        }
+      },
+      "lineOption":{
+        "name": "折线配置",
+        "type":"group",
+        "children":{
+          "symbol":{
+            "name":"标记类型",
+            "type":"string",
+            "default":"emptyCircle"
+          },
+          "symbolSize":{
+            "name":"标记大小",
+            "type":"number",
+            "default": 4
+          }
         }
       },
       "grid": {
@@ -497,8 +569,7 @@
           },
           "brushSelect": {
             "name": "brushSelect",
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
           }
         },
         "default": {
@@ -515,7 +586,8 @@
           "minValueSpan": 5,
           "maxValueSpan": 10,
           "zoomLock": true,
-          "bottom": "0%"
+          "bottom": "0%",
+          "brushSelect": false
         }
       }
     },

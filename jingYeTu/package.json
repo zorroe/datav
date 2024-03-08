@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/jingYeTu",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -35,12 +35,12 @@
       "xField": {
         "name": "x轴字段",
         "type": "string",
-        "default": "xb"
+        "default": "lx"
       },
       "yField": {
         "name": "y轴字段",
         "type": "string",
-        "default": "nld"
+        "default": "xs"
       },
       "valueField": {
         "name": "值字段",
@@ -124,8 +124,8 @@
         "default": {
           "top": "40",
           "bottom": "20",
-          "side": "20",
-          "width": "40%"
+          "side": "15",
+          "width": "31%"
         }
       },
       "xAxis": {
@@ -155,15 +155,40 @@
           "splitLineColor": {
             "name": "分割线颜色",
             "type": "string"
+          },
+          "splitLineInterval": {
+            "name": "标签显示间隔",
+            "type": "number"
+          },
+          "min0": {
+            "name": "最小值0",
+            "type": "number"
+          },
+          "max0": {
+            "name": "最大值0",
+            "type": "number"
+          },
+          "min1": {
+            "name": "最小值1",
+            "type": "number"
+          },
+          "max1": {
+            "name": "最大值1",
+            "type": "number"
           }
         },
         "default": {
           "boundaryGap": false,
           "labelColor": "#999",
           "labelSize": 12,
-          "splitNumber": 5,
+          "splitNumber": 2,
           "splitLineType": "5-5",
-          "splitLineColor": "rgba(58, 58, 58, 0.3)"
+          "splitLineColor": "rgba(58, 58, 58, 0.3)",
+          "splitLineInterval": 0,
+          "min0": "",
+          "max0": 6000,
+          "min1": "",
+          "max1": 1000
         }
       },
       "yAxis": {
@@ -197,10 +222,6 @@
           "shadowColor": {
             "name": "shadow颜色",
             "type": "string"
-          },
-          "interval": {
-            "name": "标签显示间隔",
-            "type": "number"
           }
         },
         "default": {
@@ -209,9 +230,8 @@
           "axisLabelSize": 12,
           "axisLabelWidth": 50,
           "axisLabelColor": "#666",
-          "axisLabelMargin": 35,
-          "shadowColor": "rgba(56, 156, 255, 0.1)=rgba(255, 211, 0, 0.1)",
-          "interval": 0
+          "axisLabelMargin": 27,
+          "shadowColor": "rgba(56, 156, 255, 0.1)=rgba(255, 211, 0, 0.1)"
         }
       },
       "series": {
@@ -236,94 +256,24 @@
     "api_data": {
       "source": [
         {
-          "xb": "男",
-          "nld": "65+",
-          "rs": 40
+          "lx": "硕士研究生",
+          "xs": "全日制",
+          "rs": 4149
         },
         {
-          "xb": "女",
-          "nld": "65+",
-          "rs": 5
+          "lx": "博士研究生",
+          "xs": "全日制",
+          "rs": 917
         },
         {
-          "xb": "男",
-          "nld": "60-64",
-          "rs": 176
+          "lx": "硕士研究生",
+          "xs": "非全日制",
+          "rs": 1745
         },
         {
-          "xb": "女",
-          "nld": "60-64",
-          "rs": 26
-        },
-        {
-          "xb": "男",
-          "nld": "55-59",
-          "rs": 311
-        },
-        {
-          "xb": "女",
-          "nld": "55-59",
-          "rs": 127
-        },
-        {
-          "xb": "男",
-          "nld": "50-54",
-          "rs": 327
-        },
-        {
-          "xb": "女",
-          "nld": "50-54",
-          "rs": 269
-        },
-        {
-          "xb": "男",
-          "nld": "45-49",
-          "rs": 388
-        },
-        {
-          "xb": "女",
-          "nld": "45-49",
-          "rs": 432
-        },
-        {
-          "xb": "男",
-          "nld": "40-44",
-          "rs": 403
-        },
-        {
-          "xb": "女",
-          "nld": "40-44",
-          "rs": 505
-        },
-        {
-          "xb": "男",
-          "nld": "35-39",
-          "rs": 426
-        },
-        {
-          "xb": "女",
-          "nld": "35-39",
-          "rs": 560
-        },
-        {
-          "xb": "男",
-          "nld": "30-34",
-          "rs": 202
-        },
-        {
-          "xb": "女",
-          "nld": "30-34",
-          "rs": 349
-        },
-        {
-          "xb": "男",
-          "nld": "0-29",
-          "rs": 61
-        },
-        {
-          "xb": "女",
-          "nld": "0-29",
-          "rs": 98
+          "lx": "博士研究生",
+          "xs": "非全日制",
+          "rs": 110
         }
       ]
     }

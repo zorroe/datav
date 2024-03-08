@@ -134,7 +134,7 @@ module.exports = Event.extend(
           axisTick: {
             show: false,
           },
-          axisLabel:{
+          axisLabel: {
             color: cfg.xAxis.labelColor,
             fontSize: cfg.xAxis.labelSize,
           },
@@ -153,10 +153,10 @@ module.exports = Event.extend(
           axisTick: {
             show: false,
           },
-          axisLabel:{
+          axisLabel: {
             color: cfg.xAxis.labelColor,
             fontSize: cfg.xAxis.labelSize,
-            interval: cfg.xAxis.labelInterval
+            interval: cfg.xAxis.labelInterval,
           },
           splitNumber: cfg.xAxis.splitNumber,
           splitLine: {
@@ -167,6 +167,18 @@ module.exports = Event.extend(
           },
         },
       ];
+      if (cfg.xAxis.min0) {
+        xAxis[0].min = cfg.xAxis.min0;
+      }
+      if (cfg.xAxis.max0) {
+        xAxis[0].max = cfg.xAxis.max0;
+      }
+      if (cfg.xAxis.min1) {
+        xAxis[1].min = cfg.xAxis.min1;
+      }
+      if (cfg.xAxis.max1) {
+        xAxis[1].max = cfg.xAxis.max1;
+      }
 
       const shadowColor = cfg.yAxis.shadowColor.split("=");
 
@@ -205,7 +217,7 @@ module.exports = Event.extend(
             color: cfg.yAxis.axisLabelColor,
             align: "center",
             margin: cfg.yAxis.axisLabelMargin,
-            interval: cfg.yAxis.interval
+            interval: cfg.yAxis.interval,
           },
           axisLine: {
             lineStyle: {

@@ -1,14 +1,14 @@
 {
-  "name": "@ecnu-pierose/tiao",
-  "version": "0.0.6",
+  "name": "@ecnu-pierose/tiao2",
+  "version": "0.0.1",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
     "lodash": "4.6.1",
-    "echarts": "5.0.0"
+    "echarts": "5.3.1"
   },
   "datav": {
-    "cn_name": "条形图",
+    "cn_name": "条形图2.0",
     "icon": "",
     "protocol": 2,
     "type": [
@@ -133,6 +133,11 @@
         "type": "number",
         "default": 4
       },
+      "zoomTextColor": {
+        "name": "滚动条标签颜色",
+        "type": "string",
+        "default": "rgba(0,0,0,0)"
+      },
       "autoPlay": {
         "name": "是否自动轮播",
         "type": "boolean",
@@ -143,20 +148,45 @@
         "type": "number",
         "default": 3000
       },
-      "sortFontSize":{
-        "name":"序号字号",
-        "type":"number",
-        "default":14
+      "sortFontSize": {
+        "name": "序号字号",
+        "type": "number",
+        "default": 14
       },
-      "nameFontSize":{
-        "name":"名称字号",
-        "type":"number",
-        "default":14
+      "sortFontWeight": {
+        "name": "序号字重",
+        "type": "number",
+        "default": 400
       },
-      "numFontSize":{
-        "name":"数字字号",
-        "type":"number",
-        "default":14
+      "nameFontSize": {
+        "name": "名称字号",
+        "type": "number",
+        "default": 14
+      },
+      "nameFontWeight": {
+        "name": "名称字重",
+        "type": "number",
+        "default": 400
+      },
+      "numFontSize": {
+        "name": "数字字号",
+        "type": "number",
+        "default": 14
+      },
+      "numFontWeight": {
+        "name": "数字字重",
+        "type": "number",
+        "default": 400
+      },
+      "textColorWithBar":{
+        "name":"标签颜色是否跟随柱子",
+        "type":"boolean",
+        "default": true
+      },
+      "textColor":{
+        "name":"标签颜色",
+        "type":"string",
+        "default": "#F29318-#F29318-#F29318"
       }
     },
     "api_data": {

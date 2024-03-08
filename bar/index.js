@@ -147,7 +147,14 @@ module.exports = Event.extend(
         axisPointer: {
           type: "shadow",
         },
-        confine: true,
+        confine: cfg.tooltip.confine,
+        order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
+        valueFormatter: (value) => {
+          if(cfg.tooltip.valueFixed > -1){
+            return value.toFixed(cfg.tooltip.valueFixed)
+          }
+          return value
+        }
       };
 
       if (cfg.tooltip.formatter) {
@@ -164,6 +171,11 @@ module.exports = Event.extend(
           textStyle: {
             color: cfg.tooltip.textColor,
             fontSize: cfg.tooltip.textSize,
+          },
+        },
+        axisPointer: {
+          shadowStyle: {
+            color: cfg.axisPointer.shadowColor,
           },
         },
         legend: {

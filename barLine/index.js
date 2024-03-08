@@ -48,63 +48,33 @@ module.exports = Event.extend(
       console.log("data==", data);
       var cfg = this.mergeConfig(config);
       console.log(cfg);
-      const rgbColor = [
-        "#0080FF",
-        "#FFD300",
-        "#F28018",
-        "#2BA471",
-        "#FB647D",
-        "#029CD4",
-        "#AE6FDE",
-        "#E5E539",
-        "#50D6E3",
-        "#50D6E3",
-        "#50D6E3",
-        "#50D6E3",
-        "#50D6E3",
-        "#50D6E3",
-        "#50D6E3",
-        "#50D6E3",
-      ];
-      const gradualColor = [
-        ["#60B0FF", "#297AFC"],
-        ["#FFD300", "#F29318"],
-        ["#0DD491", "#07A872"],
-        ["#FF98A9", "#FF98A9"],
-        ["#D69FFF", "#AE6FDE"],
-        ["#75F3FF", "#50D6E3"],
-        ["#FF9191", "#FF9191"],
-      ];
-      var color = [];
-      if (!cfg.gradual) {
-        color = rgbColor;
-      } else {
-        color = gradualColor.map((c) => {
-          return {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: c[0],
-              },
-              {
-                offset: 1,
-                color: c[1],
-              },
-            ],
-            global: false,
-          };
-        });
-      }
+
+      const colors = cfg.color.split("=").map((c) => c.split("-"));
+
+      const color = colors.map((c) => {
+        return {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: c[0],
+            },
+            {
+              offset: 1,
+              color: c[1],
+            },
+          ],
+          global: false,
+        };
+      });
 
       // 预处理柱形图的样式
       cfg.series.forEach((s) => {
         if (s.type === "bar") {
-          console.log(s);
           if (cfg.barOption.barMaxWidth) {
             s.barMaxWidth = cfg.barOption.barMaxWidth;
           }
@@ -120,9 +90,11 @@ module.exports = Event.extend(
               });
           }
         }
+        if (s.type === "line") {
+          s.symbol = cfg.lineOption.symbol;
+          s.symbolSize = cfg.lineOption.symbolSize;
+        }
       });
-
-      console.log("series", cfg.series);
 
       const options = {
         color,
@@ -138,6 +110,25 @@ module.exports = Event.extend(
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          backgroundColor: cfg.tooltip.bgColor,
+          padding: cfg.tooltip.padding,
+          textStyle: {
+            color: cfg.tooltip.textColor,
+            fontSize: cfg.tooltip.textSize,
+          },
+          confine: cfg.tooltip.confine,
+          order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
+          valueFormatter: (value) => {
+            if (cfg.tooltip.valueFixed > -1) {
+              return value.toFixed(cfg.tooltip.valueFixed);
+            }
+            return value;
+          },
+        },
+        axisPointer: {
+          shadowStyle: {
+            color: cfg.axisPointer.shadowColor,
           },
         },
         grid: {

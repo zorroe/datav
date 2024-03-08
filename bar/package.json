@@ -1,11 +1,11 @@
 {
   "name": "@ecnu-pierose/bar",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
     "lodash": "4.6.1",
-    "echarts": "5.0.0"
+    "echarts": "5.3.1"
   },
   "datav": {
     "cn_name": "柱状图",
@@ -53,29 +53,59 @@
         "children": {
           "formatter": {
             "name": "formatter",
-            "type": "string",
-            "default": ""
+            "type": "string"
           },
           "bgColor": {
             "name": "背景颜色",
-            "type": "string",
-            "default": "#fff"
+            "type": "string"
           },
           "padding": {
             "name": "padding",
-            "type": "number",
-            "default": 5
+            "type": "number"
           },
           "textColor": {
             "name": "字体颜色",
-            "type": "string",
-            "default": "#3A3A3A"
+            "type": "string"
           },
           "textSize": {
             "name": "字体大小",
-            "type": "number",
-            "default": 14
+            "type": "number"
+          },
+          "valueFixed": {
+            "name": "value精度",
+            "type": "number"
+          },
+          "confine": {
+            "name": "是否限制在图标内",
+            "type": "boolean"
+          },
+          "order": {
+            "name": "是否按照series顺序",
+            "type": "boolean"
           }
+        },
+        "default": {
+          "formatter": "",
+          "bgColor": "#fff",
+          "padding": 5,
+          "textColor": "#3A3A3A",
+          "textSize": 14,
+          "valueFixed": -1,
+          "confine": false,
+          "order": true
+        }
+      },
+      "axisPointer": {
+        "name": "指针",
+        "type": "group",
+        "children": {
+          "shadowColor": {
+            "name": "阴影颜色",
+            "type": "string"
+          }
+        },
+        "default": {
+          "shadowColor": "rgba(56, 156, 255, 0.12)"
         }
       },
       "grid": {
@@ -84,24 +114,26 @@
         "children": {
           "left": {
             "name": "左",
-            "type": "string",
-            "default": "10%"
+            "type": "string"
           },
           "right": {
             "name": "右",
-            "type": "string",
-            "default": "10%"
+            "type": "string"
           },
           "top": {
             "name": "顶",
-            "type": "string",
-            "default": "60"
+            "type": "string"
           },
           "bottom": {
             "name": "底",
-            "type": "string",
-            "default": "60"
+            "type": "string"
           }
+        },
+        "default": {
+          "left": "10%",
+          "right": "10%",
+          "top": "60",
+          "bottom": "60"
         }
       },
       "legend": {
@@ -110,44 +142,46 @@
         "children": {
           "legendIsShow": {
             "name": "图例是否显示",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "legendLeft": {
             "name": "图例距左距离",
-            "type": "string",
-            "default": "0%"
+            "type": "string"
           },
           "legendTop": {
             "name": "图例距顶距离",
-            "type": "string",
-            "default": ""
+            "type": "string"
           },
           "legendOrient": {
             "name": "图例方向",
-            "type": "string",
-            "default": "horizontal"
+            "type": "string"
           },
           "textColor": {
             "name": "图例颜色",
-            "type": "string",
-            "default": "#3A3A3A"
+            "type": "string"
           },
           "textSize": {
             "name": "图例字大小",
-            "type": "number",
-            "default": 12
+            "type": "number"
           },
           "itemWidth": {
             "name": "图形宽度",
-            "type": "number",
-            "default": 8
+            "type": "number"
           },
           "itemHeight": {
             "name": "图形高度",
-            "type": "number",
-            "default": 8
+            "type": "number"
           }
+        },
+        "default": {
+          "legendIsShow": true,
+          "legendLeft": "0%",
+          "legendTop": "",
+          "legendOrient": "horizontal",
+          "textColor": "#3A3A3A",
+          "textSize": 12,
+          "itemWidth": 8,
+          "itemHeight": 8
         }
       },
       "barOption": {
@@ -156,29 +190,31 @@
         "children": {
           "isStack": {
             "name": "是否堆叠",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "isRadius": {
             "name": "是否圆角",
-            "type": "boolean",
-            "default": "true"
+            "type": "boolean"
           },
           "radiusSize": {
             "name": "圆角大小",
-            "type": "number",
-            "default": 8
+            "type": "number"
           },
           "width": {
             "name": "柱子宽度",
-            "type": "number",
-            "default": 10
+            "type": "number"
           },
           "linear": {
             "name": "是否渐变",
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
           }
+        },
+        "default": {
+          "isStack": true,
+          "isRadius": "true",
+          "radiusSize": 8,
+          "width": 10,
+          "linear": false
         }
       },
       "xAxis": {
@@ -187,59 +223,61 @@
         "children": {
           "lineShow": {
             "name": "轴线是否显示",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "lineWidth": {
             "name": "轴线宽度",
-            "type": "number",
-            "default": 1
+            "type": "number"
           },
           "lineColor": {
             "name": "轴线颜色",
-            "type": "string",
-            "default": "#c2c2c2"
+            "type": "string"
           },
           "tickShow": {
             "name": "刻度是否显示",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "name": {
             "name": "坐标轴名称",
-            "type": "string",
-            "default": ""
+            "type": "string"
           },
           "nameLocation": {
             "name": "名称显示位置",
-            "type": "string",
-            "default": "middle"
+            "type": "string"
           },
           "nameGap": {
             "name": "名称和轴线的距离",
-            "type": "number",
-            "default": 15
+            "type": "number"
           },
           "nameSize": {
             "name": "名称字体大小",
-            "type": "number",
-            "default": 12
+            "type": "number"
           },
           "labelWidth": {
             "name": "名称宽度",
-            "type": "number",
-            "default": "60"
+            "type": "number"
           },
           "labelTextOverflow": {
             "name": "名称溢出设置",
-            "type": "string",
-            "default": "break"
+            "type": "string"
           },
           "labelEllipsis": {
             "name": "名称溢出显示文本",
-            "type": "string",
-            "default": "..."
+            "type": "string"
           }
+        },
+        "default": {
+          "lineShow": true,
+          "lineWidth": 1,
+          "lineColor": "#c2c2c2",
+          "tickShow": true,
+          "name": "",
+          "nameLocation": "middle",
+          "nameGap": 15,
+          "nameSize": 12,
+          "labelWidth": "60",
+          "labelTextOverflow": "break",
+          "labelEllipsis": "..."
         }
       },
       "yAxis": {
@@ -248,64 +286,66 @@
         "children": {
           "lineShow": {
             "name": "轴线是否显示",
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
           },
           "lineWidth": {
             "name": "轴线宽度",
-            "type": "number",
-            "default": 1
+            "type": "number"
           },
           "lineColor": {
             "name": "轴线颜色",
-            "type": "string",
-            "default": "#c2c2c2"
+            "type": "string"
           },
           "tickShow": {
             "name": "刻度是否显示",
-            "type": "boolean",
-            "default": false
+            "type": "boolean"
           },
           "splitLineShow": {
             "name": "分割线是否显示",
-            "type": "boolean",
-            "default": true
+            "type": "boolean"
           },
           "splitLineWidth": {
             "name": "轴线宽度",
-            "type": "number",
-            "default": 1
+            "type": "number"
           },
           "splitLineColor": {
             "name": "轴线颜色",
-            "type": "string",
-            "default": "#c2c2c2"
+            "type": "string"
           },
           "splitLineType": {
             "name": "分割线类型",
-            "type": "string",
-            "default": "dashed"
+            "type": "string"
           },
           "name": {
             "name": "坐标轴名称",
-            "type": "string",
-            "default": " "
+            "type": "string"
           },
           "nameLocation": {
             "name": "名称显示位置",
-            "type": "string",
-            "default": "middle"
+            "type": "string"
           },
           "nameGap": {
             "name": "名称和轴线的距离",
-            "type": "number",
-            "default": 15
+            "type": "number"
           },
           "nameSize": {
             "name": "名称字体大小",
-            "type": "number",
-            "default": 12
+            "type": "number"
           }
+        },
+        "default": {
+          "lineShow": false,
+          "lineWidth": 1,
+          "lineColor": "#c2c2c2",
+          "tickShow": false,
+          "splitLineShow": true,
+          "splitLineWidth": 1,
+          "splitLineColor": "#c2c2c2",
+          "splitLineType": "dashed",
+          "name": " ",
+          "nameLocation": "middle",
+          "nameGap": 15,
+          "nameSize": 12
         }
       }
     },
