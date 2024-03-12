@@ -134,6 +134,10 @@ module.exports = Event.extend(
         },
       };
 
+      if(cfg.tooltip.formatter){
+        tooltip.formatter = cfg.tooltip.formatter
+      }
+
       const grid = {
         left: cfg.grid.left,
         right: cfg.grid.right,
@@ -200,16 +204,20 @@ module.exports = Event.extend(
         yAxis.min = cfg.yAxis.min;
       }
 
+      const stacks = cfg.series.stack.split("-")
       const series = [
         ...barsData.map((d, idx) => {
           return {
             name: d["catName"],
             type: "line",
             data: d.values,
-            stack: cfg.series.isStack ? "a" : idx + "",
+            stack: stacks[idx],
             areaStyle: {
               color: areaColor[idx],
             },
+            symbol: cfg.series.symbol,
+            symbolSize: cfg.series.symbolSize,
+            showSymbol: cfg.series.showSymbol
           };
         }),
       ];

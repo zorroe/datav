@@ -1,6 +1,6 @@
 {
-  "name": "@ecnu-pierose/tiao2",
-  "version": "0.0.1",
+  "name": "@ecnu-pierose/tiao",
+  "version": "0.0.8",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -141,7 +141,7 @@
       "autoPlay": {
         "name": "是否自动轮播",
         "type": "boolean",
-        "default": false
+        "default": true
       },
       "autoPlayInterval": {
         "name": "轮播周期",

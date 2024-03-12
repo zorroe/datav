@@ -84,6 +84,12 @@ module.exports = Event.extend(
         },
       };
 
+      const axisPointer = {
+        shadowStyle: {
+          color: cfg.axisPointer.shadowColor,
+        }
+      }
+
       const tooltip = {
         show: cfg.tooltip.isShow,
         trigger: "axis",
@@ -148,6 +154,7 @@ module.exports = Event.extend(
           type: "bar",
           stack: "a",
           barWidth: cfg.series.barWidth,
+          barMinHeight: cfg.series.barMinHeight,
           itemStyle: {
             borderRadius:
               idx < uniqueX.length - 1
@@ -198,6 +205,7 @@ module.exports = Event.extend(
         color,
         legend,
         tooltip,
+        axisPointer,
         grid,
         dataset,
         xAxis,

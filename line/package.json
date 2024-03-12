@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/line",
-  "version": "0.0.6",
+  "version": "0.0.9",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -109,13 +109,18 @@
           "suffix": {
             "name": "后缀",
             "type": "string"
+          },
+          "formatter": {
+            "name": "格式化",
+            "type": "string"
           }
         },
         "default": {
           "isShow": true,
           "confine": true,
           "fixed": 2,
-          "suffix": ""
+          "suffix": "",
+          "formatter": ""
         }
       },
       "legend": {
@@ -327,9 +332,9 @@
         "name": "series",
         "type": "group",
         "children": {
-          "isStack": {
-            "name": "是否堆叠",
-            "type": "boolean"
+          "stack": {
+            "name": "堆叠字符串",
+            "type": "string"
           },
           "symbol": {
             "name": "符号类型",
@@ -338,12 +343,17 @@
           "symbolSize": {
             "name": "符号大小",
             "type": "number"
+          },
+          "showSymbol":{
+            "name":"是否显示symbol",
+            "type":"boolean"
           }
         },
         "default": {
-          "isStack": false,
+          "stack": "a-b-c-d-e",
           "symbol": "emptyCircle",
-          "symbolSize": 4
+          "symbolSize": 4,
+          "showSymbol": true
         }
       },
       "zoom": {

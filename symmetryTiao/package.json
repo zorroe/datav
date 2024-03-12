@@ -35,7 +35,7 @@
       "dimensions": {
         "name": "维度",
         "type": "string",
-        "default": "lqlx-男-女"
+        "default": "xxxs-硕士研究生-博士研究生"
       },
       "color": {
         "name": "颜色",
@@ -174,13 +174,11 @@
           },
           "labelColor": {
             "name": "标签颜色",
-            "type": "string",
-            "default": "rgba(58, 58, 58, 0.50)"
+            "type": "string"
           },
           "labelSize": {
             "name": "标签大小",
-            "type": "number",
-            "default": 12
+            "type": "number"
           },
           "splitLineColor": {
             "name": "分割线颜色",
@@ -193,8 +191,10 @@
         },
         "default": {
           "inverse": true,
-          "min": -2000,
-          "max": 2000,
+          "min": -4000,
+          "max": 4000,
+          "labelColor": "rgba(58, 58, 58, 0.50)",
+          "labelSize": 12,
           "splitLineColor": "rgba(58, 58, 58, 0.30)",
           "splitLineType": "5-5"
         }

@@ -17,6 +17,7 @@ module.exports = Event.extend(
     this.chart = null; //图表
     this.interval = null;
     this.init(config);
+    clearInterval(this.interval);
   },
   {
     /**
@@ -28,6 +29,9 @@ module.exports = Event.extend(
       //2.刷新布局,针对有子组件的组件 可有可无
       this.updateLayout();
       //3.子组件实例化
+      if (this.chart) {
+        this.chart.clear();
+      }
       this.chart = Echarts.init(this.container[0]);
       //4.如果有需要, 更新样式
       this.updateStyle();
@@ -167,13 +171,13 @@ module.exports = Event.extend(
                 fontWeight: cfg.sortFontWeight,
               },
               top1Name: {
-                color: cfg.textColorWithBar ? top1Color[0]: textColor[1],
+                color: cfg.textColorWithBar ? top1Color[0] : textColor[1],
                 width: cfg.labelNameWidth,
                 fontSize: cfg.nameFontSize,
                 fontWeight: cfg.nameFontWeight,
               },
               top1Num: {
-                color: cfg.textColorWithBar ? top1Color[0]: textColor[2],
+                color: cfg.textColorWithBar ? top1Color[0] : textColor[2],
                 width: cfg.labelNumWidth,
                 fontSize: cfg.numFontSize,
                 fontWeight: cfg.numFontWeight,
@@ -187,13 +191,13 @@ module.exports = Event.extend(
                 fontWeight: cfg.sortFontWeight,
               },
               notop1Name: {
-                color: cfg.textColorWithBar ? otherColor[0]: textColor[1],
+                color: cfg.textColorWithBar ? otherColor[0] : textColor[1],
                 width: cfg.labelNameWidth,
                 fontSize: cfg.nameFontSize,
                 fontWeight: cfg.nameFontWeight,
               },
               notop1Num: {
-                color: cfg.textColorWithBar ? otherColor[0]: textColor[2],
+                color: cfg.textColorWithBar ? otherColor[0] : textColor[2],
                 width: cfg.labelNumWidth,
                 fontSize: cfg.numFontSize,
                 fontWeight: cfg.numFontWeight,
@@ -249,28 +253,36 @@ module.exports = Event.extend(
       //如果有需要的话,更新样式
       this.updateStyle();
 
-      const playCarousel = () => {
-        if (options.dataZoom[0].endValue == options.dataset.source.length - 1) {
-          options.dataZoom[0].endValue = cfg.valueSpan;
-          options.dataZoom[0].startValue = 0;
-        } else {
-          options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
-          options.dataZoom[0].startValue = options.dataZoom[0].startValue + 1;
-        }
-        this.chart.setOption(options);
+      const startPlay = () => {
+        this.interval = setInterval(() => {
+          if (
+            options.dataZoom[0].endValue ==
+            options.dataset.source.length - 1
+          ) {
+            options.dataZoom[0].endValue = cfg.valueSpan;
+            options.dataZoom[0].startValue = 0;
+          } else {
+            options.dataZoom[0].endValue = options.dataZoom[0].endValue + 1;
+            options.dataZoom[0].startValue = options.dataZoom[0].startValue + 1;
+          }
+          this.chart.setOption({ dataZoom: options.dataZoom });
+        }, cfg.autoPlayInterval);
+      };
+
+      const stopPlay = () => {
+        clearInterval(this.interval);
       };
 
       if (cfg.autoPlay) {
-        clearInterval(this.interval);
-        this.interval = setInterval(playCarousel, cfg.autoPlayInterval);
+        startPlay();
         this.chart.on("mouseover", () => {
-          clearInterval(this.interval);
+          stopPlay();
         });
         this.chart.on("mouseout", () => {
-          this.interval = setInterval(playCarousel, cfg.autoPlayInterval);
+          clearInterval(this.interval);
+          startPlay();
         });
       } else {
-        clearInterval(this.interval);
         this.chart.off("mouseover");
         this.chart.off("mouseout");
       }
