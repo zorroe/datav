@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/normalTiao",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -192,12 +192,26 @@
           "splitNumber": {
             "name": "分割线数量",
             "type": "number"
+          },
+          "labelInterval": {
+            "name": "标签之间间隔",
+            "type": "number"
+          },
+          "labelColor": {
+            "name": "标签颜色",
+            "type": "string"
+          },
+          "labelFontSize": {
+            "name": "标签字体大小",
+            "type": "number"
           }
         },
         "default": {
           "splitLineType": "4-2",
           "splitLineColor": "#CCC",
-          "splitNumber": 5
+          "splitNumber": 5,
+          "labelColor": "#999",
+          "labelFontSize": 12
         }
       },
       "yAxis": {

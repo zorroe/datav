@@ -144,6 +144,10 @@ module.exports = Event.extend(
             color: cfg.xAxis.splitLineColor,
           },
         },
+        axisLabel: {
+          color: cfg.xAxis.labelColor,
+          fontSize: cfg.xAxis.labelFontSize,
+        },
         splitNumber: cfg.xAxis.splitNumber,
       };
 
