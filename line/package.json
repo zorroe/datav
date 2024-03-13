@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/line",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -151,6 +151,10 @@
             "name": "图例字大小",
             "type": "number"
           },
+          "icon":{
+            "name": "图例图标",
+            "type": "string"
+          },
           "itemWidth": {
             "name": "图形宽度",
             "type": "number"
@@ -171,6 +175,7 @@
           "orient": "horizontal",
           "textColor": "#3A3A3A",
           "textSize": 12,
+          "icon":"rect",
           "itemWidth": 8,
           "itemHeight": 8,
           "itemGap": 20

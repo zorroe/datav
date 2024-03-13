@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar-line",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.3.1",
@@ -71,6 +71,10 @@
             "name": "图例间隔",
             "type": "number"
           },
+          "icon":{
+            "name": "图例图标",
+            "type": "string"
+          },
           "itemWidth": {
             "name": "图形宽度",
             "type": "number"
@@ -85,6 +89,7 @@
           "left": "0%",
           "top": "0%",
           "itemGap": 10,
+          "icon":"rect",
           "itemWidth": 10,
           "itemHeight": 10
         }

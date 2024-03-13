@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/jingYeTu",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -72,6 +72,10 @@
             "name": "图例间隔",
             "type": "number"
           },
+          "icon":{
+            "name": "图例图标",
+            "type": "string"
+          },
           "itemWidth": {
             "name": "图形宽度",
             "type": "number"
@@ -93,6 +97,7 @@
           "isShow": true,
           "left": "center",
           "top": "10",
+          "icon": "rect",
           "itemGap": 10,
           "itemWidth": 10,
           "itemHeight": 10,

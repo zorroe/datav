@@ -1,6 +1,6 @@
 {
-  "name": "@ecnu-pierose/stackTiao",
-  "version": "0.0.6",
+  "name": "@ecnu-pierose/normalTiao",
+  "version": "0.0.1",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -8,7 +8,7 @@
     "echarts": "5.0.0"
   },
   "datav": {
-    "cn_name": "堆积条形图",
+    "cn_name": "普通条形图",
     "icon": "",
     "protocol": 2,
     "type": [
@@ -55,7 +55,7 @@
       "color": {
         "name": "颜色",
         "type": "string",
-        "default": "#C61F0A-#F28018-#FFD300"
+        "default": "rgba(41, 122, 252, 0.6)-rgba(41, 122, 252, 1)=rgba(242, 147, 24, 1)-rgba(242, 147, 24, 0.6)=#07A872-#0DD491"
       },
       "grid": {
         "name": "grid",
@@ -85,11 +85,11 @@
           "bottom": 0
         }
       },
-      "axisPointer":{
+      "axisPointer": {
         "name": "axisPointer",
         "type": "group",
         "children": {
-          "shadowColor":{
+          "shadowColor": {
             "name": "阴影颜色",
             "type": "string",
             "default": "rgba(56, 156, 255, 0.12)"
@@ -148,6 +148,10 @@
             "name": "图例字大小",
             "type": "number"
           },
+          "icon": {
+            "name": "图例图标",
+            "type": "string"
+          },
           "itemWidth": {
             "name": "图形宽度",
             "type": "number"
@@ -167,9 +171,33 @@
           "top": "10",
           "textColor": "#3A3A3A",
           "textSize": 12,
+          "icon": "rect",
           "itemWidth": 10,
           "itemHeight": 10,
-          "itemGap": 10
+          "itemGap": 20
+        }
+      },
+      "xAxis": {
+        "name": "xAxis",
+        "type": "group",
+        "children": {
+          "splitLineType": {
+            "name": "分割线类型",
+            "type": "string"
+          },
+          "splitLineColor": {
+            "name": "分割线颜色",
+            "type": "string"
+          },
+          "splitNumber": {
+            "name": "分割线数量",
+            "type": "number"
+          }
+        },
+        "default": {
+          "splitLineType": "4-2",
+          "splitLineColor": "#CCC",
+          "splitNumber": 5
         }
       },
       "yAxis": {

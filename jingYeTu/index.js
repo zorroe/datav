@@ -86,7 +86,7 @@ module.exports = Event.extend(
         formatter: (params) => {
           const val0 = params[0].value;
           const val1 = params[1].value;
-          const circle = `<span style="display:inline-block;margin-right:5px;width:10px;height:10px;left:5px;background-color:`;
+          const circle = `<span style="display:inline-block;margin-right:5px;width:10px;height:10px;left:5px;border-radius: 9999px; background-color:`;
           const data0 = `${circle}${pairs[0][1]}"></span> ${params[0].seriesName}&nbsp;&nbsp; <span style='font-weight: 600'>${val0}</span>`;
           const data1 = `${circle}${pairs[1][0]}"></span> ${params[1].seriesName}&nbsp;&nbsp; <span style='font-weight: 600'>${val1}</span>`;
           return `${params[0].axisValueLabel}<br/>${data0}<br/>${data1}`;
@@ -102,6 +102,7 @@ module.exports = Event.extend(
         left: cfg.legend.left,
         top: cfg.legend.top,
         itemGap: cfg.legend.itemGap,
+        icon: cfg.legend.icon,
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
         textStyle: {

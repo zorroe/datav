@@ -70,11 +70,33 @@ module.exports = Event.extend(
       if (cfg.reverseX) {
         uniqueX.reverse();
       }
-      const color = cfg.color.split("-");
+      const colors = cfg.color.split("=");
+      const color = colors.map((c) => {
+        const pairs = c.split("-");
+        return {
+          type: "linear",
+          x: 0,
+          y: 1,
+          x2: 1,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: pairs[0], // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: pairs[1], // 100% 处的颜色
+            },
+          ],
+          global: false, // 缺省为 false
+        };
+      });
       const legend = {
         show: cfg.legend.isShow,
         top: cfg.legend.top,
         left: cfg.legend.left,
+        icon: cfg.legend.icon,
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
         itemGap: cfg.legend.itemGap,
@@ -117,8 +139,12 @@ module.exports = Event.extend(
 
       const xAxis = {
         splitLine: {
-          show: false,
+          lineStyle: {
+            type: cfg.xAxis.splitLineType.split("-"),
+            color: cfg.xAxis.splitLineColor,
+          },
         },
+        splitNumber: cfg.xAxis.splitNumber,
       };
 
       const yAxis = {
