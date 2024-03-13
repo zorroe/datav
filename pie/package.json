@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/pie",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.0.0",
@@ -42,10 +42,10 @@
         "type": "string",
         "default": "lx"
       },
-      "color":{
-        "name":"颜色",
-        "type":"string",
-        "default":"#0080FF-#FFD300-#F28018-#2BA471-#F86470-#029cd4-#ae6fde-#E5E539-#50D6E3-#3751DA-#FF88D8-#66EF8D-#CFFB67-#888FFF-#FF3535-#F2899A"
+      "color": {
+        "name": "颜色",
+        "type": "string",
+        "default": "#0080FF-#FFD300-#F28018-#2BA471-#F86470-#029cd4-#ae6fde-#E5E539-#50D6E3-#3751DA-#FF88D8-#66EF8D-#CFFB67-#888FFF-#FF3535-#F2899A"
       },
       "legend": {
         "name": "图例",
@@ -84,6 +84,10 @@
           "fontSize": {
             "name": "图例文字大小",
             "type": "number"
+          },
+          "icon": {
+            "name": "图例icon",
+            "type": "string"
           },
           "itemWidth": {
             "name": "图例色块宽度",
@@ -128,10 +132,11 @@
           },
           "showTooltip": false,
           "fontSize": 12,
+          "icon": "rect",
           "itemWidth": 8,
           "itemHeight": 8,
           "itemGap": 8,
-          "orient": "vertical",
+          "orient": "horizontal",
           "showValue": false,
           "valueSuffix": "",
           "showProportion": false,

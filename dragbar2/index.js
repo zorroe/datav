@@ -104,6 +104,7 @@ module.exports = Event.extend(
         left: cfg.legend.left,
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
+        icon: cfg.legend.icon,
         textStyle: {
           color: cfg.legend.textColor,
           fontSize: cfg.legend.textSize,

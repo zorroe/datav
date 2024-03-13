@@ -61,6 +61,7 @@ module.exports = Event.extend(
             trigger: "item",
             show: cfg.legend.showTooltip,
           },
+          icon: cfg.legend.icon,
           itemWidth: cfg.legend.itemWidth,
           itemHeight: cfg.legend.itemHeight,
           itemGap: cfg.legend.itemGap,
