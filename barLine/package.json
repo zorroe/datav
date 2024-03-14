@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar-line",
-  "version": "0.0.12",
+  "version": "0.0.16",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.3.1",
@@ -32,10 +32,10 @@
       }
     },
     "config": {
-      "color":{
-        "name":"颜色",
-        "type":"string",
-        "default":"#60B0FF-#297AFC=#FFD300-#F29318=#0DD491-#07A872"
+      "color": {
+        "name": "颜色",
+        "type": "string",
+        "default": "#60B0FF-#297AFC=#FFD300-#F29318=#0DD491-#07A872"
       },
       "dataset": {
         "name": "dataset",
@@ -71,7 +71,7 @@
             "name": "图例间隔",
             "type": "number"
           },
-          "icon":{
+          "icon": {
             "name": "图例图标",
             "type": "string"
           },
@@ -89,7 +89,7 @@
           "left": "0%",
           "top": "0%",
           "itemGap": 10,
-          "icon":"rect",
+          "icon": "rect",
           "itemWidth": 10,
           "itemHeight": 10
         }
@@ -116,7 +116,11 @@
           },
           "valueFixed": {
             "name": "value精度",
-            "type": "number"
+            "type": "string"
+          },
+          "valueSuffix": {
+            "name": "value后缀",
+            "type": "string"
           },
           "confine": {
             "name": "是否限制在图表内",
@@ -132,7 +136,8 @@
           "padding": 5,
           "textColor": "#3A3A3A",
           "textSize": 14,
-          "valueFixed": -1,
+          "valueFixed": "0-0",
+          "valueSuffix": "",
           "confine": false,
           "order": true
         }
@@ -463,18 +468,18 @@
           "borderRadius": "8,8,0,0"
         }
       },
-      "lineOption":{
+      "lineOption": {
         "name": "折线配置",
-        "type":"group",
-        "children":{
-          "symbol":{
-            "name":"标记类型",
-            "type":"string",
-            "default":"emptyCircle"
+        "type": "group",
+        "children": {
+          "symbol": {
+            "name": "标记类型",
+            "type": "string",
+            "default": "emptyCircle"
           },
-          "symbolSize":{
-            "name":"标记大小",
-            "type":"number",
+          "symbolSize": {
+            "name": "标记大小",
+            "type": "number",
             "default": 4
           }
         }

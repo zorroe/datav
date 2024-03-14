@@ -150,16 +150,18 @@ module.exports = Event.extend(
         confine: cfg.tooltip.confine,
         order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
         valueFormatter: (value) => {
-          if(cfg.tooltip.valueFixed > -1){
-            return value.toFixed(cfg.tooltip.valueFixed)
+          const v = Number(value).toFixed(cfg.tooltip.valueFixed);
+          nums = v.split(".");
+          nums[0] = nums[0].replace(
+            new RegExp("(\\d)(?=(\\d{3})+$)", "ig"),
+            "$1,"
+          );
+          if (cfg.tooltip.valueFixed == 0) {
+            return nums[0];
           }
-          return value
-        }
+          return nums.join(".");
+        },
       };
-
-      if (cfg.tooltip.formatter) {
-        tooltip["formatter"] = cfg.tooltip.formatter;
-      }
 
       //更新图表
       const options = {

@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/dragbar",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",

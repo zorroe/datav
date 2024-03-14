@@ -113,7 +113,7 @@ module.exports = Event.extend(
         top: cfg.legend.top,
         left: cfg.legend.left,
         orient: cfg.legend.orient,
-        icon: cfg.legend.icon,
+        icon: "path://M6 13v-2h12v2z",
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
         textStyle: {

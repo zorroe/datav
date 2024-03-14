@@ -45,7 +45,6 @@ module.exports = Event.extend(
      */
     render: function (data, config) {
       data = this.data(data);
-      console.log("data==", data);
       var cfg = this.mergeConfig(config);
       console.log(cfg);
 
@@ -95,18 +94,25 @@ module.exports = Event.extend(
           s.symbolSize = cfg.lineOption.symbolSize;
         }
       });
-
+      const legend = {
+        show: cfg.legend.show,
+        left: cfg.legend.left,
+        top: cfg.legend.top,
+        itemGap: cfg.legend.itemGap,
+        data: cfg.series.map((serie) => {
+          return {
+            name: serie.name,
+            icon:
+              serie.type === "line" ? "path://M6 13v-2h12v2z" : cfg.legend.icon,
+          };
+        }),
+        itemWidth: cfg.legend.itemWidth,
+        itemHeight: cfg.legend.itemHeight,
+      };
+      console.log(legend);
       const options = {
         color,
-        legend: {
-          show: cfg.legend.show,
-          left: cfg.legend.left,
-          top: cfg.legend.top,
-          itemGap: cfg.legend.itemGap,
-          icon: cfg.legend.icon,
-          itemWidth: cfg.legend.itemWidth,
-          itemHeight: cfg.legend.itemHeight,
-        },
+        legend,
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -120,12 +126,6 @@ module.exports = Event.extend(
           },
           confine: cfg.tooltip.confine,
           order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
-          valueFormatter: (value) => {
-            if (cfg.tooltip.valueFixed > -1) {
-              return value.toFixed(cfg.tooltip.valueFixed);
-            }
-            return value;
-          },
         },
         axisPointer: {
           shadowStyle: {
@@ -173,6 +173,28 @@ module.exports = Event.extend(
         series: cfg.series,
         dataZoom: cfg.dataZoom,
       };
+
+      const tooltipFixed = cfg.tooltip.valueFixed.split("-");
+      const tooltipSuffix = cfg.tooltip.valueSuffix.split("-");
+
+      options.series.forEach((item, idx) => {
+        item.tooltip = {
+          valueFormatter: function (value) {
+            const fixed = tooltipFixed[idx] ? Number(tooltipFixed[idx]) : 0;
+            const suffix = tooltipSuffix[idx] ? tooltipSuffix[idx] : "";
+            const v = Number(value).toFixed(fixed);
+            nums = v.split(".");
+            nums[0] = nums[0].replace(
+              new RegExp("(\\d)(?=(\\d{3})+$)", "ig"),
+              "$1,"
+            );
+            if (fixed == 0) {
+              return nums[0] + suffix;
+            }
+            return nums.join(".") + suffix;
+          },
+        };
+      });
 
       this.chart.clear();
       console.log(options);
