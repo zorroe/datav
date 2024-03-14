@@ -123,10 +123,16 @@ module.exports = Event.extend(
           fontSize: cfg.tooltip.textSize,
         },
         valueFormatter: (value) => {
-          return (
-            Number(value ? value : 0).toFixed(cfg.tooltip.fixed) +
-            cfg.tooltip.suffix
+          const v = Number(value).toFixed(cfg.tooltip.fixed);
+          nums = v.split(".");
+          nums[0] = nums[0].replace(
+            new RegExp("(\\d)(?=(\\d{3})+$)", "ig"),
+            "$1,"
           );
+          if (cfg.tooltip.fixed == 0) {
+            return nums[0] + cfg.tooltip.suffix;
+          }
+          return nums.join(".") + cfg.tooltip.suffix;
         },
         order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
       };
@@ -213,7 +219,7 @@ module.exports = Event.extend(
             itemStyle: {
               borderRadius: [0, 0, 0, 0],
             },
-            barGap: cfg.series.barGap
+            barGap: cfg.series.barGap,
           };
         }),
       ];

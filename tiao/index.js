@@ -137,7 +137,7 @@ module.exports = Event.extend(
           },
           showBackground: true,
           backgroundStyle: {
-            color: "rgba(56, 156, 255, 0.10)",
+            color: cfg.backgroundColor,
           },
           labelLayout: {
             x: 0,

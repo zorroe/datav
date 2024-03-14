@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/tiao",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -137,6 +137,11 @@
         "name": "滚动条标签颜色",
         "type": "string",
         "default": "rgba(0,0,0,0)"
+      },
+      "backgroundColor":{
+        "name": "背景颜色",
+        "type": "string",
+        "default": "rgba(180, 180, 180, 0.2)"
       },
       "autoPlay": {
         "name": "是否自动轮播",
