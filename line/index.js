@@ -128,15 +128,21 @@ module.exports = Event.extend(
         trigger: "axis",
         confine: cfg.tooltip.confine,
         valueFormatter: (value) => {
-          return (
-            Number(value ? value : 0).toFixed(cfg.tooltip.fixed) +
-            cfg.tooltip.suffix
+          const v = Number(value).toFixed(cfg.tooltip.fixed);
+          nums = v.split(".");
+          nums[0] = nums[0].replace(
+            new RegExp("(\\d)(?=(\\d{3})+$)", "ig"),
+            "$1,"
           );
+          if (cfg.tooltip.fixed == 0) {
+            return nums[0] + cfg.tooltip.suffix;
+          }
+          return nums.join(".") + cfg.tooltip.suffix;
         },
       };
 
-      if(cfg.tooltip.formatter){
-        tooltip.formatter = cfg.tooltip.formatter
+      if (cfg.tooltip.formatter) {
+        tooltip.formatter = cfg.tooltip.formatter;
       }
 
       const grid = {
@@ -205,7 +211,7 @@ module.exports = Event.extend(
         yAxis.min = cfg.yAxis.min;
       }
 
-      const stacks = cfg.series.stack.split("-")
+      const stacks = cfg.series.stack.split("-");
       const series = [
         ...barsData.map((d, idx) => {
           return {
@@ -218,7 +224,7 @@ module.exports = Event.extend(
             },
             symbol: cfg.series.symbol,
             symbolSize: cfg.series.symbolSize,
-            showSymbol: cfg.series.showSymbol
+            showSymbol: cfg.series.showSymbol,
           };
         }),
       ];

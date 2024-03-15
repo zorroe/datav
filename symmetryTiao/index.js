@@ -89,11 +89,18 @@ module.exports = Event.extend(
         trigger: "axis",
         confine: cfg.tooltip.confine,
 
-        valueFormatter: (val) => {
-          return (
-            (val < 0 ? 0 - val : val).toFixed(cfg.tooltip.fixed) +
-            cfg.tooltip.suffix
+        valueFormatter: (value) => {
+          const newV = value < 0 ? 0 - value : value;
+          const v = Number(newV).toFixed(cfg.tooltip.fixed);
+          nums = v.split(".");
+          nums[0] = nums[0].replace(
+            new RegExp("(\\d)(?=(\\d{3})+$)", "ig"),
+            "$1,"
           );
+          if (cfg.tooltip.fixed == 0) {
+            return nums[0] + cfg.tooltip.suffix;
+          }
+          return nums.join(".") + cfg.tooltip.suffix;
         },
       };
 
@@ -114,7 +121,7 @@ module.exports = Event.extend(
             return value < 0 ? 0 - value : value;
           },
           color: cfg.xAxis.labelColor,
-          fontSize: cfg.xAxis.labelSize
+          fontSize: cfg.xAxis.labelSize,
         },
         splitLine: {
           lineStyle: {

@@ -135,6 +135,7 @@ module.exports = Event.extend(
           return nums.join(".") + cfg.tooltip.suffix;
         },
         order: cfg.tooltip.order ? "seriesAsc" : "seriesDesc",
+        // extraCssText: 'backdrop-filter: blur(2px);'
       };
 
       const grid = {

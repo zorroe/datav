@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/symmetryTiao",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -35,7 +35,7 @@
       "dimensions": {
         "name": "维度",
         "type": "string",
-        "default": "xxxs-硕士研究生-博士研究生"
+        "default": "lqlx-男-女"
       },
       "color": {
         "name": "颜色",
