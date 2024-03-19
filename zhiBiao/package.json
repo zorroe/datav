@@ -1,0 +1,188 @@
+{
+  "name": "@ecnu-pierose/zhiBiao",
+  "version": "0.0.2",
+  "dependencies": {
+    "bcore": "0.0.18",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1",
+    "echarts": "5.3.1"
+  },
+  "datav": {
+    "cn_name": "预警指标条图",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "400",
+      "height": "200",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "reRender": {
+        "name": "重新渲染",
+        "type": "boolean",
+        "default": false
+      },
+      "markColor": {
+        "name": "遮盖的颜色",
+        "type": "string",
+        "default": "#FFF"
+      },
+      "grid": {
+        "name": "grid",
+        "type": "group",
+        "children": {
+          "left": {
+            "name": "left",
+            "type": "number"
+          },
+          "right": {
+            "name": "right",
+            "type": "number"
+          },
+          "top": {
+            "name": "top",
+            "type": "number"
+          },
+          "bottom": {
+            "name": "bottom",
+            "type": "number"
+          }
+        },
+        "default": {
+          "left": 10,
+          "right": 10,
+          "top": 10,
+          "bottom": 10
+        }
+      },
+      "xAxis": {
+        "name": "x轴",
+        "type": "group",
+        "children": {
+          "max": {
+            "name": "最大值",
+            "type": "number"
+          }
+        },
+        "default": {
+          "max": 200
+        }
+      },
+      "series": {
+        "name": "series",
+        "type": "group",
+        "children": {
+          "encodeX": {
+            "name": "x索引名",
+            "type": "string"
+          },
+          "encodeY": {
+            "name": "y索引名",
+            "type": "string"
+          },
+          "barWidth": {
+            "name": "柱宽",
+            "type": "number"
+          },
+          "markPointWidth": {
+            "name": "标记宽",
+            "type": "number"
+          },
+          "markPointHeight": {
+            "name": "标记高",
+            "type": "number"
+          },
+          "markPointX": {
+            "name": "标记的x位置",
+            "type": "string"
+          },
+          "markPointColor": {
+            "name": "标记的颜色",
+            "type": "string"
+          },
+          "label": {
+            "name": "Label",
+            "type": "group",
+            "children": {
+              "offsetTop": {
+                "name": "label的上偏移",
+                "type": "number"
+              },
+              "cateSize": {
+                "name": "分类名字体大小",
+                "type": "number"
+              },
+              "cateColor": {
+                "name": "分类名字体颜色",
+                "type": "string"
+              },
+              "cateWeight": {
+                "name": "分类名字体粗细",
+                "type": "number"
+              },
+              "numStrField": {
+                "name": "值Field",
+                "type": "string"
+              },
+              "valueSize": {
+                "name": "值字体大小",
+                "type": "number"
+              },
+              "valueColor": {
+                "name": "值字体颜色",
+                "type": "string"
+              },
+              "valueWeight": {
+                "name": "值字体粗细",
+                "type": "number"
+              }
+            }
+          }
+        },
+        "default": {
+          "encodeX": "value",
+          "encodeY": "name",
+          "barWidth": 15,
+          "markPointWidth": 10,
+          "markPointHeight": 20,
+          "markPointX": "0.25-0.35-0.45",
+          "markPointColor": "#FE8C55-#FBDF69-#5ECD81",
+          "label": {
+            "offsetTop": -15,
+            "cateSize": 14,
+            "cateColor": "#F28018",
+            "cateWeight": "400",
+            "numStrField": "valueField",
+            "valueSize": 16,
+            "valueColor": "#2F8AFF",
+            "valueWeight": "400"
+          }
+        }
+      }
+    },
+    "api_data": {
+      "source": [
+        {
+          "value": 20,
+          "valueField": "20平方米/生",
+          "name": "Matcha Latte"
+        }
+      ]
+    }
+  }
+}
