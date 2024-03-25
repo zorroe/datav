@@ -109,19 +109,42 @@ module.exports = Event.extend(
       const axisPointer = {
         shadowStyle: {
           color: cfg.axisPointer.shadowColor,
-        }
-      }
+        },
+      };
 
       const tooltip = {
-        show: cfg.tooltip.isShow,
+        show: true,
         trigger: "axis",
         confine: cfg.tooltip.confine,
-
-        valueFormatter: (value) => {
-          return (
-            Number(value ? value : 0).toFixed(cfg.tooltip.fixed) +
-            cfg.tooltip.suffix
-          );
+        // valueFormatter: (value) => {
+        //   return (
+        //     Number(value ? value : 0).toFixed(cfg.tooltip.fixed) +
+        //     cfg.tooltip.suffix
+        //   );
+        // },
+        formatter: (params) => {
+          console.log(params);
+          return params
+            .map((item) => {
+              var total = 0;
+              uniqueX.forEach((x) => {
+                total += item.value[x];
+              });
+              const marker = item.marker;
+              const seriesName = item.seriesName;
+              const value = `<span style='font-weight: 600'>${
+                item.value[item.seriesName]
+              }${cfg.tooltip.suffix}</span>`;
+              const percent = `<span style='font-weight: 600'>${Number(
+                (item.value[item.seriesName] / total) * 100
+              ).toFixed(2)}%</span>`;
+              if(cfg.tooltip.showPercent){
+                return `${marker}&nbsp;&nbsp;${seriesName}&nbsp;&nbsp;${value}&nbsp;&nbsp;&nbsp;&nbsp;${percent}`;
+              }else{
+                return `${marker}&nbsp;&nbsp;${seriesName}&nbsp;&nbsp;${value}`;
+              }
+            })
+            .join("<br/>");
         },
       };
 

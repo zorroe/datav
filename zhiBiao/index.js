@@ -56,7 +56,7 @@ module.exports = Event.extend(
       });
       const clientWidth = this.container.context.clientWidth;
       const barLength = clientWidth - cfg.grid.left - cfg.grid.right;
-      const color = cfg.markColor.split("-");
+      const color = cfg.barColor.split("-");
       // 不显示图例
       const legend = {
         show: false,
@@ -145,12 +145,18 @@ module.exports = Event.extend(
               ],
               global: false, // 缺省为 false
             },
-            borderColor: "#FFF",
+            borderColor: cfg.markColor,
             borderWidth: 1,
+          },
+          emphasis: {
+            itemStyle: {
+              color: cfg.barColor,
+            },
           },
           barWidth: cfg.series.barWidth,
           markPoint: {
             symbol: "rect",
+            silent: true,
             symbolSize: [cfg.series.markPointWidth, cfg.series.markPointHeight],
             data: markPointXs.map((item, idx) => {
               return {
@@ -165,11 +171,11 @@ module.exports = Event.extend(
                     colorStops: [
                       {
                         offset: 0,
-                        color: cfg.markColor, // 0% 处的颜色
+                        color: cfg.barColor, // 0% 处的颜色
                       },
                       {
                         offset: 0.3,
-                        color: cfg.markColor,
+                        color: cfg.barColor,
                       },
                       {
                         offset: 0.3,
@@ -181,11 +187,11 @@ module.exports = Event.extend(
                       },
                       {
                         offset: 0.7,
-                        color: cfg.markColor,
+                        color: cfg.barColor,
                       },
                       {
                         offset: 1,
-                        color: cfg.markColor, // 100% 处的颜色
+                        color: cfg.barColor, // 100% 处的颜色
                       },
                     ],
                     global: false, // 缺省为 false

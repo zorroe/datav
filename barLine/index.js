@@ -109,7 +109,6 @@ module.exports = Event.extend(
         itemWidth: cfg.legend.itemWidth,
         itemHeight: cfg.legend.itemHeight,
       };
-      console.log(legend);
       const options = {
         color,
         legend,
@@ -167,6 +166,7 @@ module.exports = Event.extend(
           axisLabel: {
             show: cfg.xAxis.labelShow,
             color: cfg.xAxis.labelColor,
+            interval: cfg.xAxis.labelInterval,
           },
         },
         yAxis: cfg.yAxis,

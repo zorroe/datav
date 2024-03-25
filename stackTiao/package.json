@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/normalTiao",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -100,10 +100,6 @@
         "name": "tooltip",
         "type": "group",
         "children": {
-          "isShow": {
-            "name": "是否显示",
-            "type": "boolean"
-          },
           "confine": {
             "name": "是否限制在图表内",
             "type": "boolean"
@@ -115,13 +111,17 @@
           "suffix": {
             "name": "后缀",
             "type": "string"
+          },
+          "showPercent": {
+            "name": "显示百分比",
+            "type": "boolean"
           }
         },
         "default": {
-          "isShow": true,
           "confine": true,
           "fixed": 0,
-          "suffix": ""
+          "suffix": "",
+          "showPercent": false
         }
       },
       "legend": {
@@ -211,7 +211,8 @@
           "splitLineColor": "#CCC",
           "splitNumber": 5,
           "labelColor": "#999",
-          "labelFontSize": 12
+          "labelFontSize": 12,
+          "labelInterval": 0
         }
       },
       "yAxis": {

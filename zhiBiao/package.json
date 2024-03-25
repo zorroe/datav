@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/zhiBiao",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",
@@ -38,7 +38,12 @@
         "default": false
       },
       "markColor": {
-        "name": "遮盖的颜色",
+        "name": "背景颜色",
+        "type": "string",
+        "default": "#f3f3f3"
+      },
+      "barColor": {
+        "name": "条的颜色",
         "type": "string",
         "default": "#FFF"
       },
