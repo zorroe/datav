@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/bar-linev2",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "dependencies": {
     "bcore": "0.0.18",
     "echarts": "5.3.1",
@@ -210,6 +210,18 @@
           "nameSize": {
             "name": "名称字体大小",
             "type": "number"
+          },
+          "labelWidth": {
+            "name": "标签宽度",
+            "type": "number"
+          },
+          "labelOverflow": {
+            "name": "overflow",
+            "type": "string"
+          },
+          "labelEllipsis": {
+            "name": "ellipsis",
+            "type": "string"
           }
         },
         "default": {
@@ -225,8 +237,16 @@
           "nameLocation": "middle",
           "nameGap": 15,
           "nameColor": "rgba(58,58,58,0.5)",
-          "nameSize": 12
+          "nameSize": 12,
+          "labelWidth": 50,
+          "labelOverflow": "break",
+          "labelEllipsis": "..."
         }
+      },
+      "ySplitNumber": {
+        "name": "y轴分割段数",
+        "type": "number",
+        "default": 5
       },
       "yAxis": {
         "name": "y轴",
@@ -345,6 +365,14 @@
                   "default": "{value}"
                 }
               }
+            },
+            "min": {
+              "name": "最小值",
+              "type": "number"
+            },
+            "max": {
+              "name": "最大值",
+              "type": "number"
             }
           }
         },
@@ -376,6 +404,8 @@
               "color": "rgba(58, 58, 58, 0.50)",
               "fontSize": 12
             },
+            "min": 9999,
+            "max": 9999,
             "_active": false
           },
           {
@@ -406,6 +436,8 @@
               "fontSize": 12,
               "formatter": "{value}%"
             },
+            "min": 9999,
+            "max": 9999,
             "_active": true
           }
         ]

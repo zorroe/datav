@@ -1,6 +1,6 @@
 {
   "name": "@ecnu-pierose/jingYeTu",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "dependencies": {
     "bcore": "0.0.18",
     "jquery": "2.1.4",

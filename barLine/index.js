@@ -167,9 +167,31 @@ module.exports = Event.extend(
             show: cfg.xAxis.labelShow,
             color: cfg.xAxis.labelColor,
             interval: cfg.xAxis.labelInterval,
+            width: cfg.xAxis.labelWidth,
+            overflow: cfg.xAxis.labelOverflow,
+            ellipsis: cfg.xAxis.labelEllipsis,
           },
         },
-        yAxis: cfg.yAxis,
+        yAxis: cfg.yAxis.map((y) => {
+          const minMax = {};
+          if (y.min!==9999) {
+            minMax.min = y.min;
+          }
+          if (y.max!=9999) {
+            minMax.max = y.max;
+          }
+          return {
+            type: y.type,
+            name: y.name,
+            nameTextStyle: y.nameTextStyle,
+            alignTicks: y.alignTicks,
+            splitLine: y.splitLine,
+            axisLine: y.axisLine,
+            axisLabel: y.axisLabel,
+            splitNumber: cfg.ySplitNumber,
+            ...minMax,
+          };
+        }),
         series: cfg.series,
         dataZoom: cfg.dataZoom,
       };
